@@ -1,9 +1,6 @@
 package ru.spbstu.kspt.task1;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Main class
@@ -21,9 +18,27 @@ public class Main {
             this.flat = flat;
         }
 
+        public String getStreet() {
+            return this.street;
+        }
+
+        public Integer getHouse() {
+            return this.house;
+        }
+
         @Override
         public String toString() {
             return street + " " + house + " " + flat;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj instanceof Address) {
+                Address other = (Address) obj;
+                return Objects.equals(street, other.street) && house == other.house && flat == other.flat;
+            }
+            return false;
         }
     }
 
@@ -47,12 +62,13 @@ public class Main {
             this.addressBook = myMap;
         }
 
+
         public void addAddressBook(Person person, Address address) {
             addressBook.put(person, address);
         }
 
         public void removeAddressBook(Person person) {
-            addressBook.remove(person);
+                addressBook.remove(person);
         }
 
         public void changeAddress(Person person, Address address) {
@@ -67,22 +83,24 @@ public class Main {
             } else throw new IllegalAccessException();
         }
 
-        public void findOnStreet(String street) {
+        public List<Person> findOnStreet(String street) {
             List<Person> listOfPerson = new ArrayList<>();
             for (Person person : addressBook.keySet()) {
                 if (addressBook.get(person).street == street) {
                     listOfPerson.add(person);
                 }
             }
+            return listOfPerson;
         }
 
-        public void findOnHouse(Integer house) {
+        public List findOnHouse(Integer house) {
             List<Person> listOfPerson = new ArrayList<>();
             for (Person person : addressBook.keySet()) {
                 if (addressBook.get(person).house == house) {
                     listOfPerson.add(person);
                 }
             }
+            return listOfPerson;
         }
 
         public Map<Person, Address> getAddressBook() {
