@@ -15,4 +15,3 @@ class MainTest {
         logger.info("Test finished");
     }
 }
-
