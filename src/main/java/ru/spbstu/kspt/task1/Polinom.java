@@ -4,17 +4,18 @@ import java.util.List;
 
 public class Polinom {
 
-    private List<Integer> coef = new ArrayList<>();
+    private ArrayList<Integer> coef;
     private String function;
     private int x;
     private int order;
 
     public Polinom(int order, String function) {
+        this.coef = coef;
         this.order = order;
         this.function = function;
         String[] parts = this.function.split(";");
-        for (int i = 0; i <= this.order; i++) {
-            System.out.println(parts[i]);
+        for (int i = 0; i < parts.length; i++) {
+            if (!parts[i].isEmpty())
             this.coef.add( Integer.parseInt(parts[i]));
         }
     }
