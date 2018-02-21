@@ -10,7 +10,7 @@ public class Polinom {
     private int order;
 
     public Polinom(int order, String function) {
-        this.coef = coef;
+        this.coef = new ArrayList<>();
         this.order = order;
         this.function = function;
         String[] parts = this.function.split(";");
