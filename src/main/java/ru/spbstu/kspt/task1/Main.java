@@ -53,10 +53,21 @@ public class Main {
         public String toString() {
             return name;
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj instanceof Person) {
+                Person other = (Person) obj;
+                return Objects.equals(name, other.name);
+            }
+            return false;
+        }
     }
 
+
     public static class addressBook {
-        private static Map<Person, Address> addressBook = new HashMap<>();
+        private static Map<Person, Address> addressBook = new LinkedHashMap<>();
 
         public addressBook(Map<Person, Address> myMap) {
             this.addressBook = myMap;
@@ -68,14 +79,15 @@ public class Main {
         }
 
         public void removeAddressBook(Person person) {
-                addressBook.remove(person);
+            addressBook.remove(person);
         }
 
-        public void changeAddress(Person person, Address address) {
+        public void changeAddressBook(Person person, Address address) {
             if (addressBook.containsKey(person)) {
                 addressBook.replace(person, address);
             }
         }
+
 
         public Address getAddress(Person person) throws IllegalAccessException {
             if (addressBook.containsKey(person)) {
@@ -93,10 +105,10 @@ public class Main {
             return listOfPerson;
         }
 
-        public List findOnHouse(Integer house) {
+        public List findOnHouse(String street, Integer house) {
             List<Person> listOfPerson = new ArrayList<>();
             for (Person person : addressBook.keySet()) {
-                if (addressBook.get(person).house == house) {
+                if (addressBook.get(person).street == street && addressBook.get(person).house == house) {
                     listOfPerson.add(person);
                 }
             }
@@ -109,11 +121,11 @@ public class Main {
 
         @Override
         public String toString() {
-            StringBuilder anwser = new StringBuilder();
+            StringBuilder result = new StringBuilder();
             for (Person key : addressBook.keySet()) {
-                anwser.append(addressBook.get(key)).append("\n");
+                result.append(addressBook.get(key)).append("\n");
             }
-            return anwser.toString();
+            return result.toString();
         }
     }
 }

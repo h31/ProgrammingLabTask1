@@ -1,54 +1,56 @@
 package ru.spbstu.kspt.task1;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-//import static ru.spbstu.kspt.task1.MainTest.createAddressBook;
 
 
 class MainTest {
-    private static Map<Main.Person, Main.Address> MyMap = new HashMap<>();
-    private static List<Main.Person> listPerson = Arrays.asList(new Main.Person("Шадрин"),
-            new Main.Person("Дженжер"));
-    private static List<Main.Address> listAddress = Arrays.asList(new Main.Address("Новая", 12, 325),
-            new Main.Address("Пролетарская", 308, 359));
-
+    private static Map<Main.Person, Main.Address> MyMap = new LinkedHashMap<>();
 
     private static Main.addressBook createAddressBook() {
-        for (int i = 0; i < listPerson.size(); i++) {
-            MyMap.put(listPerson.get(i), listAddress.get(i));
-        }
-        System.out.println(MyMap);
         return new Main.addressBook(MyMap);
     }
+
 
     @Test
     void addAddressBook() {
         Main.addressBook addressBook = createAddressBook();
         addressBook.addAddressBook(new Main.Person("Долгих"), new Main.Address("Советская", 8, 9));
         addressBook.addAddressBook(new Main.Person("Кубасова"), new Main.Address("Ноябрьская", 47, 741));
+        assertEquals(2, addressBook.getAddressBook().size());
+        addressBook.addAddressBook(new Main.Person("Полухин"), new Main.Address("наб.Фонтанки", 56, 8));
+        assertEquals(3, addressBook.getAddressBook().size());
+        addressBook.addAddressBook(new Main.Person("Виноградный"), new Main.Address("наб.Фонтанки", 8, 359));
         assertEquals(4, addressBook.getAddressBook().size());
+        addressBook.addAddressBook(new Main.Person("Шадрин"), new Main.Address("наб.Фонтанки", 56, 18));
+        assertEquals(5, addressBook.getAddressBook().size());
     }
+
 
     @Test
     void removeAddressBook() {
         Main.addressBook addressBook = createAddressBook();
-        addressBook.removeAddressBook(listPerson.get(1));
+        addressBook.removeAddressBook((Main.Person) MyMap.keySet().toArray()[0]);
+        assertEquals(4, addressBook.getAddressBook().size());
+        addressBook.removeAddressBook((Main.Person) MyMap.keySet().toArray()[0]);
         assertEquals(3, addressBook.getAddressBook().size());
     }
 
 
     @Test
-    void changeAddress() {
+    void changeAddressBook() {
         Main.addressBook addressBook = createAddressBook();
-        addressBook.changeAddress(listPerson.get(1), new Main.Address("Харченко", 16, 540));
+        addressBook.changeAddressBook(((Main.Person) MyMap.keySet().toArray()[1]), new Main.Address("Харченко", 16, 540));
+        addressBook.changeAddressBook((Main.Person) MyMap.keySet().toArray()[0], new Main.Address("Шателена", 18, 8));
         try {
-            assertEquals(new Main.Address("Харченко", 16, 540), addressBook.getAddress(listPerson.get(1)));
+            assertEquals(new Main.Address("Харченко", 16, 540),
+                    addressBook.getAddress((Main.Person) MyMap.keySet().toArray()[1]));
+            assertEquals(new Main.Address("Шателена", 18, 8),
+                    addressBook.getAddress((Main.Person) MyMap.keySet().toArray()[0]));
 
         } catch (IllegalAccessException e) {
             System.out.println(e.getMessage());
@@ -59,34 +61,38 @@ class MainTest {
     @Test
     void getAddress() {
         Main.addressBook addressBook = createAddressBook();
-        //System.out.println(addressBook);
         try {
-            assertEquals(listAddress.get(1), addressBook.getAddress(listPerson.get(1)));
-            //System.out.println(listAddress.get(1));
-            assertEquals(listAddress.get(0), addressBook.getAddress(listPerson.get(0)));
-            //System.out.println(listAddress.get(0));
+            assertEquals((MyMap.values().toArray()[1]),
+                    addressBook.getAddress((Main.Person) MyMap.keySet().toArray()[1]));
+            assertEquals(MyMap.values().toArray()[0],
+                    addressBook.getAddress((Main.Person) MyMap.keySet().toArray()[0]));
         } catch (IllegalAccessException e) {
             System.out.println(e.getMessage());
         }
     }
+
 
     @Test
     void findOnStreet() {
         Main.addressBook addressBook = createAddressBook();
         try {
-            assertEquals(Arrays.asList(listPerson.get(1)),
-                    addressBook.findOnStreet(addressBook.getAddress(listPerson.get(1)).getStreet()));
+            assertEquals(Arrays.asList((Main.Person) MyMap.keySet().toArray()[0],
+                    MyMap.keySet().toArray()[1], MyMap.keySet().toArray()[2]),
+                    addressBook.findOnStreet(addressBook.getAddress((Main.Person) MyMap.keySet().toArray()[1]).getStreet()));
         } catch (IllegalAccessException e) {
             System.out.println(e.getMessage());
         }
     }
 
+
     @Test
     void findOnHouse() {
         Main.addressBook addressBook = createAddressBook();
         try {
-            assertEquals(Arrays.asList(listPerson.get(0)),
-                    addressBook.findOnHouse(addressBook.getAddress(listPerson.get(0)).getHouse()));
+            assertEquals(Arrays.asList((Main.Person) MyMap.keySet().toArray()[2], MyMap.keySet().toArray()[4]),
+                    addressBook.findOnHouse(addressBook.getAddress((Main.Person)
+                            MyMap.keySet().toArray()[2]).getStreet(), addressBook.getAddress((Main.Person)
+                            MyMap.keySet().toArray()[2]).getHouse()));
         } catch (IllegalAccessException e) {
             System.out.println(e.getMessage());
         }
