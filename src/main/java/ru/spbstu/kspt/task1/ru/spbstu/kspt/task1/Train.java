@@ -7,9 +7,10 @@ public class Train {
     private String terminal;
     private Table table;
 
-    Train(String name, String terminal){
+    Train(String name, String terminal, Table table){
         this.name = name;
         this.terminal = terminal;
+        this.table = table;
     }
 
 
@@ -23,6 +24,6 @@ public class Train {
 
     @Override
     public String toString() {
-        return name + " " + terminal;
+        return "Поезд: " + name+ ".\n" + "Конечная станция: " + terminal+ "\n" + "Расписание: \n" + table;
     }
 }
