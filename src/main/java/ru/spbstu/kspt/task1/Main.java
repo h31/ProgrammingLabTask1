@@ -1,101 +1,52 @@
 package ru.spbstu.kspt.task1;
 
 
-import sun.tools.jconsole.Tab;
-
 import java.util.*;
 
 /**
  * Main class
  */
 public class Main {
+    public static void main(String[] args){
+        System.out.println("Введите название поезда");
+        Scanner n = new Scanner(System.in);
+        String name = n.nextLine();
+        System.out.println("Введите название конечной станции");
+        Scanner t = new Scanner(System.in);
+        String terminal = t.nextLine();
 
-    public static class Train {
-        private String name;
-        private String terminal;
-        private Table table;
-
-        Train(String name, String terminal, Table table){
-            this.name = name;
-            this.terminal = terminal;
-            this.table = table;
-        }
-
-        public String getName() {
-            return this.name;
-        }
-
-        public String getTerminal() {
-            return this.terminal;
-        }
-
-        @Override
-        public String toString() {
-            return name + terminal + table.toString();
-        }
+        Train first = new Train(name, terminal);
+        System.out.println(first);
     }
 
-    public class Station{
-        private String name;
-        private Table table;
+    static String timeToString(int seconds) {
+        if (seconds > 86399) { throw new IllegalArgumentException("Некорректно введенное время!");}
+        StringBuilder result = new StringBuilder();
+        int hour = seconds / 3600;
+        int minutes = seconds % 3600 / 60;
+        int sec = seconds - hour * 3600 - minutes * 60;
 
-        Station(String name, Table table){
-            this.name = name;
-            this.table = table;
+        if (hour < 10) {
+            result.append(0).append(hour).append(":");
+        }
+        else {
+            result.append(hour).append(":");
         }
 
-        public String getName() {
-            return this.name;
+        if (minutes < 10){
+            result.append(0).append(minutes).append(":");
+        }
+        else {
+            result.append(minutes).append(":");
         }
 
-        public String getTable() {
-            return this.table.toString();
+        if (sec < 10){
+            result.append(0).append(sec);
         }
+        else {
+            result.append(sec);
+        }
+        return result.toString();
     }
 
-    public static class Trains{
-        List<Train> Trains = new ArrayList<>();
-        public Trains(ArrayList<Train> trains){
-            Trains = trains;
-        }
-
-        private void addTrain(Train train){
-            Trains.add(train);
-        }
-        private void deleteTrain(Integer number){
-            Trains.remove(number);
-        }
-
-    }
-
-    public static class Table {
-        private Map<Integer, String> Table = new HashMap<>();
-
-        public Table(Map<Integer, String> map) {
-            this.Table = map;
-        }
-
-        public void addObjToTable(Integer time, String name) {
-            Table.put(time, name);
-        }
-
-        public void deleteObjFromTable(Integer time){
-            Table.remove(time);
-        }
-
-        @Override
-        public String toString() {
-            StringBuilder result = new StringBuilder();
-            for(Integer key : Table.keySet()) {
-                if (Table.get(key) != null ) {
-                    result.append(timeToString(key)).append(" ").append(Table.get(key)).append("\n");
-                }
-            }
-            return result.toString();
-        }
-    }
-
-    private static String timeToString(int seconds) {
-        return seconds / 3600 + ":" + seconds % 3600 / 60 + ":" + seconds % 216000;
-    }
 }
