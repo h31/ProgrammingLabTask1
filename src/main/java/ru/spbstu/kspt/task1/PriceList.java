@@ -1,12 +1,10 @@
 package ru.spbstu.kspt.task1;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Map;
 
 
 /**
@@ -14,39 +12,52 @@ import java.util.Scanner;
  */
 
 public class PriceList {
+    private final Map<Integer, Product> pricelist = new HashMap<>();
 
-    private final List<Product> listOfProducts = new ArrayList<>();
-
-
-    public void addProduct(String name, int code, double price, int quantity) {
-        listOfProducts.add(new Product(name, code, price, quantity));
-    }
-
-    private int indexByCode(int currentCode) {
-        int result = 0;
-        for (int i = 0; i < listOfProducts.size(); i++) {
-            if ((listOfProducts.get(i).getCode() == currentCode)) {
-                result = i;
-                break;
-            }
-        }
-        return result;
+    public void addProduct(String name, int code, int priceRub, int priceCop, int quantity) {
+        pricelist.put(code, new Product(name, code, priceRub, priceCop, quantity));
     }
 
     public void removeProduct(int currentCode) {
-        listOfProducts.remove(this.indexByCode(currentCode));
+        pricelist.remove(currentCode);
     }
 
-    public void thePriceChange(int currentCode, int currentPrice) {
-        listOfProducts.get(indexByCode(currentCode)).setPrice(currentPrice);
+    public void priceChange(int currentCode, int currentPriceRub, int currentPriceCop) {
+        if (pricelist.containsKey(currentCode)) {
+            Product productChanged = new Product(pricelist.get(currentCode).getName(), currentCode, currentPriceRub,
+                    currentPriceCop, pricelist.get(currentCode).getQuantity());
+            pricelist.replace(currentCode, productChanged);
+        }
     }
 
-    public void theNameChange(int currentCode, String currentName) {
-        listOfProducts.get(indexByCode(currentCode)).setName(currentName);
+    public void nameChange(int currentCode, String currentName) {
+        if (pricelist.containsKey(currentCode)) {
+            Product productChanged = new Product(currentName, currentCode, pricelist.get(currentCode).getPriceRub(),
+                    pricelist.get(currentCode).getPriceCop(), pricelist.get(currentCode).getQuantity());
+            pricelist.replace(currentCode, productChanged);
+        }
     }
 
-    public double theTotalCost(int currentCode, int currentQuantity) {
-        return listOfProducts.get(indexByCode(currentCode)).allItemsCost();
+    public int[] theTotalCost(int currentCode) {
+        try{
+            return new int[]{pricelist.get(currentCode).getCostRub(),
+                    pricelist.get(currentCode).getCostCop()};
+        }  catch (IllegalArgumentException e) {
+            throw e;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PriceList)) return false;
+        PriceList priceList = (PriceList) o;
+        return pricelist.equals(priceList.pricelist);
+    }
+
+    @Override
+    public int hashCode() {
+        return pricelist.hashCode();
     }
 }
 

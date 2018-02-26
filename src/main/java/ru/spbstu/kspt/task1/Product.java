@@ -1,18 +1,23 @@
 package ru.spbstu.kspt.task1;
 
+
 public class Product {
 
     private String name;
     private int code;
-    private double price;
+    private int priceRub, priceCop;
     private int quantity;
 
-    public Product(String name, int code,
-                    double price, int quantity) {
-        this.name = name;
-        this.code = code;
-        this.price = price;
-        this.quantity = quantity;
+    public Product(String name, int code, int PriceRub, int PriceCop, int quantity) {
+        try {
+            this.name = name;
+            this.code = code;
+            this.priceRub = priceRub;
+            this.priceCop = priceCop;
+            this.quantity = quantity;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public String getName() {
@@ -23,16 +28,26 @@ public class Product {
         return code;
     }
 
-    public double getPrice() {
-        return price;
+    public int getPriceRub() {
+        return priceRub;
+    }
+
+    public int getPriceCop() {
+        return priceCop;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
-    public double allItemsCost() {
-        return price * quantity;
+    private int wholeCostInCop = (priceRub * 100 + priceCop) * quantity;
+
+    public int getCostRub() {
+        return wholeCostInCop / 100;
+    }
+
+    public int getCostCop() {
+        return wholeCostInCop % 100;
     }
 
     public void setName(String name) {
@@ -43,8 +58,12 @@ public class Product {
         this.code = code;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPriceRub(int priceRub) {
+        this.priceRub = priceRub;
+    }
+
+    public void setPriceCop(int priceCop) {
+        this.priceCop = priceCop;
     }
 
     public void setQuantity(int quantity) {
@@ -53,8 +72,8 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product Name: " + name + "; Product Code: " + code + "; Product Price: " + price +
-                " rub; Number of Items: " + quantity;
+        return "Product Name: " + name + "; Product Code: " + code + "; Product Price: " + priceRub +
+                " rub, " + priceCop + "cop; Number of Items: " + quantity;
     }
 
     @Override
@@ -65,20 +84,20 @@ public class Product {
         Product product = (Product) o;
 
         if (code != product.code) return false;
-        if (Double.compare(product.price, price) != 0) return false;
+        if (priceRub != product.priceRub) return false;
+        if (priceCop != product.priceCop) return false;
         if (quantity != product.quantity) return false;
         return name != null ? name.equals(product.name) : product.name == null;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = name != null ? name.hashCode() : 0;
-        result = 31 * result + code;
-        temp = Double.doubleToLongBits(price);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + quantity;
+        int result = getName().hashCode();
+        result = 31 * result + getCode();
+        result = 31 * result + getPriceRub();
+        result = 31 * result + getPriceCop();
+        result = 31 * result + getQuantity();
+        result = 31 * result + wholeCostInCop;
         return result;
     }
 }
