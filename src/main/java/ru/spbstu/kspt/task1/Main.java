@@ -3,8 +3,7 @@ package ru.spbstu.kspt.task1;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static java.lang.Math.pow;
-import static java.lang.Math.sqrt;
+import static java.lang.Math.*;
 
 /**
  * Main class
@@ -12,14 +11,27 @@ import static java.lang.Math.sqrt;
 
 public class Main {
 
-    private static final Logger logger = LogManager.getLogger(Main.class);
-
-    public static void main(String[] args) {
-        logger.debug("Logging example");
-        System.out.println("Hello World!");
+    public static Quaternion getQuaternionByAxisAndAngle(Point axis, double angle) {
+        double scalar = cos(angle / 2.0);
+        double x = axis.x * sin(angle / 2.0);
+        double y = axis.y * sin(angle / 2.0);
+        double z = axis.z * sin(angle / 2.0);
+        return new Quaternion(new Point(x, y, z), scalar);
     }
 
-     static double round(double value) {
+    public static double determineAngle(Quaternion q) {
+        return acos(q.scalar) * 2.0;
+    }
+
+    public static Point determineAxis(Quaternion q) {
+        double a = 2.0 * asin(q.scalar);
+        double x = q.vector.x / a;
+        double y = q.vector.y / a;
+        double z = q.vector.z / a;
+        return new Point(x, y, z);
+    }
+
+    static double round(double value) {
         int scale = (int) Math.pow(10, 9);
         return (double) Math.round(value * scale) / scale;
     }
@@ -32,10 +44,15 @@ public class Main {
 
         private final double z;
 
-        Point(double x, double y, double z) {
+        public Point(double x, double y, double z) {
             this.x = round(x);
             this.y = round(y);
             this.z = round(z);
+        }
+
+        @Override
+        public String toString() {
+            return "(" + x + ", " + y + ", " + z + ")";
         }
 
         @Override
@@ -74,7 +91,7 @@ public class Main {
             this.scalar = round(scalar);
         }
 
-        Point getVector() {
+        public Point getVector() {
             return vector;
         }
 
@@ -82,7 +99,7 @@ public class Main {
             return scalar;
         }
 
-        Quaternion scalarMultiplication(double scalar1) {
+        public Quaternion scalarMultiplication(double scalar1) {
             return new Quaternion(new Point(
                     scalar1 * vector.x,
                     scalar1 * vector.y,
@@ -91,7 +108,7 @@ public class Main {
                     scalar1 * this.scalar);
         }
 
-        Quaternion conjugate() {
+        public Quaternion conjugate() {
             return new Quaternion(new Point(-vector.x, -vector.y, -vector.z), scalar);
         }
 
@@ -99,7 +116,7 @@ public class Main {
             return sqrt(pow(vector.x, 2.0) + pow(vector.y, 2.0) + pow(vector.z, 2.0) + pow(scalar, 2.0));
         }
 
-        Quaternion plus(Quaternion other) {
+        public Quaternion plus(Quaternion other) {
             return new Quaternion(new Point(
                     vector.x + other.vector.x,
                     vector.y + other.vector.y,
@@ -108,7 +125,7 @@ public class Main {
                     scalar + other.scalar);
         }
 
-        Quaternion minus(Quaternion other) {
+        public Quaternion minus(Quaternion other) {
             return new Quaternion(new Point(
                     vector.x - other.vector.x,
                     vector.y - other.vector.y,
@@ -117,20 +134,15 @@ public class Main {
                     scalar - other.scalar);
         }
 
-        Quaternion reciprocal() {
+        public Quaternion inverse() {
             return this.conjugate().scalarMultiplication(1 / pow(this.module(), 2.0));
         }
 
-        Quaternion norm() {
-            return new Quaternion(new Point(
-                    vector.x * vector.x,
-                    vector.y * vector.y,
-                    vector.z * vector.z
-            ),
-                    scalar * scalar);
+        public double norm() {
+            return round(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z + scalar * scalar);
         }
 
-        Quaternion multiply(Quaternion other) {
+        public Quaternion multiply(Quaternion other) {
             return new Quaternion(new Point(
                     scalar * other.vector.x + vector.x * other.scalar + vector.y * other.vector.z - vector.z * other.vector.y,
                     scalar * other.vector.y - vector.x * other.vector.z + vector.y * other.scalar + vector.z * other.vector.x,
