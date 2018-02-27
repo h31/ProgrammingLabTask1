@@ -26,7 +26,7 @@ public class Trains {
     }
 
 
-    public static void getTrainsFromFile(String dir, String name) {
+    public static Trains getTrainsFromFile(String dir, String name) {
         String text = Files.readFile(dir, name);
 
         String[] textTrains;
@@ -60,9 +60,12 @@ public class Trains {
             }
             trains.addTrain(train);
         }
+        return trains;
     }
 
-    public static void addTrainsToFile(String dir, String name) {
+    public static void addTrainsToFile(String dir, String name, Trains trains) {
+        String trainsString = trains.toString();
+        Files.writeFile(dir, name, trainsString);
 
     }
 

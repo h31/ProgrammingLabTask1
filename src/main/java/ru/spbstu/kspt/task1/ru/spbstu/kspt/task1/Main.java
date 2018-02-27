@@ -11,9 +11,10 @@ public class Main {
     public static void main(String[] args){
         String dir = "/Users/Ferrero/IdeaProjects3/ProgrammingLabTask1/src/main/resources/trains/";
         String name = "trains.txt";
+        String newName = "trains2.txt";
 
-        Trains.getTrainsFromFile(dir, name);
-
+        Trains tr = Trains.getTrainsFromFile(dir, name);
+        Trains.addTrainsToFile(dir, newName, tr);
     }
 
     static String timeToString(String secs) {
