@@ -1,5 +1,6 @@
 package ru.spbstu.kspt.task1;
 import java.io.*;
+import java.util.*;
 
 public class Files {
 
@@ -64,20 +65,40 @@ public class Files {
 
     public static void writeFile(String dir, String name, String text){
         File f = new File(dir+name);
-
+        boolean rewrite = true;
         if (!f.exists()) {
             System.out.println("Файла " + name + " еще не существует!");
             addFileToDirectory(name, dir);
         }
-
-        try(FileOutputStream file = new FileOutputStream(dir + name)) {
-            byte[] buffer = text.getBytes();
-
-            file.write(buffer, 0, buffer.length);
+        else{
+            System.out.println("Файл уже существует! Перезаписать? y / n");
+            Scanner in = new Scanner(System.in);
+            switch (in.next()){
+                case "y":
+                    rewrite = true;
+                        break;
+                case "n":
+                    rewrite = false;
+                        break;
+                default:
+                    rewrite = false;
+                    System.out.println("Некорректный ввод! Перезапись запрещена.");
+                    break;
+            }
 
         }
-        catch(IOException ex){
-            System.out.println(ex.getMessage());
+        if (rewrite) {
+            try (FileOutputStream file = new FileOutputStream(dir + name)) {
+                byte[] buffer = text.getBytes();
+
+                file.write(buffer, 0, buffer.length);
+                System.out.println("Файл " + name + " yбыл успешно записан в директорию " + dir);
+
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        } else {
+            System.out.println("Запись файла " + name + " была запрещена пользователем.");
         }
     }
 }

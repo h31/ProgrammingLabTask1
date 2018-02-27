@@ -9,18 +9,7 @@ import java.util.*;
  */
 public class Main {
     public static void main(String[] args){
-        try {
-            FileInputStream f1 =
-                    new FileInputStream("/Users/Ferrero/IdeaProjects3/ProgrammingLabTask1/src/main/resources/trains.txt");
-            byte[] buffer = new byte[f1.available()];
-            f1.read(buffer, 0, f1.available());
-            for(int i=0; i<buffer.length; i++){
-                System.out.print((char)buffer[i]);
-            }
-        }
-        catch (IOException ex){
-            System.out.println(ex.getMessage());
-        }
+
 
 
       /*  System.out.println("Введите название поезда");
