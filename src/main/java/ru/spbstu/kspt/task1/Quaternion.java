@@ -17,6 +17,11 @@ public class Quaternion {
 
     private final double scalar;
 
+    static double round(double value) {
+        int scale = (int) Math.pow(10, 9);
+        return (double) Math.round(value * scale) / scale;
+    }
+
     Quaternion(Point vector, double scalar) {
         this.vector = vector;
         this.scalar = round(scalar);
@@ -143,10 +148,6 @@ public class Quaternion {
 
         private final double z;
 
-        static double round(double value) {
-            int scale = (int) Math.pow(10, 9);
-            return (double) Math.round(value * scale) / scale;
-        }
 
         public Point(double x, double y, double z) {
             this.x = round(x);
