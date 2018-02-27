@@ -5,8 +5,6 @@ import java.util.*;
 public class Files {
 
     public static void main(String[] args){
-        writeFile("/Users/Ferrero/IdeaProjects3/ProgrammingLabTask1/src/main/resources/trains/","test.txt","");
-
     }
 
     public static void addDirectory(String dir) {
@@ -41,16 +39,15 @@ public class Files {
         }
     }
 
-    public static void readFile(String dir, String name) {
+    static String readFile(String dir, String name) {
         StringBuilder result = new StringBuilder();
         try (FileInputStream file = new FileInputStream(dir + name)){
             System.out.println("Файл " + dir + name + ", размером " + file.available() + " байт принят в работу");
 
             byte[] buffer = new byte[file.available()];
             file.read(buffer, 0, file.available());
-            System.out.println("Содержимое файла:");
-            for(int i = 0; i < buffer.length; i++){
-                result.append((char)buffer[i]);
+            for (byte aBuffer : buffer) {
+                result.append((char) aBuffer);
             }
             file.close();
 
@@ -59,8 +56,7 @@ public class Files {
             System.out.println(ex.getMessage());
 
         }
-        System.out.println(result);
-
+        return result.toString();
     }
 
     public static void writeFile(String dir, String name, String text){

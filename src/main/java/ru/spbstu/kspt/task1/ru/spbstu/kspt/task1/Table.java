@@ -6,9 +6,9 @@ import static ru.spbstu.kspt.task1.Main.timeToString;
 
 
 public class Table {
-    Map<Integer, String> Table = new LinkedHashMap<>();
+    Map<String, String> Table = new LinkedHashMap<>();
 
-    private Table(Map<Integer, String> map) {
+    public Table(Map<String, String> map) {
         this.Table = map;
     }
 
@@ -16,18 +16,18 @@ public class Table {
         this.Table = new LinkedHashMap<>();
     }
 
-    public void addObjToTable(Integer time, String name) {
+    public void addObjToTable(String time, String name) {
         Table.put(time, name);
     }
 
-    public void deleteObjFromTable(Integer time){
+    public void deleteObjFromTable(String time){
         Table.remove(time);
     }
 
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for(Integer key : Table.keySet()) {
+        for(String key : Table.keySet()) {
                 result.append(timeToString(key)).append(" ").append(Table.get(key)).append("\n");
         }
         return result.toString();

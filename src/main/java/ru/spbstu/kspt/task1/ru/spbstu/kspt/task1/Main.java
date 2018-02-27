@@ -9,39 +9,15 @@ import java.util.*;
  */
 public class Main {
     public static void main(String[] args){
+        String dir = "/Users/Ferrero/IdeaProjects3/ProgrammingLabTask1/src/main/resources/trains/";
+        String name = "trains.txt";
 
-
-
-      /*  System.out.println("Введите название поезда");
-        Scanner n = new Scanner(System.in);
-        String name = n.nextLine();
-        System.out.println("Введите название конечной станции");
-        Scanner t = new Scanner(System.in);
-        String terminal = t.nextLine();
-        Table tabl = new Table();
-
-        tabl.addObjToTable(35321,"Купчино");
-        tabl.addObjToTable(37654, "Невский проспект");
-        tabl.addObjToTable(45332, "Сенная площадь");
-        tabl.addObjToTable(54004, "Горьковская");
-*/
-       /* for (int i = 1; i < 6; i++){
-            System.out.println("Введите время и название станции для поезда №" + i);
-            Scanner time = new Scanner(System.in);
-            Scanner nameStation = new Scanner(System.in);
-            tabl.addObjToTable(time.nextInt(), nameStation.nextLine());
-        }
-*/
-        /*Train first = new Train(name, terminal, tabl);
-        Trains trains = new Trains();
-        trains.addTrain(first);
-        trains.addTrain(first);
-        trains.addTrain(first);
-        */
+        Trains.getTrainsFromFile(dir, name);
 
     }
 
-    static String timeToString(int seconds) {
+    static String timeToString(String secs) {
+        int seconds = Integer.parseInt(secs);
         if (seconds > 86399) { throw new IllegalArgumentException("Некорректно введенное время!");}
         StringBuilder result = new StringBuilder();
         int hour = seconds / 3600;

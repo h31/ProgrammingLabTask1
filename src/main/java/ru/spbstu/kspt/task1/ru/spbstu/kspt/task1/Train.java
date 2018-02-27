@@ -13,6 +13,15 @@ public class Train {
         this.table = table;
     }
 
+    Train(){
+        this.name = "null";
+        this.terminal = "null";
+        this.table = new Table();
+    }
+
+    public void setName(String name) {this.name = name;}
+    public void setTerminal(String terminal) {this.terminal = terminal;}
+    public void setTable(Table table) {this.table = table;}
 
     public String getName() {
         return this.name;
@@ -24,6 +33,6 @@ public class Train {
 
     @Override
     public String toString() {
-        return "Поезд: " + name+ ".\n" + "Конечная станция: " + terminal+ "\n" + "Расписание: \n" + table;
+        return "Поезд: " + name+ ".\n" + "Конечная станция: " + terminal+ "\n" + "Расписание: \n" + table.toString();
     }
 }
