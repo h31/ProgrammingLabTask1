@@ -1,7 +1,7 @@
 package ru.spbstu.kspt.task1;
 
 
-import java.io.FileReader;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -9,11 +9,21 @@ import java.util.*;
  */
 public class Main {
     public static void main(String[] args){
+        try {
+            FileInputStream f1 =
+                    new FileInputStream("/Users/Ferrero/IdeaProjects3/ProgrammingLabTask1/src/main/resources/trains.txt");
+            byte[] buffer = new byte[f1.available()];
+            f1.read(buffer, 0, f1.available());
+            for(int i=0; i<buffer.length; i++){
+                System.out.print((char)buffer[i]);
+            }
+        }
+        catch (IOException ex){
+            System.out.println(ex.getMessage());
+        }
 
-        try(FileReader reader = new FileReader("/Users/Ferrero/IdeaProjects3/ProgrammingLabTask1/src/main/resources/trains.txt"))
 
-
-        System.out.println("Введите название поезда");
+      /*  System.out.println("Введите название поезда");
         Scanner n = new Scanner(System.in);
         String name = n.nextLine();
         System.out.println("Введите название конечной станции");
@@ -25,7 +35,7 @@ public class Main {
         tabl.addObjToTable(37654, "Невский проспект");
         tabl.addObjToTable(45332, "Сенная площадь");
         tabl.addObjToTable(54004, "Горьковская");
-
+*/
        /* for (int i = 1; i < 6; i++){
             System.out.println("Введите время и название станции для поезда №" + i);
             Scanner time = new Scanner(System.in);
@@ -33,12 +43,13 @@ public class Main {
             tabl.addObjToTable(time.nextInt(), nameStation.nextLine());
         }
 */
-        Train first = new Train(name, terminal, tabl);
+        /*Train first = new Train(name, terminal, tabl);
         Trains trains = new Trains();
         trains.addTrain(first);
         trains.addTrain(first);
         trains.addTrain(first);
-        System.out.println(trains);
+        */
+
     }
 
     static String timeToString(int seconds) {
