@@ -1,0 +1,16 @@
+Поезд: First.
+Конечная станция: Parnas
+Расписание: 
+02:46:40 Kupchino
+05:33:20 Moscowckaya
+08:20:00 Nevsky
+11:06:40 Gorkovskaya
+13:53:20 Pionerskaya
+Поезд: First.
+Конечная станция: Parnas
+Расписание: 
+02:46:40 Kupchino
+05:33:20 Moscowckaya
+08:20:00 Nevsky
+11:06:40 Gorkovskaya
+13:53:20 Pionerskaya
