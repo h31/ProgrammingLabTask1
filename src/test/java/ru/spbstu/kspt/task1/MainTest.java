@@ -3,6 +3,8 @@ package ru.spbstu.kspt.task1;
 import org.junit.jupiter.api.Test;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import static java.lang.Math.PI;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
@@ -88,14 +90,32 @@ class MainTest {
 
     @Test
     void getQuaternionByAxisAndAngle() {
-        assertEquals(new Main.Quaternion(new Main.Point(-45.0, -1.0, 0.0), 5.0),
-                Main.getQuaternionByAxisAndAngle(new Main.Point(1.0, 1.0, 1.0), 1.0));
+        Main.Quaternion q = new Main.Quaternion(new Main.Point(0.707106781, 0.0, 0.0), 0.707106781);
+        Main.Quaternion q1 = new Main.Quaternion(new Main.Point(0.0, -1.0, 0.0), 0.0);
+        assertEquals(q, Main.getQuaternionByAxisAndAngle(new Main.Point(1.0, 0.0, 0.0), PI / 2.0));
+        assertEquals(q1, Main.getQuaternionByAxisAndAngle(new Main.Point(0.0, -1.0, 0.0), PI ));
     }
 
 
    @Test
     void determineAngle() {
-       Main.Quaternion q = new Main.Quaternion(new Main.Point(-45.0, -1.0, 1.0), 5.0);
-       assertEquals(1.0, Main.determineAngle(q));
+       Main.Quaternion q = new Main.Quaternion(new Main.Point(1.0, 1.0, 1.0), 1.0);
+       Main.Quaternion q1 = new Main.Quaternion(new Main.Point(-2.0, 1.0, 4.0), 2.0);
+       Main.Quaternion q2 = new Main.Quaternion(new Main.Point(-1.0, -1.0, 1.0), -1.0);
+       Main.Quaternion q3 = new Main.Quaternion(new Main.Point(0.7071, 0.0, 0.0), 0.7071);
+       assertEquals((2.0 * PI) / 3.0, Main.determineAngle(q), 1e-10);
+       assertEquals(2.318558961454817, Main.determineAngle(q1), 1e-10);
+       assertEquals((4.0 * PI) / 3.0, Main.determineAngle(q2), 1e-10);
+       assertEquals(PI / 2.0, Main.determineAngle(q3));
+   }
+
+   @Test
+    void determineAxis() {
+       Main.Quaternion q = new Main.Quaternion(new Main.Point(1.0, 1.0, 1.0), 1.0);
+       Main.Quaternion q2 = new Main.Quaternion(new Main.Point(-2.0, 2.0, -4.0), 1.0);
+       Main.Quaternion q3 = new Main.Quaternion(new Main.Point(0.7071, 0.0, 0.0), 0.7071);
+       assertEquals(new Main.Point(0.5, 0.5, 0.5), Main.determineAxis(q));
+       assertEquals(new Main.Point(-0.4, 0.4, -0.8), Main.determineAxis(q2));
+       assertEquals(new Main.Point(0.707106781, 0.0, 0.0), Main.determineAxis(q3));
    }
 }

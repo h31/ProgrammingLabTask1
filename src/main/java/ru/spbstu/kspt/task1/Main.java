@@ -11,23 +11,26 @@ import static java.lang.Math.*;
 
 public class Main {
 
+    private static final Logger logger = LogManager.getLogger(Main.class);
+
     public static Quaternion getQuaternionByAxisAndAngle(Point axis, double angle) {
+        Point vector = axis.normal();
         double scalar = cos(angle / 2.0);
-        double x = axis.x * sin(angle / 2.0);
-        double y = axis.y * sin(angle / 2.0);
-        double z = axis.z * sin(angle / 2.0);
+        double x = vector.x * sin(angle / 2.0);
+        double y = vector.y * sin(angle / 2.0);
+        double z = vector.z * sin(angle / 2.0);
         return new Quaternion(new Point(x, y, z), scalar);
     }
 
     public static double determineAngle(Quaternion q) {
-        return acos(q.scalar) * 2.0;
+        return acos(q.scalar / q.module()) * 2.0;
     }
 
     public static Point determineAxis(Quaternion q) {
-        double a = 2.0 * asin(q.scalar);
-        double x = q.vector.x / a;
-        double y = q.vector.y / a;
-        double z = q.vector.z / a;
+        double mod = q.module();
+        double x = q.vector.x / mod;
+        double y = q.vector.y / mod;
+        double z = q.vector.z / mod;
         return new Point(x, y, z);
     }
 
@@ -48,6 +51,18 @@ public class Main {
             this.x = round(x);
             this.y = round(y);
             this.z = round(z);
+        }
+
+        private Point normal() {
+            double length = this.length();
+            double x1 = x / length;
+            double y1 = y / length;
+            double z1 = z / length;
+            return new Point(x1, y1, z1);
+        }
+
+        private double length() {
+            return sqrt(x * x + y * y + z * z);
         }
 
         @Override
@@ -95,7 +110,7 @@ public class Main {
             return vector;
         }
 
-        double getScalar() {
+        public double getScalar() {
             return scalar;
         }
 
@@ -112,7 +127,7 @@ public class Main {
             return new Quaternion(new Point(-vector.x, -vector.y, -vector.z), scalar);
         }
 
-        double module() {
+        public double module() {
             return sqrt(pow(vector.x, 2.0) + pow(vector.y, 2.0) + pow(vector.z, 2.0) + pow(scalar, 2.0));
         }
 
@@ -173,7 +188,14 @@ public class Main {
 
         @Override
         public String toString() {
-            return "" + vector.x + "i + " + vector.y + "j + " + vector.z + "k + " + scalar + "";
+            String s = "" + vector.x + "i ";
+            if (vector.y > 0) s += "+ " + vector.y + "j ";
+            else s += "- " + abs(vector.y) + "j ";
+            if (vector.z > 0) s += "+ " + vector.z + "k ";
+            else s += "- " + abs(vector.z) + "k ";
+            if (scalar > 0) s += "+ " + scalar;
+            else s += "- " + abs(scalar);
+            return s;
         }
     }
 }
