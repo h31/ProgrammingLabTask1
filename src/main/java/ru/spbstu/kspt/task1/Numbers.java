@@ -74,10 +74,9 @@ public class Numbers {
         return new Numbers(number / div, dimension);
     }
 
-    Numbers divisionForDim(Numbers other) {
+    double divisionForDim(Numbers other) {
         if (new Dimension(dimension).equalsDim(new Dimension(other.dimension))) {
-            return new Numbers(number / (other.number *
-                    (new Dimension(other.dimension).power() / new Dimension(dimension).power())), dimension);
+            return number / (other.number * (new Dimension(other.dimension).power() / new Dimension(dimension).power()));
         }
         else {
             throw new IllegalArgumentException("Разные классы размерностей");

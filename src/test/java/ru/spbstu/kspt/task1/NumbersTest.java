@@ -55,10 +55,10 @@ class NumbersTest {
 
     @Test
     void divisionForDim() {
-        assertEquals(new Numbers(4.0,"кг"),
-                new Numbers(2.0,"кг").plus(new Numbers(2.0,"кг")));
-        assertEquals(new Numbers(2.002,"кг"),
-                new Numbers(2.0,"кг").plus(new Numbers(2.0,"г")));
+        assertEquals(1000.0,
+                new Numbers(2.0,"кг").divisionForDim(new Numbers(2.0,"г")));
+        assertEquals(2.0,
+                new Numbers(4.0,"кг").divisionForDim(new Numbers(2.0,"кг")));
     }
 
     @Test
