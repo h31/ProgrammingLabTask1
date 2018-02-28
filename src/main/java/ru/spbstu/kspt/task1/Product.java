@@ -40,16 +40,6 @@ public class Product {
         return quantity;
     }
 
-    private int wholeCostInCop = (priceRub * 100 + priceCop) * quantity;
-
-    public int getCostRub() {
-        return wholeCostInCop / 100;
-    }
-
-    public int getCostCop() {
-        return wholeCostInCop % 100;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -97,7 +87,6 @@ public class Product {
         result = 31 * result + getPriceRub();
         result = 31 * result + getPriceCop();
         result = 31 * result + getQuantity();
-        result = 31 * result + wholeCostInCop;
         return result;
     }
 }

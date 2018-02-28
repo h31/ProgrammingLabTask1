@@ -1,9 +1,8 @@
 package ru.spbstu.kspt.task1;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
 
 
@@ -12,7 +11,7 @@ import java.util.Map;
  */
 
 public class PriceList {
-    private final Map<Integer, Product> pricelist = new HashMap<>();
+    public final Map<Integer, Product> pricelist = new HashMap<>();
 
     public void addProduct(String name, int code, int priceRub, int priceCop, int quantity) {
         pricelist.put(code, new Product(name, code, priceRub, priceCop, quantity));
@@ -38,14 +37,11 @@ public class PriceList {
         }
     }
 
-    public int[] theTotalCost(int currentCode) {
-        try{
-            return new int[]{pricelist.get(currentCode).getCostRub(),
-                    pricelist.get(currentCode).getCostCop()};
-        }  catch (IllegalArgumentException e) {
-            throw e;
-        }
-    }
+//    public int totalCostExactProduct(int currentCode) {
+//        return (pricelist.get(currentCode).getPriceRub() * 100 +
+//                pricelist.get(currentCode).getPriceCop()) *
+//                pricelist.get(currentCode).getQuantity();
+//     }
 
     @Override
     public boolean equals(Object o) {
