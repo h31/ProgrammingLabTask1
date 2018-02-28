@@ -150,6 +150,16 @@ public class Numbers {
     }
 
     @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(number);
+        result = (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (dimension != null ? dimension.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString(){
         return "" + number + " " + dimension;
     }

@@ -77,15 +77,19 @@ public class Dimension {
         throw new IllegalArgumentException("Неверная размерность");
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Dimension dimension = (Dimension) o;
+
+        return dim != null ? dim.equals(dimension.dim) : dimension.dim == null;
+    }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj instanceof Dimension) {
-            Dimension other = (Dimension) obj;
-            return dim.equals(other.dim);
-        }
-        return false;
+    public int hashCode() {
+        return dim != null ? dim.hashCode() : 0;
     }
 
     @Override
