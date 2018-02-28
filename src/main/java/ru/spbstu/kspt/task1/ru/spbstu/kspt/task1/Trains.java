@@ -65,8 +65,8 @@ public class Trains {
 
     public static void addTrainsToFile(String dir, String name, Trains trains) {
         String trainsString = trains.toString();
-        Files.writeFile(dir, name, trainsString);
 
+        Files.writeFile(dir, name, trainsString);
     }
 
     public static String stringsToString(String[] textSplitted) {
@@ -83,8 +83,10 @@ public class Trains {
         StringBuilder result = new StringBuilder();
 
         for (Train train : Trains) {
-            result.append(train.toString());
+            result.append(train.toString()).append("####\n");
         }
+        int length = result.length();
+        result.delete(length - 6, length);
         return result.toString();
     }
 }

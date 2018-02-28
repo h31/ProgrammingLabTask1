@@ -27,9 +27,11 @@ public class Table {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
+        result.append("Table:\n");
         for(String key : Table.keySet()) {
                 result.append(timeToString(key)).append(" ").append(Table.get(key)).append("\n");
         }
+        result.append("EndTable.\n");
         return result.toString();
     }
 }

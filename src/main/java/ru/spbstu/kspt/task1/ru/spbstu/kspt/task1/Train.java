@@ -33,6 +33,6 @@ public class Train {
 
     @Override
     public String toString() {
-        return "Поезд: " + name+ ".\n" + "Конечная станция: " + terminal+ "\n" + "Расписание: \n" + table.toString();
+        return "name= " + name+ ".\n" + "terminal= " + terminal+ "\n" + table;
     }
 }

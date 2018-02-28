@@ -17,3 +17,33 @@ Table:
 40000 Gorkovskaya
 50000 Pionerskaya
 EndTable.
+####
+name= First
+terminal= Parnas
+Table:
+10000 Kupchino
+20000 Moscowckaya
+30000 Nevsky
+40000 Gorkovskaya
+50000 Pionerskaya
+EndTable.
+####
+name= First
+terminal= Parnas
+Table:
+10000 Kupchino
+20000 Moscowckaya
+30000 Nevsky
+40000 Gorkovskaya
+50000 Pionerskaya
+EndTable.
+####
+name= First
+terminal= Parnas
+Table:
+10000 Kupchino
+20000 Moscowckaya
+30000 Nevsky
+40000 Gorkovskaya
+50000 Pionerskaya
+EndTable.
