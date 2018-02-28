@@ -35,7 +35,7 @@ public class Dimension {
     static {
         time = new HashMap<>();
         time.put("с",1.0);
-        time.put("м",60.0);
+        time.put("мин",60.0);
         time.put("ч",3600.0);
     }
 

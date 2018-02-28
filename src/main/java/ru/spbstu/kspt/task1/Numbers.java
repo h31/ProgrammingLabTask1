@@ -26,30 +26,30 @@ package ru.spbstu.kspt.task1;
 public class Numbers {
 
     private double number;
-    private String dimen;
+    private String dimension;
 
-    public double getNumber() {
+    double getNumber() {
         return number;
     }
 
-    public String getDimen() {
-        return dimen;
+    String getDimension() {
+        return dimension;
     }
 
     Numbers() {
         number = 0;
-        dimen = "м";
+        dimension = "м";
     }
 
-    Numbers(double number, String dimen) {
+    Numbers(double number, String dimension) {
         this.number = number;
-        this.dimen = dimen;
+        this.dimension = dimension;
     }
 
     Numbers plus(Numbers other) {
-        if (new Dimension(dimen).equalsDim( new Dimension(other.dimen))) {
+        if (new Dimension(dimension).equalsDim( new Dimension(other.dimension))) {
             return new Numbers(number + other.number *
-                    (new Dimension(other.dimen).power() / new Dimension(dimen).power()), dimen);
+                    (new Dimension(other.dimension).power() / new Dimension(dimension).power()), dimension);
         }
         else {
             throw new IllegalArgumentException("Разные классы размерностей");
@@ -57,9 +57,9 @@ public class Numbers {
     }
 
     Numbers minus(Numbers other) {
-        if (new Dimension(dimen).equalsDim(new Dimension(other.dimen))) {
+        if (new Dimension(dimension).equalsDim(new Dimension(other.dimension))) {
             return new Numbers(number - other.number *
-                    (new Dimension(other.dimen).power() / new Dimension(dimen).power()), dimen);
+                    (new Dimension(other.dimension).power() / new Dimension(dimension).power()), dimension);
         }
         else {
             throw new IllegalArgumentException("Разные классы размерностей");
@@ -67,17 +67,17 @@ public class Numbers {
     }
 
     Numbers multiplication(double multi) {
-        return new Numbers(number * multi, dimen);
+        return new Numbers(number * multi, dimension);
     }
 
     Numbers division(double div) {
-        return new Numbers(number / div, dimen);
+        return new Numbers(number / div, dimension);
     }
 
     Numbers divisionForDim(Numbers other) {
-        if (new Dimension(dimen).equalsDim(new Dimension(other.dimen))) {
-            return new Numbers(number /
-                    (other.number * (new Dimension(other.dimen).power() / new Dimension(dimen).power())), dimen);
+        if (new Dimension(dimension).equalsDim(new Dimension(other.dimension))) {
+            return new Numbers(number / (other.number *
+                    (new Dimension(other.dimension).power() / new Dimension(dimension).power())), dimension);
         }
         else {
             throw new IllegalArgumentException("Разные классы размерностей");
@@ -86,8 +86,8 @@ public class Numbers {
 
 
     Numbers whoIsBigger (Numbers other) {
-        if (new Dimension (dimen).equalsDim(new Dimension(other.dimen))) {
-            if (number * new Dimension(dimen).power() >= other.number * new Dimension(other.dimen).power()) {
+        if (new Dimension (dimension).equalsDim(new Dimension(other.dimension))) {
+            if (number * new Dimension(dimension).power() >= other.number * new Dimension(other.dimension).power()) {
                 return this;
             }
             else {
@@ -100,8 +100,8 @@ public class Numbers {
     }
 
     Numbers whoIsLess (Numbers other) {
-        if (new Dimension(dimen).equalsDim(new Dimension(other.dimen))) {
-            if (number * new Dimension(dimen).power() <= other.number * new Dimension(other.dimen).power()) {
+        if (new Dimension(dimension).equalsDim(new Dimension(other.dimension))) {
+            if (number * new Dimension(dimension).power() <= other.number * new Dimension(other.dimension).power()) {
                 return this;
             }
             else {
@@ -114,10 +114,10 @@ public class Numbers {
     }
 
     Numbers transfer (String other) {
-        if (new Dimension(dimen).equalsDim(new Dimension(other))) {
-            if (dimen.equals(other)) {
+        if (new Dimension(dimension).equalsDim(new Dimension(other))) {
+            if (!dimension.equals(other)) {
                 return new Numbers(number *
-                        (new Dimension(other).power() / new Dimension(dimen).power()), other);
+                        (new Dimension(dimension).power() / new Dimension(other).power()), other);
             }
             else {
                 System.out.println("Перевод не нуждается");
@@ -130,8 +130,8 @@ public class Numbers {
     }
 
     boolean equalsNum (Numbers other) {
-        if (new Dimension(dimen).equalsDim(new Dimension(other.dimen))) {
-            return  (number == other.number * (new Dimension(other.dimen).power() / new Dimension(dimen).power()));
+        if (new Dimension(dimension).equalsDim(new Dimension(other.dimension))) {
+            return (number == other.number * (new Dimension(other.dimension).power() / new Dimension(dimension).power()));
         }
         else {
             throw new IllegalArgumentException("Разные классы размерностей");
@@ -145,13 +145,13 @@ public class Numbers {
         if (obj instanceof Numbers) {
             Numbers other = (Numbers) obj;
             return number == other.number
-                    && dimen.equals(other.dimen);
+                    && dimension.equals(other.dimension);
         }
         return false;
     }
 
     @Override
     public String toString(){
-        return "" + number + " " + dimen;
+        return "" + number + " " + dimension;
     }
 }
