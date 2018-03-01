@@ -13,11 +13,15 @@ class MainTest {
     void addPerson() {
         phoneBook.addPerson("Tony", new String[]{"+79215466775", "89214855645"});
         phoneBook.addPerson("Daniel", new String[]{"895464664543", "8563956375"});
+        phoneBook.addPerson("Tonya", new String[]{});
+
         ArrayList<String> phoneList = new ArrayList<>();
         phoneList.add("+79215466775");
         phoneList.add("89214855645");
 
         assertEquals(phoneList, phoneBook.book.get("Tony"));
+        assertEquals(true, phoneBook.book.containsKey("Daniel"));
+        assertEquals(true, phoneBook.book.get("Tonya").isEmpty());
     }
 
     @Test
