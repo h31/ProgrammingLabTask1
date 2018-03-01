@@ -28,7 +28,7 @@ class Main {
     void delPerson(String name) {
         if (!book.containsKey(name)) throw new IllegalArgumentException("invalid Person");
         book.remove(name);
-    }
+    } 
 
     void addNumber(String name, String number) {
         if (!book.containsKey(name)) throw new IllegalArgumentException("invalid Person");
