@@ -19,7 +19,7 @@ class Main {
     void addPerson(String name, String[] numbers) {
         ArrayList<String> list = new ArrayList<>();
         list.addAll(Arrays.asList(numbers));
-        for (String i : list){
+        for (String i : list) {
             if (!checkNum(i)) throw new IllegalArgumentException("Wrong format");
         }
         book.put(name, list);
@@ -35,6 +35,13 @@ class Main {
         if (checkNum(number))
             book.get(name).add(number);
         else throw new IllegalArgumentException("Wrong format");
+    }
+
+    void delNumber(String name, String number) {
+        if (!book.containsKey(name)) throw new IllegalArgumentException("invalid Person");
+        if (book.get(name).isEmpty()) throw new IllegalArgumentException("empty List");
+        if (!book.get(name).contains(number)) throw new IllegalArgumentException("invalid Number");
+        book.get(name).remove(number);
     }
 }
 
