@@ -34,7 +34,7 @@ class Main {
         if (!book.containsKey(name)) throw new IllegalArgumentException("invalid Person");
         if (checkNum(number))
             book.get(name).add(number);
-        else throw new IllegalArgumentException("Wrong format"); 
+        else throw new IllegalArgumentException("Wrong format");
     }
 }
 
