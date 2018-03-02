@@ -68,4 +68,13 @@ class MainTest {
         assertEquals(2, phoneBook.book.get("Daniel").size());
         // System.out.println(phoneBook.book);
     }
+
+    @Test
+    void searchPerson() {
+        phoneBook.addPerson("Daniel", new String[]{"895464664543", "8563956375", "+86584527364"});
+        phoneBook.addPerson("Tony", new String[]{"+79215466775", "89214855645"});
+
+        assertEquals(phoneBook.book.get("Daniel"), phoneBook.searchPerson("Daniel"));
+        assertEquals(phoneBook.book.get("Tony"), phoneBook.searchPerson("Tony"));
+    }
 }

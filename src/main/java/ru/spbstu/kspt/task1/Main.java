@@ -43,5 +43,10 @@ class Main {
         if (!book.get(name).contains(number)) throw new IllegalArgumentException("invalid Number");
         book.get(name).remove(number);
     }
+
+    ArrayList<String> searchPerson(String name) {
+        if (book.containsKey(name)) return book.get(name);
+        else throw new IllegalArgumentException("invalid name");
+    }
 }
 
