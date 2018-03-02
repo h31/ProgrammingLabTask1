@@ -13,8 +13,14 @@ public class TrieTest {
     void exampleTest() {
         logger.info("Test started");
         Trie testTrie = new Trie();
-        testTrie.put("word");
+        testTrie.insert("word");
         assertEquals(true, testTrie.find("word"));
+        testTrie.insert("world");
+        assertEquals(true, testTrie.find("world"));
+        assertEquals(true, testTrie.find("wor"));
+        assertEquals(false, testTrie.find("hello"));
+        testTrie.delete("word");
+        assertEquals(false, testTrie.find("word"));
         logger.info("Test finished");
     }
 }
