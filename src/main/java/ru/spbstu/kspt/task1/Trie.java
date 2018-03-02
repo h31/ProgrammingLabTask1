@@ -16,26 +16,22 @@ public class Trie {
     TrieNode root = new TrieNode();
 
 
-    public void insert(String s) {
+    public void insert(String str) {
         TrieNode v = root;
 
-        for (char ch : s.toLowerCase().toCharArray()) {
+        for (char ch : str.toLowerCase().toCharArray()) {
             if (!v.children.containsKey(ch)) {
                 v.children.put(ch, new TrieNode());
             }
-            System.out.println(v);
             v = v.children.get(ch);
-            System.out.println(ch);
-            System.out.println(v);
-            System.out.println(".");
         }
         v.leaf = true;
     }
 
 
-    public boolean find(String s) {
+    public boolean find(String str) {
         TrieNode v = root;
-        for (char ch : s.toLowerCase().toCharArray()) {
+        for (char ch : str.toLowerCase().toCharArray()) {
             if (!v.children.containsKey(ch)) {
                 return false;
             } else {
@@ -46,14 +42,18 @@ public class Trie {
     }
 
 
-    public void delete(String s) {
+    public void delete(String str) {
         TrieNode v = root;
-
         Trie trie = new Trie();
-        if (trie.find(s)) {
-            for (char ch : s.toLowerCase().toCharArray()) {
-                v = v.children.remove(ch);
+        if (trie.find(str)) {
+            for (char ch : str.toLowerCase().toCharArray()) {
+                if (v.children.containsKey(ch)) {
+                    v.children.remove(ch);
+                }
+                v = v.children.get(ch);
             }
         }
     }
+
+
 }
