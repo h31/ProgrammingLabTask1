@@ -53,10 +53,7 @@ public class Trie {
         if (trie.find(s)) {
             for (char ch : s.toLowerCase().toCharArray()) {
                 v = v.children.remove(ch);
-                v = v.children.get(ch);
-
             }
-            v.leaf = false;
         }
     }
 }
