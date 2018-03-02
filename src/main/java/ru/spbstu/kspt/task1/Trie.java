@@ -18,11 +18,16 @@ public class Trie {
 
     public void insert(String s) {
         TrieNode v = root;
+
         for (char ch : s.toLowerCase().toCharArray()) {
             if (!v.children.containsKey(ch)) {
                 v.children.put(ch, new TrieNode());
             }
+            System.out.println(v);
             v = v.children.get(ch);
+            System.out.println(ch);
+            System.out.println(v);
+            System.out.println(".");
         }
         v.leaf = true;
     }
@@ -43,11 +48,13 @@ public class Trie {
 
     public void delete(String s) {
         TrieNode v = root;
+
         Trie trie = new Trie();
         if (trie.find(s)) {
             for (char ch : s.toLowerCase().toCharArray()) {
-                v.children.remove(ch);
+                v = v.children.remove(ch);
                 v = v.children.get(ch);
+
             }
             v.leaf = false;
         }
