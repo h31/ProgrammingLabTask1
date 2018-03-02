@@ -38,10 +38,34 @@ public class Main {
                 cube.RotateDown();
             }
             if (Objects.equals(l, "F")) {
-                cube.SpinFront();
+                cube.Spin(1);
+            }
+            if (Objects.equals(l, "F'")) {
+                cube.Spin(2);
             }
             if (Objects.equals(l, "R")) {
-                cube.SpinRight();
+                cube.SpinR();
+            }
+            if (Objects.equals(l, "R'")) {
+                cube.SpinR();
+            }
+            if (Objects.equals(l, "L")) {
+                cube.SpinL();
+            }
+            if (Objects.equals(l, "L'")) {
+                cube.RotateLeft();
+                cube.Spin(2);
+                cube.RotateRight();
+            }
+            if (Objects.equals(l, "U")) {
+                cube.RotateDown();
+                cube.Spin(1);
+                cube.RotateUp();
+            }
+            if (Objects.equals(l, "U'")) {
+                cube.RotateUp();
+                cube.Spin(2);
+                cube.RotateDown();
             }
         }
     }

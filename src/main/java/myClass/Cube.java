@@ -24,43 +24,31 @@ public class Cube {
         return cube;
     }
 
-    int x = 0, y = 0;
-
-    public void RotateOpposite() {
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                cube[x][i][j] = cube[x][j][i];
-                cube[y][i][j] = cube[y][j][i];
-            }
-        }
-    }
-
-    char[][] help = new char[0][];
-    char[][] help1 = new char[0][];
 
     public void RotateLeft() {
-        y = 5;
-        RotateOpposite();
-        help = cube[1];
-        help1 = cube[5];
+        rotate(1, 0);
+        rotate(0, 4);
+        char[][] help = cube[1];
+        cube[1] = cube[2];
+        cube[2] = cube[3];
+        cube[3] = cube[5];
         cube[5] = help;
-        help = cube[2];
-        cube[1] = help;
-        help = cube[3];
-        cube[2] = help;
-        cube[3] = help1;
+        rotate(5, 5);
+        rotate(5, 5);
     }
 
     public void RotateRight() {
         RotateLeft();
         RotateLeft();
         RotateLeft();
+        rotate(3, 1);
+        rotate(3, 1);
     }
 
     public void RotateUp() {
-        x = 1;
-        y = 3;
-        RotateOpposite();
+        char[][] help;
+        char[][] help1;
+
         help1 = cube[0];
         help = cube[5];
         cube[5] = help1;
@@ -69,6 +57,8 @@ public class Cube {
         help1 = cube[4];
         cube[2] = help1;
         cube[4] = help;
+        rotate(3, 1);
+        rotate(1, 3);
     }
 
     public void RotateDown() {
@@ -77,39 +67,59 @@ public class Cube {
         RotateUp();
     }
 
-    public void SpinFront() {
-        char[][] help = cube[2].clone();
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                cube[2][i][j] = help[j][n - i - 1];
-            }
-        }
-        char[] h = cube[0][n - 1].clone();
+    public void Spin(int t) {
+        rotate(t, 2);
         char c;
         for (int i = 0; i < n; ++i) {
-            cube[0][n - 1][i] = cube[1][n - i - 1][n - 1];
-        }
-        for (int i = 0; i < n; ++i) {
-            c = cube[3][i][0];
-            cube[3][i][0] = h[i];
-            h[i] = c;
-        }
-        for (int i = 0; i < n; ++i) {
-            c = cube[4][0][i];
-            cube[4][0][i] = h[n - i - 1];
-            h[n - i - 1] = c;
-        }
-        for (int i = 0; i < n; ++i) {
-            cube[1][i][n - 1] = h[n - i - 1];
+            if (t == 1) {
+                c = cube[1][n - i - 1][n - 1];
+                cube[1][n - i - 1][n - 1] = cube[4][0][n - i - 1];
+                cube[4][0][n - i - 1] = cube[3][i][0];
+                cube[3][i][0] = cube[0][n - 1][i];
+                cube[0][n - 1][i] = c;
+            } else {
+                c = cube[1][n - i - 1][n - 1];
+                cube[1][n - i - 1][n - 1] = cube[0][n - 1][i];
+                cube[0][n - 1][i] = cube[3][i][0];
+                cube[3][i][0] = cube[4][0][n - i - 1];
+                cube[4][0][n - i - 1] = c;
+            }
         }
     }
 
-    public void SpinRight() {
+    private void rotate(int t, int pos) {
+        char[][] help = new char[n][n];
+
+        if (t == 1) {
+            for (int i = 0; i < n; ++i) {
+                for (int j = 0; j < n; ++j) {
+                    help[i][j] = cube[pos][n - 1 - j][i];
+                }
+            }
+        } else {
+            for (int i = 0; i < n; ++i) {
+                for (int j = 0; j < n; ++j) {
+                    help[i][j] = cube[pos][j][n - 1 - i];
+                }
+            }
+        }
+        cube[pos] = help;
+    }
+    public void SpinR() {
+        RotateLeft();
+        Spin(1);
         RotateRight();
-        SpinFront();
+        rotate(3, 2);
+        rotate(3, 2);
+    }
+    public void SpinL() {
+        RotateRight();
+        Spin(1);
         RotateLeft();
     }
 }
+
+
 
 
 
