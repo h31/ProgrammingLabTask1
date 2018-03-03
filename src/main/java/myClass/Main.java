@@ -63,9 +63,9 @@ public class Main {
                 cube.RotateUp();
             }
             if (Objects.equals(l, "U'")) {
-                cube.RotateUp();
-                cube.Spin(2);
                 cube.RotateDown();
+                cube.Spin(2);
+                cube.RotateUp();
             }
         }
     }

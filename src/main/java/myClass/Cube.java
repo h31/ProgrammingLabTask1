@@ -26,23 +26,23 @@ public class Cube {
 
 
     public void RotateLeft() {
-        rotate(1, 0);
-        rotate(0, 4);
         char[][] help = cube[1];
         cube[1] = cube[2];
         cube[2] = cube[3];
         cube[3] = cube[5];
         cube[5] = help;
-        rotate(5, 5);
-        rotate(5, 5);
+        rotate(1, 0);
+        rotate(0, 4);
+        rotate(1, 5);
+        rotate(1, 5);
+        rotate(1, 3);
+        rotate(1, 3);
     }
 
     public void RotateRight() {
         RotateLeft();
         RotateLeft();
         RotateLeft();
-        rotate(3, 1);
-        rotate(3, 1);
     }
 
     public void RotateUp() {
@@ -109,9 +109,8 @@ public class Cube {
         RotateLeft();
         Spin(1);
         RotateRight();
-        rotate(3, 2);
-        rotate(3, 2);
     }
+
     public void SpinL() {
         RotateRight();
         Spin(1);
