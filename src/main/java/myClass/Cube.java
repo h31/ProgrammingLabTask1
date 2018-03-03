@@ -1,10 +1,10 @@
 package myClass;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class Cube {
     private char[][][] cube;
-    private char[][] arr;
     private int n;
 
     char[] symbols = {'W', 'R', 'B', 'O', 'Y', 'G'};
@@ -105,16 +105,61 @@ public class Cube {
         }
         cube[pos] = help;
     }
-    public void SpinR() {
-        RotateLeft();
-        Spin(1);
-        RotateRight();
-    }
 
-    public void SpinL() {
-        RotateRight();
-        Spin(1);
-        RotateLeft();
+    public void Random() {
+        String[] array = new String[]{"F", "F'", "R", "R'", "L", "L'", "U", "U'", "Left", "Right", "Up", "Down"};
+        for (int i = 0; i < 100; ++i) {
+            Random random = new Random();
+            int number = random.nextInt(11);
+            if (number == 0) {
+                Spin(1);
+            }
+            if (number == 1) {
+                Spin(2);
+            }
+            if (number == 2) {
+                RotateLeft();
+                Spin(1);
+                RotateRight();
+            }
+            if (number == 3) {
+                RotateLeft();
+                Spin(2);
+                RotateRight();
+            }
+            if (number == 4) {
+                RotateRight();
+                Spin(1);
+                RotateLeft();
+            }
+            if (number == 5) {
+                RotateRight();
+                Spin(2);
+                RotateLeft();
+            }
+            if (number == 6) {
+                RotateDown();
+                Spin(1);
+                RotateUp();
+            }
+            if (number == 7) {
+                RotateDown();
+                Spin(2);
+                RotateUp();
+            }
+            if (number == 8) {
+                RotateLeft();
+            }
+            if (number == 9) {
+                RotateRight();
+            }
+            if (number == 10) {
+                RotateUp();
+            }
+            if (number == 11) {
+                RotateDown();
+            }
+        }
     }
 }
 

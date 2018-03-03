@@ -11,8 +11,6 @@ public class Main {
 
         Cube cube = new Cube(n);
 
-        PrintCube prntC = new PrintCube(n);
-        prntC.Print(cube);
         while (true) {
             System.out.println("What'll we do?");
             Scanner look = new Scanner(System.in);
@@ -44,18 +42,24 @@ public class Main {
                 cube.Spin(2);
             }
             if (Objects.equals(l, "R")) {
-                cube.SpinR();
+                cube.RotateLeft();
+                cube.Spin(1);
+                cube.RotateRight();
             }
             if (Objects.equals(l, "R'")) {
-                cube.SpinR();
-            }
-            if (Objects.equals(l, "L")) {
-                cube.SpinL();
-            }
-            if (Objects.equals(l, "L'")) {
                 cube.RotateLeft();
                 cube.Spin(2);
                 cube.RotateRight();
+            }
+            if (Objects.equals(l, "L")) {
+                cube.RotateRight();
+                cube.Spin(1);
+                cube.RotateLeft();
+            }
+            if (Objects.equals(l, "L'")) {
+                cube.RotateRight();
+                cube.Spin(2);
+                cube.RotateLeft();
             }
             if (Objects.equals(l, "U")) {
                 cube.RotateDown();
@@ -66,6 +70,9 @@ public class Main {
                 cube.RotateDown();
                 cube.Spin(2);
                 cube.RotateUp();
+            }
+            if (Objects.equals(l, "Random cube")) {
+                cube.Random();
             }
         }
     }
