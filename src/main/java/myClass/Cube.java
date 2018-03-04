@@ -107,7 +107,6 @@ public class Cube {
     }
 
     public void Random() {
-        String[] array = new String[]{"F", "F'", "R", "R'", "L", "L'", "U", "U'", "Left", "Right", "Up", "Down"};
         for (int i = 0; i < 100; ++i) {
             Random random = new Random();
             int number = random.nextInt(11);
