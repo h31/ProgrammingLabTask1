@@ -22,4 +22,10 @@ class PolinomTest {
         assertEquals(new Polinom(6,"21;-5;-15;-3;-18;16;0"),
                 new Polinom(4, "7;3;-3;-3;-8").multiplication(new Polinom(2, "3;-2;0")));
     }
+
+    @Test
+    void computation() {
+        assertEquals(102,
+                new Polinom(4, "7;3;-6;-1;-8").computation(2));
+    }
 }

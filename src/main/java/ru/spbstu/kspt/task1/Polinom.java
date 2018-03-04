@@ -84,6 +84,21 @@ public class Polinom {
         return result;
     }
 
+    private int exponentation(int value, int power) {
+        int result = 1;
+        for (int i = 0; i < power; i++) result*=value;
+        return result;
+    }
+
+
+    public int computation(int x) {
+        int result = 0;
+        for (int i = 0; i <= this.order; i++) {
+            result += exponentation(x, i) * this.coef.get(this.coef.size() - i - 1);
+        }
+        return result;
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
