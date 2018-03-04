@@ -56,7 +56,7 @@ class Main {
                 if (number.equals(num)) return name;
             }
         }
-        throw new IllegalArgumentException("invalid number");
+        throw new IllegalArgumentException("invalid number"); 
     }
 }
 
