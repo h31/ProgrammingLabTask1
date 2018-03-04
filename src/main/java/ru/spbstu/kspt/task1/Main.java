@@ -11,7 +11,7 @@ class Main {
     Map<String, ArrayList<String>> book = new HashMap<>();
 
     private static boolean checkNum(String numFormat) {
-        Pattern p = Pattern.compile("[\\d*#()\\-+]+");
+        Pattern p = Pattern.compile("[\\d*#\\-+]+");
         Matcher m = p.matcher(numFormat);
         return m.matches();
     }
@@ -56,7 +56,7 @@ class Main {
                 if (number.equals(num)) return name;
             }
         }
-        throw new IllegalArgumentException("invalid number"); 
+        throw new IllegalArgumentException("invalid number");
     }
 }
 
