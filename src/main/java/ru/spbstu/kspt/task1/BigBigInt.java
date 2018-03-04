@@ -7,8 +7,8 @@ package ru.spbstu.kspt.task1;
  * +складываться
  * +вычитаться
  * +умножаться
- * -делиться
- * -находить остаток от деления
+ * +делиться
+ * +находить остаток от деления
  */
 
 
@@ -20,12 +20,12 @@ class BigBigInt {
         return value;
     }
 
-    BigBigInt(String string) { //Конструктор класса
+    BigBigInt(String clearLine) { //Конструктор класса
         //Преобразование строик в число без впередиидущих '0' и ' '
-        string = string.replaceAll("\\D", "");
-        string = string.replaceFirst("^0+(?!$)", "");
+        clearLine = clearLine.replaceAll("\\D", "");
+        clearLine = clearLine.replaceFirst("^0+(?!$)", "");
         //Обработка ввода строки не содержащей чисел
-        value = string;
+        value = clearLine;
         if (value.isEmpty()) {
             System.out.println("Ошибка ввода числа");
             value = null;
@@ -46,16 +46,17 @@ class BigBigInt {
     }
 
     static BigBigInt add(BigBigInt bbInt1, BigBigInt bbInt2) {//Сумма двух bbInt
+        StringBuilder builder = new StringBuilder();
         if (compare(bbInt1, bbInt2) < 0) {
             BigBigInt bbInt = bbInt1;
             bbInt1 = bbInt2;
             bbInt2 = bbInt;
         }
         String answer = "";
-        String str2 = "";
         for (int i = 0; i < bbInt1.value.length() - bbInt2.value.length(); i++) {
-            str2 = str2 + "0";
+            builder.append("0");
         }
+        String str2 = builder.toString();
         str2 = str2 + bbInt2.value;
         boolean ten = false;
         int help;
@@ -70,7 +71,7 @@ class BigBigInt {
                 help -= 10;
             } else
                 ten = false;
-            StringBuilder builder = new StringBuilder();
+            builder = new StringBuilder();
             answer = builder.append(Integer.toString(help)).append(answer).toString();
         }
         if (ten)
@@ -79,16 +80,17 @@ class BigBigInt {
     }
 
     static BigBigInt subtract(BigBigInt bbInt1, BigBigInt bbInt2) {//Разность двух bbInt
+        StringBuilder builder = new StringBuilder();
         if (compare(bbInt1, bbInt2) < 0) {
             BigBigInt bbInt = bbInt1;
             bbInt1 = bbInt2;
             bbInt2 = bbInt;
         }
         String answer = "";
-        String str2 = "";
         for (int i = 0; i < bbInt1.value.length() - bbInt2.value.length(); i++) {
-            str2 = str2 + "0";
+            builder.append("0");
         }
+        String str2 = builder.toString();
         str2 = str2 + bbInt2.value;
         boolean ten = false;
         int help;
@@ -103,7 +105,8 @@ class BigBigInt {
                 help += 10;
             } else
                 ten = false;
-            answer = Integer.toString(help) + answer;
+            builder = new StringBuilder();
+            answer = builder.append(Integer.toString(help)).append(answer).toString();
         }
         return new BigBigInt(answer);
     }
