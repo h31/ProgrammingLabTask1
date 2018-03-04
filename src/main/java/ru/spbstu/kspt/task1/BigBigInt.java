@@ -1,16 +1,14 @@
 package ru.spbstu.kspt.task1;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 /**
-Объекты данного класса (bbInt) - положительные числа длинной от одного, до 2^31-1 элементов
-Объекты умеют:
-    +сравниваться
-    +складываться
-    +вычитаться
-    +умножаться
-    -делиться
-    -находить остаток от деления
+ * Объекты данного класса (bbInt) - положительные числа длинной от одного, до 2^31-1 элементов
+ * Объекты умеют:
+ * +сравниваться
+ * +складываться
+ * +вычитаться
+ * +умножаться
+ * -делиться
+ * -находить остаток от деления
  */
 
 
@@ -23,23 +21,12 @@ class BigBigInt {
     }
 
     BigBigInt(String string) { //Конструктор класса
-        //Обработка впередиидущих '0' и ' '
-        int i;
-        for (i = 0; i < string.length(); i++) {
-            if (string.charAt(i) != '0' && string.charAt(i) != ' ') {
-                break;
-            }
-            if (i == string.length() - 1 && string.charAt(i) == '0') {
-                value = "0";
-                return;
-            }
-        }
         //Преобразование строик в число без впередиидущих '0' и ' '
-        char[] help = new char[string.length() - i];
-        string.getChars(i, string.length(), help, 0);
-        value = new String(help);
+        string = string.replaceAll("\\D", "");
+        string = string.replaceFirst("^0+(?!$)", "");
         //Обработка ввода строки не содержащей чисел
-        if (value.compareTo("") == 0) {
+        value = string;
+        if (value.isEmpty()) {
             System.out.println("Ошибка ввода числа");
             value = null;
         }
@@ -47,36 +34,20 @@ class BigBigInt {
 
     int Comparison(BigBigInt bbInt) {//Сравнение двух bbInt
         int result = -2;
-        if (this.value.compareTo(bbInt.value) == 0) {
-            result = 0;
-            return result;
-        }
-        if (this.value.length() > bbInt.value.length()) {
-            result = 1;
-            return result;
-        }
-        if (this.value.length() < bbInt.value.length()) {
-            result = -1;
-            return result;
-        }
+        if (this.value.compareTo(bbInt.value) == 0) return 0;
+        if (this.value.length() > bbInt.value.length()) return 1;
+        if (this.value.length() < bbInt.value.length()) return -1;
         for (int i = 0; i < Math.min(this.value.length(), bbInt.value.length()); i++) {
-            if (this.value.charAt(i) > bbInt.value.charAt(i)) {
-                result = 1;
-                return result;
-            }
-            if (this.value.charAt(i) < bbInt.value.charAt(i)) {
-                result = -1;
-                return result;
-            }
+            if (this.value.charAt(i) > bbInt.value.charAt(i)) return 1;
+            if (this.value.charAt(i) < bbInt.value.charAt(i)) return -1;
         }
         System.out.println("Ошибка при попытке сравнения");
         return result;
     }
 
-    static BigBigInt addition(BigBigInt bbInt1, BigBigInt bbInt2) {//Сумма двух bbInt
+    static BigBigInt add(BigBigInt bbInt1, BigBigInt bbInt2) {//Сумма двух bbInt
         if (bbInt1.Comparison(bbInt2) < 0) {
-            BigBigInt bbInt;
-            bbInt = bbInt1;
+            BigBigInt bbInt = bbInt1;
             bbInt1 = bbInt2;
             bbInt2 = bbInt;
         }
@@ -99,17 +70,17 @@ class BigBigInt {
                 help -= 10;
             } else
                 ten = false;
-            answer = Integer.toString(help) + answer;
+            StringBuilder builder = new StringBuilder();
+            answer = builder.append(Integer.toString(help)).append(answer).toString();
         }
         if (ten)
             answer = "1" + answer;
         return new BigBigInt(answer);
     }
 
-    static BigBigInt subtraction(BigBigInt bbInt1, BigBigInt bbInt2) {//Разность двух bbInt
+    static BigBigInt subtract(BigBigInt bbInt1, BigBigInt bbInt2) {//Разность двух bbInt
         if (bbInt1.Comparison(bbInt2) < 0) {
-            BigBigInt bbInt;
-            bbInt = bbInt1;
+            BigBigInt bbInt = bbInt1;
             bbInt1 = bbInt2;
             bbInt2 = bbInt;
         }
@@ -138,6 +109,7 @@ class BigBigInt {
     }
 
     static BigBigInt multiplication(BigBigInt bbInt1, BigBigInt bbInt2) {//Произведение двух bbIn
+        if ((bbInt1 == new BigBigInt("0")) || (bbInt2 == new BigBigInt("0"))) return new BigBigInt("0");
         if (bbInt1.Comparison(bbInt2) < 0) {
             BigBigInt bbInt;
             bbInt = bbInt1;
@@ -156,12 +128,13 @@ class BigBigInt {
             ans = Integer.toString(help) + ans;
             for (int j = i; j < bbInt2.value.length() - 1; j++)
                 ans = ans + "0";
-            answer = BigBigInt.addition(answer, new BigBigInt(ans));
+            answer = BigBigInt.add(answer, new BigBigInt(ans));
         }
         return answer;
     }
 
     static BigBigInt division(BigBigInt bbInt1, BigBigInt bbInt2) {//Деление двух bbInt
+        if ((bbInt1.toString() == "0") || (bbInt2.toString() == "0")) return new BigBigInt("0");
         BigBigInt bbInt;
         if (bbInt1.Comparison(bbInt2) < 0) {
             bbInt = bbInt1;
@@ -172,16 +145,37 @@ class BigBigInt {
         String str2;
         String counter = "0";
         do {
-            str2 = addition(bbInt, bbInt2).value;
+            str2 = add(bbInt, bbInt2).value;
             bbInt = new BigBigInt(str2);
-            counter = addition(new BigBigInt(counter), new BigBigInt("1")).value;
+            counter = add(new BigBigInt(counter), new BigBigInt("1")).value;
         } while (bbInt1.Comparison(bbInt) == 1);
         if (bbInt.Comparison(bbInt1) == 1)
-            counter = subtraction(new BigBigInt(counter), new BigBigInt("1")).value;
+            counter = subtract(new BigBigInt(counter), new BigBigInt("1")).value;
         return new BigBigInt(counter);
     }
 
-    static BigBigInt residue(BigBigInt bbInt1, BigBigInt bbInt2) {//Остаток от деления двух bbInt
-        return new BigBigInt("В процессе разработки");
+    static BigBigInt remaind(BigBigInt bbInt1, BigBigInt bbInt2) {//Остаток от деления двух bbInt
+        if ((bbInt1 == new BigBigInt("0")) || (bbInt2 == new BigBigInt("0"))) return new BigBigInt("0");
+        BigBigInt bbInt;
+        if (bbInt1.Comparison(bbInt2) < 0) {
+            bbInt = bbInt1;
+            bbInt1 = bbInt2;
+            bbInt2 = bbInt;
+        }
+        bbInt = new BigBigInt("0");
+        String str2;
+        String counter = "0";
+        do {
+            str2 = add(bbInt, bbInt2).value;
+            bbInt = new BigBigInt(str2);
+            counter = add(new BigBigInt(counter), new BigBigInt("1")).value;
+        } while (bbInt1.Comparison(bbInt) == 1);
+        if (bbInt.Comparison(bbInt1) == 0) return new BigBigInt("0");
+        else {
+            bbInt = subtract(bbInt, bbInt2);
+            counter = subtract(bbInt1, bbInt).value;
+        }
+        return new BigBigInt(counter);
     }
+
 }

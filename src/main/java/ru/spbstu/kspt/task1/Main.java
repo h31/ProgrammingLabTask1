@@ -1,8 +1,5 @@
 package ru.spbstu.kspt.task1;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 /**
  * Main class
  */
@@ -30,10 +27,10 @@ public class Main {
         System.out.println("Первое число: " + bbInt1.getValue());
         System.out.println("Второе число: " + bbInt2.getValue());
         System.out.println("Сравнение двух чисел:           " + bbInt1.Comparison(bbInt2));
-        System.out.println("Сумма двух чисел:               " + BigBigInt.addition(bbInt1, bbInt2).getValue());
-        System.out.println("Разность двух чисел:            " + BigBigInt.subtraction(bbInt1, bbInt2).getValue());
+        System.out.println("Сумма двух чисел:               " + BigBigInt.add(bbInt1, bbInt2).getValue());
+        System.out.println("Разность двух чисел:            " + BigBigInt.subtract(bbInt1, bbInt2).getValue());
         System.out.println("Произведение двух чисел:        " + BigBigInt.multiplication(bbInt1, bbInt2).getValue());
         System.out.println("Деление двух чисел:             " + BigBigInt.division(bbInt1, bbInt2).getValue());
-        //System.out.println("Остаток от деления двух чисел:  " + BigBigInt.residue(bbInt1, bbInt2).getValue());
+        System.out.println("Остаток от деления двух чисел:  " + BigBigInt.remaind(bbInt1, bbInt2).getValue());
     }
 }
