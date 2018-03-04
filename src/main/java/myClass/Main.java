@@ -71,7 +71,17 @@ public class Main {
                 cube.Spin(2);
                 cube.RotateUp();
             }
-            if (Objects.equals(l, "Random cube")) {
+            if (Objects.equals(l, "D")) {
+                cube.RotateUp();
+                cube.Spin(1);
+                cube.RotateDown();
+            }
+            if (Objects.equals(l, "D'")) {
+                cube.RotateUp();
+                cube.Spin(2);
+                cube.RotateDown();
+            }
+            if (Objects.equals(l, "Random")) {
                 cube.Random();
             }
         }

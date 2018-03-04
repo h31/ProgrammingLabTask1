@@ -107,9 +107,9 @@ public class Cube {
     }
 
     public void Random() {
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 20; ++i) {
             Random random = new Random();
-            int number = random.nextInt(11);
+            int number = random.nextInt(13);
             if (number == 0) {
                 Spin(1);
             }
@@ -156,6 +156,16 @@ public class Cube {
                 RotateUp();
             }
             if (number == 11) {
+                RotateDown();
+            }
+            if (number == 12) {
+                RotateUp();
+                Spin(1);
+                RotateDown();
+            }
+            if (number == 13) {
+                RotateUp();
+                Spin(2);
                 RotateDown();
             }
         }
