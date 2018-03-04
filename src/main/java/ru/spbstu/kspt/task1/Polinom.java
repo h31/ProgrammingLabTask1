@@ -12,10 +12,17 @@ public class Polinom {
         this.coef = new ArrayList<>();
         this.order = order;
         this.function = function;
-        String[] parts = this.function.split(";");
-        for (int i = 0; i < parts.length; i++) {
-            if (!parts[i].isEmpty())
-                this.coef.add(Integer.parseInt(parts[i]));
+        if (!this.function.equals("")) {
+            String[] parts = this.function.split(";");
+            for (int i = 0; i < parts.length; i++) {
+                if (!parts[i].isEmpty())
+                    this.coef.add(Integer.parseInt(parts[i]));
+            }
+        }
+        else {
+            for (int i = 0; i <= this.order; i++){
+                this.coef.add(0);
+            }
         }
     }
 
@@ -24,7 +31,7 @@ public class Polinom {
         return new Polinom(Math.min(this.order, pol.order), minFunction);
     }
 
-    private Polinom equ(Polinom pol) {
+    private Polinom aligment(Polinom pol) {
         Polinom result = this.min(pol);
         for (int i = 0; i < Math.abs(this.order - pol.order); i++) {
             result.coef.add(i, 0);
@@ -35,11 +42,11 @@ public class Polinom {
 
     public Polinom plus(Polinom pol) {
         Polinom maxPol = (this.order < pol.order) ? pol : this;
-        Polinom minPol = this.equ(pol);
+        Polinom minPol = this.aligment(pol);
         int end = maxPol.order;
         Polinom result = new Polinom(end, "");
         for (int i = 0; i <= end; i++) {
-            result.coef.add(i, (maxPol.coef.get(i) + minPol.coef.get(i)));
+            result.coef.set(i, (maxPol.coef.get(i) + minPol.coef.get(i)));
         }
         result.function = result.toString();
         return result;
@@ -49,15 +56,29 @@ public class Polinom {
         Polinom minuend, subtrahend;
         if (this.order > pol.order) {
             minuend = this;
-            subtrahend = this.equ(pol);
+            subtrahend = this.aligment(pol);
         } else {
-            minuend = this.equ(pol);
+            minuend = this.aligment(pol);
             subtrahend = pol;
         }
         int end = Math.max(this.order, pol.order);
         Polinom result = new Polinom(end, "");
         for (int i = 0; i <= end; i++) {
-            result.coef.add(i, (minuend.coef.get(i) - subtrahend.coef.get(i)));
+            result.coef.set(i, (minuend.coef.get(i) - subtrahend.coef.get(i)));
+        }
+        result.function = result.toString();
+        return result;
+    }
+
+    public Polinom multiplication(Polinom pol) {
+        int k;
+        Polinom result = new Polinom(this.order + pol.order, "");
+        for (int i = this.order; i >= 0; i--) {
+            k = i + pol.order;
+            for (int j = pol.order; j >= 0; j--) {
+                result.coef.set(k, (this.coef.get(i) * pol.coef.get(j)) + result.coef.get(k));
+                k--;
+            }
         }
         result.function = result.toString();
         return result;
