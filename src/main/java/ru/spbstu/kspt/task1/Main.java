@@ -26,11 +26,11 @@ public class Main {
 
         System.out.println("Первое число: " + bbInt1.getValue());
         System.out.println("Второе число: " + bbInt2.getValue());
-        System.out.println("Сравнение двух чисел:           " + bbInt1.Comparison(bbInt2));
+        System.out.println("Сравнение двух чисел:           " + BigBigInt.compare(bbInt1, bbInt2));
         System.out.println("Сумма двух чисел:               " + BigBigInt.add(bbInt1, bbInt2).getValue());
         System.out.println("Разность двух чисел:            " + BigBigInt.subtract(bbInt1, bbInt2).getValue());
-        System.out.println("Произведение двух чисел:        " + BigBigInt.multiplication(bbInt1, bbInt2).getValue());
-        System.out.println("Деление двух чисел:             " + BigBigInt.division(bbInt1, bbInt2).getValue());
-        System.out.println("Остаток от деления двух чисел:  " + BigBigInt.remaind(bbInt1, bbInt2).getValue());
+        System.out.println("Произведение двух чисел:        " + BigBigInt.multiply(bbInt1, bbInt2).getValue());
+        System.out.println("Деление двух чисел:             " + BigBigInt.divide(bbInt1, bbInt2).getValue());
+        System.out.println("Остаток от деления двух чисел:  " + BigBigInt.remain(bbInt1, bbInt2).getValue());
     }
 }

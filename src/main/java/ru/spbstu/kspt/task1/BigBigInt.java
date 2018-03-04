@@ -32,21 +32,21 @@ class BigBigInt {
         }
     }
 
-    int Comparison(BigBigInt bbInt) {//Сравнение двух bbInt
+    static int compare(BigBigInt bbInt1, BigBigInt bbInt2) {//Сравнение двух bbInt
         int result = -2;
-        if (this.value.compareTo(bbInt.value) == 0) return 0;
-        if (this.value.length() > bbInt.value.length()) return 1;
-        if (this.value.length() < bbInt.value.length()) return -1;
-        for (int i = 0; i < Math.min(this.value.length(), bbInt.value.length()); i++) {
-            if (this.value.charAt(i) > bbInt.value.charAt(i)) return 1;
-            if (this.value.charAt(i) < bbInt.value.charAt(i)) return -1;
+        if (bbInt1.value.compareTo(bbInt2.value) == 0) return 0;
+        if (bbInt1.value.length() > bbInt2.value.length()) return 1;
+        if (bbInt1.value.length() < bbInt2.value.length()) return -1;
+        for (int i = 0; i < Math.min(bbInt1.value.length(), bbInt2.value.length()); i++) {
+            if (bbInt1.value.charAt(i) > bbInt2.value.charAt(i)) return 1;
+            if (bbInt1.value.charAt(i) < bbInt2.value.charAt(i)) return -1;
         }
         System.out.println("Ошибка при попытке сравнения");
         return result;
     }
 
     static BigBigInt add(BigBigInt bbInt1, BigBigInt bbInt2) {//Сумма двух bbInt
-        if (bbInt1.Comparison(bbInt2) < 0) {
+        if (compare(bbInt1, bbInt2) < 0) {
             BigBigInt bbInt = bbInt1;
             bbInt1 = bbInt2;
             bbInt2 = bbInt;
@@ -79,7 +79,7 @@ class BigBigInt {
     }
 
     static BigBigInt subtract(BigBigInt bbInt1, BigBigInt bbInt2) {//Разность двух bbInt
-        if (bbInt1.Comparison(bbInt2) < 0) {
+        if (compare(bbInt1, bbInt2) < 0) {
             BigBigInt bbInt = bbInt1;
             bbInt1 = bbInt2;
             bbInt2 = bbInt;
@@ -108,9 +108,9 @@ class BigBigInt {
         return new BigBigInt(answer);
     }
 
-    static BigBigInt multiplication(BigBigInt bbInt1, BigBigInt bbInt2) {//Произведение двух bbIn
+    static BigBigInt multiply(BigBigInt bbInt1, BigBigInt bbInt2) {//Произведение двух bbIn
         if ((bbInt1 == new BigBigInt("0")) || (bbInt2 == new BigBigInt("0"))) return new BigBigInt("0");
-        if (bbInt1.Comparison(bbInt2) < 0) {
+        if (compare(bbInt1, bbInt2) < 0) {
             BigBigInt bbInt;
             bbInt = bbInt1;
             bbInt1 = bbInt2;
@@ -133,10 +133,9 @@ class BigBigInt {
         return answer;
     }
 
-    static BigBigInt division(BigBigInt bbInt1, BigBigInt bbInt2) {//Деление двух bbInt
-        if ((bbInt1.toString() == "0") || (bbInt2.toString() == "0")) return new BigBigInt("0");
+    static BigBigInt divide(BigBigInt bbInt1, BigBigInt bbInt2) {//Деление двух bbInt
         BigBigInt bbInt;
-        if (bbInt1.Comparison(bbInt2) < 0) {
+        if (compare(bbInt1, bbInt2) < 0) {
             bbInt = bbInt1;
             bbInt1 = bbInt2;
             bbInt2 = bbInt;
@@ -148,16 +147,16 @@ class BigBigInt {
             str2 = add(bbInt, bbInt2).value;
             bbInt = new BigBigInt(str2);
             counter = add(new BigBigInt(counter), new BigBigInt("1")).value;
-        } while (bbInt1.Comparison(bbInt) == 1);
-        if (bbInt.Comparison(bbInt1) == 1)
+        } while (compare(bbInt1, bbInt) == 1);
+        if (compare(bbInt, bbInt1) == 1)
             counter = subtract(new BigBigInt(counter), new BigBigInt("1")).value;
         return new BigBigInt(counter);
     }
 
-    static BigBigInt remaind(BigBigInt bbInt1, BigBigInt bbInt2) {//Остаток от деления двух bbInt
+    static BigBigInt remain(BigBigInt bbInt1, BigBigInt bbInt2) {//Остаток от деления двух bbInt
         if ((bbInt1 == new BigBigInt("0")) || (bbInt2 == new BigBigInt("0"))) return new BigBigInt("0");
         BigBigInt bbInt;
-        if (bbInt1.Comparison(bbInt2) < 0) {
+        if (compare(bbInt1, bbInt2) < 0) {
             bbInt = bbInt1;
             bbInt1 = bbInt2;
             bbInt2 = bbInt;
@@ -169,8 +168,8 @@ class BigBigInt {
             str2 = add(bbInt, bbInt2).value;
             bbInt = new BigBigInt(str2);
             counter = add(new BigBigInt(counter), new BigBigInt("1")).value;
-        } while (bbInt1.Comparison(bbInt) == 1);
-        if (bbInt.Comparison(bbInt1) == 0) return new BigBigInt("0");
+        } while (compare(bbInt1, bbInt) == 1);
+        if (compare(bbInt1, bbInt) == 0) return new BigBigInt("0");
         else {
             bbInt = subtract(bbInt, bbInt2);
             counter = subtract(bbInt1, bbInt).value;
