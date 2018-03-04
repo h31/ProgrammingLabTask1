@@ -37,11 +37,19 @@ public class PriceList {
         }
     }
 
-//    public int totalCostExactProduct(int currentCode) {
-//        return (pricelist.get(currentCode).getPriceRub() * 100 +
-//                pricelist.get(currentCode).getPriceCop()) *
-//                pricelist.get(currentCode).getQuantity();
-//     }
+    public int totalCostExactProduct(int currentCode) {
+         return (pricelist.get(currentCode).getPriceRub() * 100 +
+                pricelist.get(currentCode).getPriceCop()) *
+                pricelist.get(currentCode).getQuantity();
+     }
+
+     public int totalCost() {
+        int sum = 0;
+        for (Product p:pricelist.values()) {
+            sum += totalCostExactProduct(p.getCode());
+        }
+        return sum;
+     }
 
     @Override
     public boolean equals(Object o) {
@@ -53,7 +61,7 @@ public class PriceList {
 
     @Override
     public int hashCode() {
-        return pricelist.hashCode();
+        return pricelist != null ? pricelist.hashCode() : 0;
     }
 }
 

@@ -81,14 +81,23 @@ public class PriceListTest {
         assertEquals(thirdPricelist.pricelist, testMap);
     }
 
-//    @Test
-//    void totalCost() {
-//        PriceList moreProducts = new PriceList();
-//        moreProducts.addProduct("mango", 1, 10, 10, 1);
-//        moreProducts.addProduct("cheese", 2, 20, 20, 2);
-//        moreProducts.addProduct("ice-cream", 3, 30, 30, 3);
-//        assertEquals(440, moreProducts.totalCostExactProduct(2));
-//    }
+    @Test
+    void testTotalCostExactProduct() {
+        PriceList moreProducts = new PriceList();
+        moreProducts.addProduct("mango", 1, 10, 10, 1);
+        moreProducts.addProduct("cheese", 2, 20, 20, 2);
+        moreProducts.addProduct("ice-cream", 3, 30, 30, 3);
+        assertEquals(4040, moreProducts.totalCostExactProduct(2));
+    }
+
+    @Test
+    void testTotalCost() {
+        PriceList moreProducts = new PriceList();
+        moreProducts.addProduct("mango", 1, 10, 10, 1);
+        moreProducts.addProduct("cheese", 2, 20, 20, 2);
+        moreProducts.addProduct("ice-cream", 3, 30, 30, 3);
+        assertEquals(14140, moreProducts.totalCost());
+    }
 }
 
 
