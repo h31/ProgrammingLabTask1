@@ -35,7 +35,6 @@ class MainTest {
         assertEquals(true, phoneBook.book.containsKey("Tony"));
         assertEquals(false, phoneBook.book.containsKey("Kate"));
         assertEquals(true, !phoneBook.book.containsKey("Daniel"));
-        // System.out.println(phoneBook.book);
     }
 
     @Test
@@ -50,7 +49,6 @@ class MainTest {
         assertEquals(3, phoneBook.book.get("Daniel").size());
         assertEquals(true, phoneBook.book.get("Daniel").contains("+79215944756"));
         assertEquals("#8-999-5463275", phoneBook.book.get("Tony").get(2));
-        // System.out.println(phoneBook.book);
     }
 
     @Test
@@ -66,15 +64,23 @@ class MainTest {
 
         assertEquals(phoneList, phoneBook.book.get("Tony"));
         assertEquals(2, phoneBook.book.get("Daniel").size());
-        // System.out.println(phoneBook.book);
     }
 
     @Test
-    void searchPerson() {
+    void searchByPerson() {
         phoneBook.addPerson("Daniel", new String[]{"895464664543", "8563956375", "+86584527364"});
         phoneBook.addPerson("Tony", new String[]{"+79215466775", "89214855645"});
 
-        assertEquals(phoneBook.book.get("Daniel"), phoneBook.searchPerson("Daniel"));
-        assertEquals(phoneBook.book.get("Tony"), phoneBook.searchPerson("Tony"));
+        assertEquals(phoneBook.book.get("Daniel"), phoneBook.searchByPerson("Daniel"));
+        assertEquals(phoneBook.book.get("Tony"), phoneBook.searchByPerson("Tony"));
+    }
+
+    @Test
+    void searchByNum() {
+        phoneBook.addPerson("Daniel", new String[]{"895464664543", "8563956375", "+86584527364"});
+        phoneBook.addPerson("Tony", new String[]{"+79215466775", "89214855645"});
+
+        assertEquals("Tony", phoneBook.searchByNum("89214855645"));
+        assertEquals("Daniel", phoneBook.searchByNum("8563956375"));
     }
 }

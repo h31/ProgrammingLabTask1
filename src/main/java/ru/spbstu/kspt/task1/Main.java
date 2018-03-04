@@ -26,27 +26,37 @@ class Main {
     }
 
     void delPerson(String name) {
-        if (!book.containsKey(name)) throw new IllegalArgumentException("invalid Person");
+        if (!book.containsKey(name)) throw new IllegalArgumentException("invalid person");
         book.remove(name);
     }
 
     void addNumber(String name, String number) {
-        if (!book.containsKey(name)) throw new IllegalArgumentException("invalid Person");
+        if (!book.containsKey(name)) throw new IllegalArgumentException("invalid person");
         if (checkNum(number))
             book.get(name).add(number);
         else throw new IllegalArgumentException("Wrong format");
     }
 
     void delNumber(String name, String number) {
-        if (!book.containsKey(name)) throw new IllegalArgumentException("invalid Person");
-        if (book.get(name).isEmpty()) throw new IllegalArgumentException("empty List");
-        if (!book.get(name).contains(number)) throw new IllegalArgumentException("invalid Number");
+        if (!book.containsKey(name)) throw new IllegalArgumentException("invalid person");
+        if (book.get(name).isEmpty()) throw new IllegalArgumentException("empty list");
+        if (!book.get(name).contains(number)) throw new IllegalArgumentException("invalid number");
         book.get(name).remove(number);
     }
 
-    ArrayList<String> searchPerson(String name) {
+    ArrayList<String> searchByPerson(String name) {
         if (book.containsKey(name)) return book.get(name);
-        else throw new IllegalArgumentException("invalid name");
+        else throw new IllegalArgumentException("invalid person");
+    }
+
+    String searchByNum(String number) {
+        if (!checkNum(number)) throw new IllegalArgumentException("Wrong format");
+        for (String name : book.keySet()) {
+            for (String num : book.get(name)) {
+                if (number.equals(num)) return name;
+            }
+        }
+        throw new IllegalArgumentException("invalid number");
     }
 }
 
