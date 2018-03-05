@@ -13,14 +13,20 @@ public class TrieTest {
     void exampleTest() {
         logger.info("Test started");
         Trie testTrie = new Trie();
+        assertEquals(false, testTrie.find("word"));
         testTrie.insert("word");
         assertEquals(true, testTrie.find("word"));
-        testTrie.insert("world");
-        assertEquals(true, testTrie.find("world"));
+        testTrie.insert("worry");
+        assertEquals(true, testTrie.find("worry"));
         assertEquals(true, testTrie.find("wor"));
         assertEquals(false, testTrie.find("hello"));
+        testTrie.insert("kotlin");
+        assertEquals(true, testTrie.find("kotlin"));
+        testTrie.delete("kotlin");
+        assertEquals(false, testTrie.find("kotlin"));
         testTrie.delete("word");
         assertEquals(false, testTrie.find("word"));
+        assertEquals(true, testTrie.find("worry"));
         logger.info("Test finished");
     }
 }

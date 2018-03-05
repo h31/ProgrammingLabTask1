@@ -22,10 +22,14 @@ public class Trie {
         for (char ch : str.toLowerCase().toCharArray()) {
             if (!v.children.containsKey(ch)) {
                 v.children.put(ch, new TrieNode());
+                System.out.println("i");
+                System.out.println(v.children.keySet());
             }
             v = v.children.get(ch);
+
         }
         v.leaf = true;
+
     }
 
 
@@ -45,14 +49,25 @@ public class Trie {
     public void delete(String str) {
         TrieNode v = root;
         Trie trie = new Trie();
-        if (trie.find(str)) {
-            for (char ch : str.toLowerCase().toCharArray()) {
-                if (v.children.containsKey(ch)) {
-                    v.children.remove(ch);
-                }
-                v = v.children.get(ch);
+        boolean broExist = false;
+        String str2 = str;
+        for (char ch : str.substring(1).toLowerCase().toCharArray()) {
+            if ( v.children.keySet().size() > 1) {
+                System.out.println(v.children.keySet().size());
+                broExist = true;
+                str2 = str.substring(str.indexOf(ch));
+                System.out.println(str2);
             }
         }
+
+        for (char ch : str2.toLowerCase().toCharArray()) {
+            v.children.remove(ch);
+            System.out.println("d");
+            System.out.println(v.children.keySet());
+
+
+        }
+
     }
 
 
