@@ -1,8 +1,5 @@
 package ru.spbstu.kspt.task1;
 
-
-import jdk.nashorn.internal.codegen.MapCreator;
-
 import java.util.*;
 
 /**
@@ -20,7 +17,7 @@ public class Dimension {
     }
 
     Dimension getLengthDimensions() {
-        return new Dimension().addDimension("км",1000).addDimension("м",100).
+        return new Dimension().addDimension("км",100000).addDimension("м",100).
                 addDimension("дм",10).addDimension("см",1);
     }
 

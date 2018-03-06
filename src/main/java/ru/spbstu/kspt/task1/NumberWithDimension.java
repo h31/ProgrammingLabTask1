@@ -1,7 +1,5 @@
 package ru.spbstu.kspt.task1;
 
-import com.sun.javafx.image.PixelConverter;
-
 /**
  * Класс числа с размерностью
  *
@@ -15,7 +13,7 @@ import com.sun.javafx.image.PixelConverter;
  *
  * divideForDim - деление размерных чисел
  */
-class NumberWithDimension {
+class NumberWithDimension implements Comparable<NumberWithDimension> {
 
     private double number;
 
@@ -66,11 +64,20 @@ class NumberWithDimension {
                 dimensionClass.getValue(other.dimension)));
     }
 
-    NumberWithDimension transfer (String other) {
+    NumberWithDimension translate (String other) { //Переводим вещественное число из одной величины в другую
         return new NumberWithDimension(number *
                 (dimensionClass.getValue(dimension) / dimensionClass.getValue(other)), other, dimensionClass);
     }
 
+
+
+    @Override
+    public int compareTo(NumberWithDimension other) { //Cравниваем два числа, подводя их под одну величину
+        return (number * dimensionClass.getValue(dimension)) > (other.number
+                * other.dimensionClass.getValue(other.dimension)) ? 1 : (number
+                * dimensionClass.getValue(dimension)) == (other.number
+                * other.dimensionClass.getValue(other.dimension)) ? 0 : -1;
+    }
 
     @Override
     public boolean equals(Object o) {
