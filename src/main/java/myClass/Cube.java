@@ -4,12 +4,12 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Cube {
-    private char[][][] cube;
-    private int n;
+    public char[][][] cube;
+    public int n;
 
     char[] symbols = {'W', 'R', 'B', 'O', 'Y', 'G'};
 
-    Cube(int n) {
+    public Cube(int n) {
         this.n = n;
         this.cube = new char[6][n][n];
 
@@ -87,7 +87,7 @@ public class Cube {
         }
     }
 
-    private void rotate(int t, int pos) {
+    public void rotate(int t, int pos) {
         char[][] help = new char[n][n];
 
         if (t == 1) {

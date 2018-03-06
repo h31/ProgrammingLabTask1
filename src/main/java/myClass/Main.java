@@ -19,69 +19,69 @@ public class Main {
                 PrintCube printC1 = new PrintCube(n);
                 printC1.Print(cube);
             }
-            if (Objects.equals(l, "Stop")) {
+            else if (Objects.equals(l, "Stop")) {
                 System.out.println("Досвидули))0)");
                 break;
             }
-            if (Objects.equals(l, "Left")) {
+            else if (Objects.equals(l, "Left")) {
                 cube.RotateLeft();
             }
-            if (Objects.equals(l, "Right")) {
+            else if (Objects.equals(l, "Right")) {
                 cube.RotateRight();
             }
-            if (Objects.equals(l, "Up")) {
+            else if (Objects.equals(l, "Up")) {
                 cube.RotateUp();
             }
-            if (Objects.equals(l, "Down")) {
+            else if (Objects.equals(l, "Down")) {
                 cube.RotateDown();
             }
-            if (Objects.equals(l, "F")) {
+            else if (Objects.equals(l, "F")) {
                 cube.Spin(1);
             }
-            if (Objects.equals(l, "F'")) {
+            else if (Objects.equals(l, "F'")) {
                 cube.Spin(2);
             }
-            if (Objects.equals(l, "R")) {
+            else if (Objects.equals(l, "R")) {
                 cube.RotateLeft();
                 cube.Spin(1);
                 cube.RotateRight();
             }
-            if (Objects.equals(l, "R'")) {
+            else if (Objects.equals(l, "R'")) {
                 cube.RotateLeft();
                 cube.Spin(2);
                 cube.RotateRight();
             }
-            if (Objects.equals(l, "L")) {
+            else if (Objects.equals(l, "L")) {
                 cube.RotateRight();
                 cube.Spin(1);
                 cube.RotateLeft();
             }
-            if (Objects.equals(l, "L'")) {
+            else if (Objects.equals(l, "L'")) {
                 cube.RotateRight();
                 cube.Spin(2);
                 cube.RotateLeft();
             }
-            if (Objects.equals(l, "U")) {
+            else if (Objects.equals(l, "U")) {
                 cube.RotateDown();
                 cube.Spin(1);
                 cube.RotateUp();
             }
-            if (Objects.equals(l, "U'")) {
+            else if (Objects.equals(l, "U'")) {
                 cube.RotateDown();
                 cube.Spin(2);
                 cube.RotateUp();
             }
-            if (Objects.equals(l, "D")) {
+            else if (Objects.equals(l, "D")) {
                 cube.RotateUp();
                 cube.Spin(1);
                 cube.RotateDown();
             }
-            if (Objects.equals(l, "D'")) {
+            else if (Objects.equals(l, "D'")) {
                 cube.RotateUp();
                 cube.Spin(2);
                 cube.RotateDown();
             }
-            if (Objects.equals(l, "Random")) {
+            else if (Objects.equals(l, "Random")) {
                 cube.Random();
             }
         }
