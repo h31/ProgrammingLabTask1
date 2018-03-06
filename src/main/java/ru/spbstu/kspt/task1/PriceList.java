@@ -1,16 +1,19 @@
 package ru.spbstu.kspt.task1;
 
-
 import java.util.HashMap;
 
 import java.util.Map;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Main class
  */
 
 public class PriceList implements PriceListInterface {
+    private static Logger log = Logger.getLogger(PriceList.class.getName());
+
     public final Map<Integer, Product> pricelist = new HashMap<>();
 
     @Override
@@ -43,19 +46,52 @@ public class PriceList implements PriceListInterface {
 
     @Override
     public int totalCostExactProduct(int currentCode) {
-         return (pricelist.get(currentCode).getPriceRub() * 100 +
+        return (pricelist.get(currentCode).getPriceRub() * 100 +
                 pricelist.get(currentCode).getPriceCop()) *
                 pricelist.get(currentCode).getQuantity();
-     }
+    }
 
-     @Override
-     public int totalCost() {
+    @Override
+    public int totalCost() {
         int sum = 0;
-        for (Product p:pricelist.values()) {
+        for (Product p : pricelist.values()) {
             sum += totalCostExactProduct(p.getCode());
         }
         return sum;
-     }
+    }
+
+    @Override
+    public void addProductByString(String currentProduct) {
+        try {
+            String[] strings = currentProduct.split(", ");
+            String currentName = strings[0];
+            int currentCode = Integer.parseInt(strings[1]);
+            int currentPriceRub = Integer.parseInt(strings[2]);
+            int currenPriceCop = Integer.parseInt(strings[3]);
+            int currentQuantity = Integer.parseInt(strings[4]);
+            addProduct(currentName, currentCode, currentPriceRub,
+                    currenPriceCop, currentQuantity);
+            log.log(Level.FINE, "Product {0} has just been added", new Product(currentName, currentCode,
+                    currentPriceRub, currenPriceCop, currentQuantity));
+        } catch (IllegalArgumentException ex) {
+            log.log(Level.SEVERE, "Request is invalid", ex);
+        }
+        log.fine("done");
+    }
+
+    @Override
+    public String totalCostExactProductInRubles(int currentCode) {
+        int rubles = totalCostExactProduct(currentCode) / 100;
+        int copecks = totalCostExactProduct(currentCode) % 100;
+        return rubles + " rub " + copecks + " cop";
+    }
+
+    @Override
+    public String totalCostInRubles() {
+        int rubles = totalCost() / 100;
+        int copecks = totalCost() % 100;
+        return rubles + " rub " + copecks + " cop";
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -12,4 +12,10 @@ public interface PriceListInterface {
     int totalCostExactProduct(int currentCode);
 
     int totalCost();
+
+    void addProductByString(String currentProduct);
+
+    String totalCostExactProductInRubles(int currentCode);
+
+    String totalCostInRubles();
 }

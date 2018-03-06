@@ -1,7 +1,10 @@
 package ru.spbstu.kspt.task1;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Product {
+    private static Logger log = Logger.getLogger(Product.class.getName());
 
     private String name;
     private int code;
@@ -15,9 +18,11 @@ public class Product {
             this.priceRub = priceRub;
             this.priceCop = priceCop;
             this.quantity = quantity;
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            log.log(Level.INFO, "New item of type 'product' is created: {0}", this);
+        } catch (IllegalArgumentException ex) {
+            log.log(Level.SEVERE, "Arguments are inappropriate.", ex);
         }
+        log.fine("done");
     }
 
     public String getName() {
