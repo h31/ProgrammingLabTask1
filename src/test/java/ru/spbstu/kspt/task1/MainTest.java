@@ -55,30 +55,30 @@ class MainTest {
         AddressBook addressBook = createAddressBook();
         addressBook.changeAddress(new Person("Вязиков"), new Address("Харченко", 16, 540));
         addressBook.changeAddress(new Person("Дженжер"), new Address("Шателена", 18, 8));
-            assertEquals(new Address("Харченко", 16, 540),
-                    addressBook.getAddress(new Person("Вязиков")));
-            assertEquals(new Address("Шателена", 18, 8),
-                    addressBook.getAddress(new Person("Дженжер")));
-        }
-
+        assertEquals(new Address("Харченко", 16, 540),
+                addressBook.getAddress(new Person("Вязиков")));
+        assertEquals(new Address("Шателена", 18, 8),
+                addressBook.getAddress(new Person("Дженжер")));
+    }
 
 
     @Test
     void getAddress() {
         AddressBook addressBook = createAddressBook();
-            assertEquals(new Address("Ноябрьская", 47, 69),
-                    addressBook.getAddress(new Person("Новикова")));
-            assertEquals(new Address("Пролетарская", 360, 308),
-                    addressBook.getAddress(new Person("Дженжер")));
-        }
-
+        assertEquals(new Address("Ноябрьская", 47, 69),
+                addressBook.getAddress(new Person("Новикова")));
+        assertEquals(new Address("Пролетарская", 360, 308),
+                addressBook.getAddress(new Person("Дженжер")));
+    }
 
 
     @Test
     void findOnStreet() {
         AddressBook addressBook = createAddressBook();
-            assertEquals(Arrays.asList(new Person("Новикова"), new Person("Земская"),
-                    new Person("Вязиков")), addressBook.findOnStreet("Ноябрьская"));
+        assertEquals(Arrays.asList(new Person("Новикова"), new Person("Земская"),
+                new Person("Вязиков")), addressBook.findOnStreet("Ноябрьская"));
+        assertEquals(Arrays.asList(new Person("Дженжер")), addressBook.findOnStreet("Пролетарская"));
+        assertEquals(Arrays.asList(), addressBook.findOnStreet("Харченко"));
     }
 
 
@@ -87,5 +87,7 @@ class MainTest {
         AddressBook addressBook = createAddressBook();
         assertEquals(Arrays.asList(new Person("Новикова"), new Person("Земская")),
                 addressBook.findOnHouse("Ноябрьская", 47));
+        assertEquals(Arrays.asList(new Person("Багаутдинов")), addressBook.findOnHouse("Новая", 8));
+        assertEquals(Arrays.asList(), addressBook.findOnHouse("Харченко", 71));
     }
 }

@@ -42,4 +42,4 @@ public class Address {
         return this.house * this.flat + this.street.hashCode();
     }
 }
-// почитать про исключения и изменить их здесь в AddressBook и удалить из тестов
+
