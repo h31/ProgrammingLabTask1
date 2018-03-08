@@ -36,8 +36,13 @@ public class Dimension {
         return this;
     }
 
-    double getValue (String dimension){
-        return dimens.get(dimension);
+    double getValueDimension(String dimension) {
+        try {
+            return dimens.get(dimension);
+        }
+        catch (NullPointerException e) {
+            throw new NullPointerException("Размерности не совпадают");
+        }
     }
 
     @Override
@@ -57,8 +62,6 @@ public class Dimension {
 
     @Override
     public String toString() {
-        return "Dimension{" +
-                "dimens=" + dimens +
-                '}';
+        return "Dimension{" + dimens + '}';
     }
 }
