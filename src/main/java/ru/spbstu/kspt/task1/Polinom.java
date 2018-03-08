@@ -5,7 +5,6 @@ public class Polinom {
 
     private ArrayList<Integer> coef;
     private String function;
-    private int x;
     private int order;
 
     public Polinom(int order, String function) {
@@ -99,6 +98,32 @@ public class Polinom {
         return result;
     }
 
+    public Polinom quotient(Polinom pol) {
+        Polinom result = new Polinom(this.order - pol.order, "");
+        ArrayList<Double> dividend = new ArrayList<>(); // Делимое
+        ArrayList<Double> divider = new ArrayList<>(); // Делитель
+        ArrayList<Double> resultToDouble = new ArrayList<>(this.order - pol.order + 1); // Частное
+        for (int i = 0; i <= this.order; i++) {
+            dividend.add(i, this.coef.get(i).doubleValue());
+            if (i <= pol.order) divider.add(i, pol.coef.get(i).doubleValue());
+        }
+        int leadingMember = 0; // Ведущий член
+        while (leadingMember <= pol.order) {
+            resultToDouble.add(leadingMember, dividend.get(leadingMember) / divider.get(0));
+            System.out.println(resultToDouble.get(leadingMember));
+            for (int i = leadingMember; i <= pol.order; i++) {
+                dividend.set(i, dividend.get(i) - (resultToDouble.get(leadingMember) * divider.get(i)));
+            }
+            leadingMember++;
+        }
+
+        for (int i = 0; i <= result.order; i++) {
+            result.coef.add(i, (int) Math.round(resultToDouble.get(i)));
+        }
+        result.function = result.toString();
+        return result;
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
@@ -113,21 +138,13 @@ public class Polinom {
     public boolean equals(Object object) {
         Polinom pol = (Polinom) object;
         if (object.getClass() != this.getClass() || this.order != pol.order) return false;
-        int a, b;
-        Polinom maxPol, minPol;
-        if (this.coef.get(0) > pol.coef.get(0)) {
-            maxPol = this;
-            minPol = pol;
-        } else {
-            maxPol = pol;
-            minPol = this;
-        }
-        if ((maxPol.coef.get(0) % minPol.coef.get(0)) == 0) {
-            a = maxPol.coef.get(0) / minPol.coef.get(0);
+        double a, b;
+        if ((this.coef.get(0) % pol.coef.get(0)) == 0 && (pol.coef.get(0) != 0)) {
+            a = this.coef.get(0) / pol.coef.get(0);
         } else return false;
-        for (int i = 1; i <= 4; i++) {
-            if ((maxPol.coef.get(i) % minPol.coef.get(i)) == 0)
-                b = maxPol.coef.get(i) / minPol.coef.get(i);
+        for (int i = 1; i <= this.order; i++) {
+            if ((this.coef.get(i) % pol.coef.get(i)) == 0 && (pol.coef.get(i) != 0))
+                b = this.coef.get(i) / pol.coef.get(i);
             else return false;
             if (a != b) return false;
         }

@@ -28,4 +28,10 @@ class PolinomTest {
         assertEquals(102,
                 new Polinom(4, "7;3;-6;-1;-8").computation(2));
     }
+
+    @Test
+    void quotient() {
+        assertEquals(new Polinom(2, "-2;-1;0"),
+                new Polinom(4, "-7;3;0;-3;-8").quotient(new Polinom(2, "3;-2;0")));
+    }
 }
