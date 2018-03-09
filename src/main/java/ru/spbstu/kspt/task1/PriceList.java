@@ -11,36 +11,48 @@ import java.util.logging.Logger;
  * Main class
  */
 
-public class PriceList implements PriceListInterface {
+class PriceList implements PriceListInterface {
     private static Logger log = Logger.getLogger(PriceList.class.getName());
 
-    public final Map<Integer, Product> pricelist = new HashMap<>();
+    final Map<Integer, Product> pricelist = new HashMap<>();
 
     @Override
     public void addProduct(String name, int code, int priceRub, int priceCop, int quantity) {
-        pricelist.put(code, new Product(name, code, priceRub, priceCop, quantity));
-    }
-
-    @Override
-    public void removeProduct(int currentCode) {
-        pricelist.remove(currentCode);
-    }
-
-    @Override
-    public void priceChange(int currentCode, int currentPriceRub, int currentPriceCop) {
-        if (pricelist.containsKey(currentCode)) {
-            Product productChanged = new Product(pricelist.get(currentCode).getName(), currentCode, currentPriceRub,
-                    currentPriceCop, pricelist.get(currentCode).getQuantity());
-            pricelist.replace(currentCode, productChanged);
+        try {
+            pricelist.put(code, new Product(name, code, priceRub, priceCop, quantity));
+        } catch (IllegalArgumentException ex) {
+            log.log(Level.SEVERE, "Request is invalid", ex);
         }
     }
 
     @Override
-    public void nameChange(int currentCode, String currentName) {
-        if (pricelist.containsKey(currentCode)) {
-            Product productChanged = new Product(currentName, currentCode, pricelist.get(currentCode).getPriceRub(),
+    public void removeProduct(int currentCode) {
+        try {
+            pricelist.remove(currentCode);
+        } catch (IllegalArgumentException ex) {
+            log.log(Level.SEVERE, "Request is invalid", ex);
+        }
+    }
+
+    @Override
+    public void priceChange(int currentCode, int newPriceRub, int newPriceCop) {
+        try {
+            Product productChanged = new Product(pricelist.get(currentCode).getName(), currentCode, newPriceRub,
+                    newPriceCop, pricelist.get(currentCode).getQuantity());
+            pricelist.replace(currentCode, productChanged);
+        } catch (IllegalArgumentException ex) {
+                log.log(Level.SEVERE, "Request is invalid", ex);
+            }
+    }
+
+    @Override
+    public void nameChange(int currentCode, String newName) {
+        try {
+            Product productChanged = new Product(newName, currentCode, pricelist.get(currentCode).getPriceRub(),
                     pricelist.get(currentCode).getPriceCop(), pricelist.get(currentCode).getQuantity());
             pricelist.replace(currentCode, productChanged);
+        } catch (IllegalArgumentException ex) {
+            log.log(Level.SEVERE, "Request is invalid", ex);
         }
     }
 
@@ -54,16 +66,16 @@ public class PriceList implements PriceListInterface {
     @Override
     public int totalCost() {
         int sum = 0;
-        for (Product p : pricelist.values()) {
-            sum += totalCostExactProduct(p.getCode());
+        for (int i : pricelist.keySet()) {
+            sum += totalCostExactProduct(i);
         }
         return sum;
     }
 
     @Override
-    public void addProductByString(String currentProduct) {
+    public void addProductByString(String product) {
         try {
-            String[] strings = currentProduct.split(", ");
+            String[] strings = product.split(", ");
             String currentName = strings[0];
             int currentCode = Integer.parseInt(strings[1]);
             int currentPriceRub = Integer.parseInt(strings[2]);
