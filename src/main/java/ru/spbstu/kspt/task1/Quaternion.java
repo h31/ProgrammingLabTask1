@@ -9,15 +9,15 @@ import static java.lang.Math.*;
  * Quaternion class
  */
 
-public class Quaternion {
+public class Quaternion implements QuaternionInterface {
 
-    private static final Logger logger = LogManager.getLogger(ru.spbstu.kspt.task1.Quaternion.class);
+    private static final Logger logger = LogManager.getLogger(ru.spbstu.kspt.task1.Quaternion.class.getName());
 
-    private final Point vector;
+    private Point vector;
 
-    private final double scalar;
+    private double scalar;
 
-    static double round(double value) {
+    public static double round(double value) {
         int scale = (int) Math.pow(10, 9);
         return (double) Math.round(value * scale) / scale;
     }
@@ -25,6 +25,18 @@ public class Quaternion {
     Quaternion(Point vector, double scalar) {
         this.vector = vector;
         this.scalar = round(scalar);
+        logger.debug("Quaternion value is " + this);
+    }
+
+    Quaternion(double angle, Point axis) {
+        Point vector = axis.normal();
+        double scalar = cos(angle / 2.0);
+        double x = vector.x * sin(angle / 2.0);
+        double y = vector.y * sin(angle / 2.0);
+        double z = vector.z * sin(angle / 2.0);
+        this.vector = new Point(x, y, z);
+        this.scalar = round(scalar);
+        logger.debug("Quaternion value is " + this);
     }
 
     public Point getVector() {
@@ -33,6 +45,14 @@ public class Quaternion {
 
     public double getScalar() {
         return scalar;
+    }
+
+    public void setVector(Point p) {
+        this.vector = p;
+    }
+
+    public void setScalar(double d) {
+        this.scalar = d;
     }
 
     public Quaternion scalarMultiplication(double scalar1) {
@@ -87,24 +107,16 @@ public class Quaternion {
                 scalar * other.scalar - vector.x * other.vector.x - vector.y * other.vector.y - vector.z * other.vector.z);
     }
 
-    public static Quaternion getQuaternionByAxisAndAngle(Point axis, double angle) {
-        Point vector = axis.normal();
-        double scalar = cos(angle / 2.0);
-        double x = vector.x * sin(angle / 2.0);
-        double y = vector.y * sin(angle / 2.0);
-        double z = vector.z * sin(angle / 2.0);
-        return new Quaternion(new Point(x, y, z), scalar);
+
+    public double determineAngle() {
+        return acos(scalar / this.module()) * 2.0;
     }
 
-    public static double determineAngle(Quaternion q) {
-        return acos(q.scalar / q.module()) * 2.0;
-    }
-
-    public static Point determineAxis(Quaternion q) {
-        double mod = q.module();
-        double x = q.vector.x / mod;
-        double y = q.vector.y / mod;
-        double z = q.vector.z / mod;
+    public Point determineAxis() {
+        double mod = this.module();
+        double x = this.vector.x / mod;
+        double y = this.vector.y / mod;
+        double z = this.vector.z / mod;
         return new Point(x, y, z);
     }
 
@@ -138,61 +150,5 @@ public class Quaternion {
         if (scalar > 0) s += "+ " + scalar;
         else s += "- " + abs(scalar);
         return s;
-    }
-
-    public static class Point {
-
-        private final double x;
-
-        private final double y;
-
-        private final double z;
-
-
-        public Point(double x, double y, double z) {
-            this.x = round(x);
-            this.y = round(y);
-            this.z = round(z);
-        }
-
-        private Point normal() {
-            double length = this.length();
-            double x1 = x / length;
-            double y1 = y / length;
-            double z1 = z / length;
-            return new Point(x1, y1, z1);
-        }
-
-        private double length() {
-            return sqrt(x * x + y * y + z * z);
-        }
-
-        @Override
-        public String toString() {
-            return "(" + x + ", " + y + ", " + z + ")";
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) return true;
-            if (obj instanceof Point) {
-                Point other = (Point) obj;
-                return x == other.x && y == other.y && z == other.z;
-            }
-            return false;
-        }
-
-        @Override
-        public int hashCode() {
-            int result;
-            long temp;
-            temp = Double.doubleToLongBits(x);
-            result = (int) (temp ^ (temp >>> 32));
-            temp = Double.doubleToLongBits(y);
-            result = 31 * result + (int) (temp ^ (temp >>> 32));
-            temp = Double.doubleToLongBits(z);
-            result = 31 * result + (int) (temp ^ (temp >>> 32));
-            return result;
-        }
     }
 }
