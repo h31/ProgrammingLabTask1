@@ -6,7 +6,11 @@ import org.apache.logging.log4j.Logger;
 /**
  * Main class
  */
-class Quaternion {
+public class Main{
+
+    private static final Logger logger = LogManager.getLogger(Main.class);
+
+    public static class Quaternion {
     private double a;
     private double b;
     private double c;
@@ -44,16 +48,38 @@ class Quaternion {
                 p.a * q.c - p.b * q.d + p.c * q.a + p.d * q.b,
                 p.a * q.d + p.b * q.c - p.c * q.b + p.d * q.a);
     }
+
     public static Quaternion division(Quaternion p, double divisor) throws ArithmeticException {
         if (divisor == 0) throw new ArithmeticException("division by zero");
         return new Quaternion(p.a / divisor, p.b / divisor, p.c / divisor, p.d / divisor);
-    }
+        }
 }
-public class Main {
-    private static final Logger logger = LogManager.getLogger(Main.class);
 
-    public static void main(String[] args) {
-        logger.debug("Logging example");
-        System.out.println("Hello World!");
+    public static Quaternion rotation(double x, double y, double z, double angle) {
+        double r = Math.sqrt(x * x + y * y + z * z);
+        double s = Math.sin(angle / 2.0) / r;
+        return new Quaternion(x * s, y * s, z * s, Math.cos(angle / 2.0));
+    }
+
+    public static class Axis{
+    private double x;
+    private double y;
+    private double z;
+
+    public Axis(double x, double y, double z){
+        double r =  Math.sqrt(x * x + y * y + z * z);
+        x = this.x / r;
+        y = this.y / r;
+        z = this.z / r;
+    }
+    }
+    public static Axis axisDetermination(Quaternion q){
+        return new Axis (q.a, q.b, q.c);
+    }
+
+    public static double angleDetermination(Quaternion q){
+        return Math.acos(q.d /  Math.sqrt(q.a * q.a + q.b * q.b + q.c * q.c)) * 2.0;
     }
 }
+
+
