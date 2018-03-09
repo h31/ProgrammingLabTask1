@@ -22,19 +22,21 @@ public class TicTacToeField {
         }
     }
 
-    public void addCross(int row, int col) {
+    private void changeState(int row, int col, Cell.State state) {
         if (!cellOnField(row, col)) throw new IllegalArgumentException("it's not such cell on the mField");
-        mField[row][col].setState(CROSS);
+        mField[row][col].setState(state);
+    }
+
+    public void addCross(int row, int col) {
+        changeState(row, col, CROSS);
     }
 
     public void addNought(int row, int col) {
-        if (!cellOnField(row, col)) throw new IllegalArgumentException("it's not such cell on the mField");
-        mField[row][col].setState(NOUGHT);
+        changeState(row, col, NOUGHT);
     }
 
     public void clear(int row, int col) {
-        if (!cellOnField(row, col)) throw new IllegalArgumentException("it's not such cell on the mField");
-        mField[row][col].setState(EMPTY);
+        changeState(row, col, EMPTY);
     }
 
     private boolean cellOnField(int row, int col) {
@@ -50,7 +52,7 @@ public class TicTacToeField {
     };
 
     private ArrayList<CellPosition> longestSequence(Cell.State state) {
-        ArrayList<CellPosition> result = new ArrayList<CellPosition>();
+        ArrayList<CellPosition> result = new ArrayList<>();
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
                 for (CellPosition dir : DIRECTIONS) {
@@ -140,18 +142,18 @@ public class TicTacToeField {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj instanceof TicTacToeField) {
-            TicTacToeField other = (TicTacToeField) obj;
+        if (!(obj instanceof TicTacToeField)) return false;
 
-            if (other.size == this.size) {
-                for (int row = 0; row < this.size; row++) {
-                    for (int col = 0; col < this.size; col++) {
-                        if (this.mField[row][col] != this.mField[row][col]) return false;
-                    }
-                }
-                return true;
+        TicTacToeField other = (TicTacToeField) obj;
+
+        if (!(other.size == this.size)) return false;
+
+        for (int row = 0; row < this.size; row++) {
+            for (int col = 0; col < this.size; col++) {
+                if (this.mField[row][col] != this.mField[row][col]) return false;
             }
         }
-        return false;
+
+        return true;
     }
 }

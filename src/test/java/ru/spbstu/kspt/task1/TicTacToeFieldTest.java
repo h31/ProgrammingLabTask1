@@ -43,24 +43,38 @@ public class TicTacToeFieldTest {
     }
 
     @Test
-    void diagonalTest() {
+    void sequenceTest() {
         logger.info("Diagonal Test started");
 
         TicTacToeField testField = new TicTacToeField(4);
 
         testField.addCross(3, 0);
         testField.addCross(2, 1);
-        assertEquals(2, testField.longestCrossSequenceSize());
+        testField.addCross(1, 2);
+        testField.addCross(0, 3);
 
+        testField.addCross(2, 0);
+        testField.addCross(1, 1);
+        testField.addCross(0, 2);
+        assertEquals(4, testField.longestCrossSequenceSize());
+
+        testField.clear(2, 1);
+        assertEquals(3, testField.longestCrossSequenceSize());
+
+        testField.clear(1, 1);
+        testField.addNought(3, 1);
         testField.addCross(3, 2);
         assertEquals(2, testField.longestCrossSequenceSize());
 
-        testField.addCross(1, 2);
-        testField.addCross(0, 3);
+        testField.clear(3, 1);
+        testField.addCross(3, 1);
+        assertEquals(3, testField.longestCrossSequenceSize());
+
+        testField.addCross(2, 2);
         assertEquals(4, testField.longestCrossSequenceSize());
 
         logger.info("Final Field: \n" + testField.toString());
-        logger.info("Diagonal Test finished");
+        logger.info("Sequence Test finished");
     }
 
     @Test
@@ -79,7 +93,7 @@ public class TicTacToeFieldTest {
         assertEquals(1000, testField.longestNoughtSequenceSize());
         assertEquals(1, testField.longestCrossSequenceSize());
 
-        logger.info("Final Field: \n" + testField.toString());
+        logger.debug("Final Field: \n" + testField.toString());
         logger.info("Big Test finished");
     }
 }
