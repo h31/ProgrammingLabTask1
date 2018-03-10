@@ -54,9 +54,4 @@ class Price {
         result = 31 * result + getPriceCop();
         return result;
     }
-
-    @Override
-    public String toString() {
-        return   priceRub + " rub, " + priceCop + "cop";
-    }
 }

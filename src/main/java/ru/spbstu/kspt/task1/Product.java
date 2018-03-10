@@ -17,6 +17,7 @@ class Product {
         try {
             this.name = name;
             this.code = code;
+            this.price = price;
             this.quantity = quantity;
             log.log(Level.INFO, "New item of type 'product' is created: {0}", this);
         } catch (IllegalArgumentException ex) {
@@ -59,8 +60,8 @@ class Product {
 
     @Override
     public String toString() {
-        return "Product Code: " + code + ", Product Name: " + name + ", Product Price: " + price +
-                "Number of Items: " + quantity;
+        return "Product Code: " + code + ", Product Name: " + name + ", Product Price: " + price.getPriceRub() + "rub, "
+                + price.getPriceCop() + "cop, Number of Items: " + quantity;
     }
 
     @Override
