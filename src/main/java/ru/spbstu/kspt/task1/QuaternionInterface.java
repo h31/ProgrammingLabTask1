@@ -2,24 +2,26 @@ package ru.spbstu.kspt.task1;
 
 public interface QuaternionInterface {
 
-    Quaternion scalarMultiplication(double scalar1);
+    Quaternion multiplyOnScalar(double scalar1);
 
     Quaternion conjugate();
 
-    double module();
+    double abs();
 
-    Quaternion plus(Quaternion q);
+    Quaternion add(Quaternion q);
 
-    Quaternion minus(Quaternion q);
+    Quaternion substract(Quaternion q);
 
     Quaternion inverse();
 
-    double norm();
+    Quaternion normalize();
+
+    double getNorm();
 
     Quaternion multiply(Quaternion q);
 
     double determineAngle();
 
-    Point determineAxis();
+    Vector3 determineAxis();
 
 }
