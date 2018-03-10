@@ -126,52 +126,55 @@ public class Polinom {
         return result;
     }
 
-//    public Polinom remainder(Polinom pol) {
-//        Polinom result = new Polinom(pol.order - 1, "");
-//        ArrayList<Double> dividend = new ArrayList<>();
-//        ArrayList<Double> divider = new ArrayList<>();
-//        ArrayList<Double> resultToDouble = new ArrayList<>(this.order - pol.order + 1);
-//        for (int i = 0; i <= this.order; i++) {
-//            dividend.add(i, this.coef.get(i).doubleValue());
-//            if (i <= pol.order) divider.add(i, pol.coef.get(i).doubleValue());
-//        }
-//        int leadingMember = 0;
-//        int k = 0;
-//        while (leadingMember <= pol.order) {
-//            resultToDouble.add(leadingMember, dividend.get(leadingMember) / divider.get(0));
-//            for (int i = leadingMember; i <= pol.order; i++) {
-//                dividend.set(i, dividend.get(i) - (resultToDouble.get(leadingMember) * divider.get(k)));
-//                k++;
-//            }
-//            k = 0;
-//            leadingMember++;
-//        }
-//        for (int i = 0; i < dividend.size(); i++) {
-//            System.out.println(dividend.get(i) + " ");
-//        }
-////        dividend.set(pol.order + 1,
-////                dividend.get(pol.order + 1) - (resultToDouble.get(leadingMember - 2) * divider.get(pol.order)));
-////        for (int i = 0; i < dividend.size(); i++) {
-////            System.out.println(dividend.get(i) + " ");
-////        }
-////         k = pol.order - 1;
-////        for (int i = pol.order + 1; i < dividend.size(); i++) {
-////            dividend.set(i, dividend.get(i) - (resultToDouble.get(leadingMember - 1) * divider.get(k)));
-////            k++;
-////        }
-////
-////        for (int i = 0; i < dividend.size(); i++) {
-////            System.out.println(dividend.get(i) + " ");
-////        }
-//
-//        int q = dividend.size() - 1;
-//        for (int i = result.order; i >= 0; i--) {
-//            result.coef.set(i, (int) Math.round(dividend.get(q)));
-//            q--;
-//        }
-//        result.function = result.toString();
-//        return result;
-//    }
+    private Polinom cleaning() {
+        ArrayList<Integer> resultCoef = new ArrayList<>();
+        for (int i = 0; i <= this.order; i++) {
+            if (this.coef.get(i) != 0) {
+                for (int j = i; j <= this.order; j++) {
+                    resultCoef.add(this.coef.get(j));
+                }
+                break;
+            }
+        }
+        Polinom result = new Polinom(resultCoef.size() - 1, "");
+        for (int i = 0; i <= result.order; i++) {
+            result.coef.set(i, resultCoef.get(i));
+        }
+        result.function = result.toString();
+        return result;
+    }
+
+    public Polinom remainder(Polinom pol) {
+        Polinom result = new Polinom(pol.order - 1, "");
+        ArrayList<Double> dividend = new ArrayList<>();
+        ArrayList<Double> divider = new ArrayList<>();
+        ArrayList<Double> resultToDouble = new ArrayList<>(this.order - pol.order + 1);
+        for (int i = 0; i <= this.order; i++) {
+            dividend.add(i, this.coef.get(i).doubleValue());
+            if (i <= pol.order) divider.add(i, pol.coef.get(i).doubleValue());
+        }
+        int leadingMember = 0;
+        int k = 0;
+        int counter = pol.order;
+        while (counter <= this.order) {
+            resultToDouble.add(leadingMember, dividend.get(leadingMember) / divider.get(0));
+            for (int i = leadingMember; i <= counter; i++) {
+                dividend.set(i, dividend.get(i) - (resultToDouble.get(leadingMember) * divider.get(k)));
+                k++;
+            }
+            k = 0;
+            leadingMember++;
+            counter++;
+        }
+        int q = dividend.size() - 1;
+        for (int i = result.order; i >= 0; i--) {
+            result.coef.set(i, (int) Math.round(dividend.get(q)));
+            q--;
+        }
+        result = result.cleaning();
+        result.function = result.toString();
+        return result;
+    }
 
     @Override
     public String toString() {
@@ -188,6 +191,7 @@ public class Polinom {
         Polinom pol = (Polinom) object;
         if (object.getClass() != this.getClass() || this.order != pol.order) return false;
         double a, b;
+
         if ((this.coef.get(0) % pol.coef.get(0)) == 0) {
             a = this.coef.get(0) / pol.coef.get(0);
         } else return false;
