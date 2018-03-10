@@ -19,6 +19,10 @@ public class Dimension {
         dimens = new HashMap<>();
     }
 
+    Map<String, Double> getDimens() {
+        return dimens;
+    }
+
     Dimension getLengthDimensions() {
         return new Dimension().addDimension("км",100000).addDimension("м",100).
                 addDimension("дм",10).addDimension("см",1);

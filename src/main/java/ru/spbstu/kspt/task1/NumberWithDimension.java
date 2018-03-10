@@ -44,16 +44,26 @@ class NumberWithDimension implements Comparable<NumberWithDimension>, NumberWith
 
     @Override
     public NumberWithDimension plus(NumberWithDimension other) { // Сложение размерных чисел
+        if(dimensionClass.getDimens().equals(other.dimensionClass.getDimens())) {
             return new NumberWithDimension(number + other.number *
                     (other.dimensionClass.getValueDimension(other.dimension) /
                             dimensionClass.getValueDimension(dimension)), dimension, dimensionClass);
+        }
+        else {
+            throw new IllegalArgumentException("Размерности не совпадают");
+        }
     }
 
     @Override
     public NumberWithDimension minus(NumberWithDimension other) { // Вычитание размерных чисел
-        return new NumberWithDimension(number - other.number *
-                (other.dimensionClass.getValueDimension(other.dimension) /
-                        dimensionClass.getValueDimension(dimension)), dimension, dimensionClass);
+        if(dimensionClass.getDimens().equals(other.dimensionClass.getDimens())) {
+            return new NumberWithDimension(number - other.number *
+                    (other.dimensionClass.getValueDimension(other.dimension) /
+                            dimensionClass.getValueDimension(dimension)), dimension, dimensionClass);
+        }
+        else {
+            throw new IllegalArgumentException("Размерности не совпадают");
+        }
     }
 
     @Override
@@ -68,8 +78,13 @@ class NumberWithDimension implements Comparable<NumberWithDimension>, NumberWith
 
     @Override
     public double divideForDim(NumberWithDimension other) { // Деление на другое число с размерностью
-        return number / (other.number * (other.dimensionClass.getValueDimension(other.dimension) /
-                dimensionClass.getValueDimension(other.dimension)));
+        if(dimensionClass.getDimens().equals(other.dimensionClass.getDimens())) {
+            return number / (other.number * (other.dimensionClass.getValueDimension(other.dimension) /
+                    dimensionClass.getValueDimension(other.dimension)));
+        }
+        else {
+            throw new IllegalArgumentException("Размерности не совпадают");
+        }
     }
 
     @Override
