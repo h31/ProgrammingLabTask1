@@ -3,6 +3,8 @@ package ru.spbstu.kspt.task1;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.logging.Level;
+
 /**
  * Класс числа с размерностью
  *
@@ -16,7 +18,7 @@ import org.apache.logging.log4j.Logger;
  *
  * divideForDim - деление размерных чисел
  */
-class NumberWithDimension implements Comparable<NumberWithDimension> {
+class NumberWithDimension implements Comparable<NumberWithDimension>, NumberWithDimensionInterface {
 
     private double number;
 
@@ -24,16 +26,14 @@ class NumberWithDimension implements Comparable<NumberWithDimension> {
 
     private Dimension dimensionClass;
 
-    double getNumber() {
+    @Override
+    public double getNumber() {
         return number;
     }
 
-    String getDimension() {
+    @Override
+    public String getDimension() {
         return dimension;
-    }
-
-    Dimension getDimensionClass() {
-        return dimensionClass;
     }
 
     NumberWithDimension(double number, String dimension, Dimension dimensionClass) {
@@ -42,32 +42,38 @@ class NumberWithDimension implements Comparable<NumberWithDimension> {
         this.dimensionClass = dimensionClass;
     }
 
-    NumberWithDimension plus(NumberWithDimension other) { // Сложение размерных чисел
+    @Override
+    public NumberWithDimension plus(NumberWithDimension other) { // Сложение размерных чисел
             return new NumberWithDimension(number + other.number *
                     (other.dimensionClass.getValueDimension(other.dimension) /
                             dimensionClass.getValueDimension(dimension)), dimension, dimensionClass);
     }
 
-    NumberWithDimension minus(NumberWithDimension other) { // Вычитание размерных чисел
+    @Override
+    public NumberWithDimension minus(NumberWithDimension other) { // Вычитание размерных чисел
         return new NumberWithDimension(number - other.number *
                 (other.dimensionClass.getValueDimension(other.dimension) /
                         dimensionClass.getValueDimension(dimension)), dimension, dimensionClass);
     }
 
-    NumberWithDimension multiply(double multi) { // Умножение на вещественное число
+    @Override
+    public NumberWithDimension multiply(double multi) { // Умножение на вещественное число
         return new NumberWithDimension(number * multi, dimension, dimensionClass);
     }
 
-    NumberWithDimension divide(double div) { // Деление на вещественное число
+    @Override
+    public NumberWithDimension divide(double div) { // Деление на вещественное число
         return new NumberWithDimension(number / div, dimension, dimensionClass);
     }
 
-    double divideForDim(NumberWithDimension other) { // Деление на другое число с размерностью
+    @Override
+    public double divideForDim(NumberWithDimension other) { // Деление на другое число с размерностью
         return number / (other.number * (other.dimensionClass.getValueDimension(other.dimension) /
                 dimensionClass.getValueDimension(other.dimension)));
     }
 
-    NumberWithDimension translate (String other) { //Переводим вещественное число из одной величины в другую
+    @Override
+    public NumberWithDimension translation (String other) { //Переводим вещественное число из одной величины в другую
         return new NumberWithDimension(number *
                 (dimensionClass.getValueDimension(dimension) / dimensionClass.getValueDimension(other)),
                 other, dimensionClass);
