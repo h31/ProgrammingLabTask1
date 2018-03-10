@@ -3,7 +3,8 @@ package ru.spbstu.kspt.task1;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static ru.spbstu.kspt.task1.Cell.State.*;
+import static ru.spbstu.kspt.task1.Cell.*;
+
 
 public class TicTacToeField {
     private final int size;
@@ -17,14 +18,14 @@ public class TicTacToeField {
 
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
-                mField[row][col] = new Cell();
+                mField[row][col] = EMPTY;
             }
         }
     }
 
-    private void changeState(int row, int col, Cell.State state) {
+    private void changeState(int row, int col, Cell cell) {
         if (!cellOnField(row, col)) throw new IllegalArgumentException("it's not such cell on the mField");
-        mField[row][col].setState(state);
+        mField[row][col] = cell;
     }
 
     public void addCross(int row, int col) {
@@ -51,15 +52,16 @@ public class TicTacToeField {
             new CellPosition(-1, 1), new CellPosition(0, 1), new CellPosition(1, 0), new CellPosition(1, 1)
     };
 
-    private ArrayList<CellPosition> longestSequence(Cell.State state) {
+    private ArrayList<CellPosition> longestSequence(Cell cell) {
         ArrayList<CellPosition> result = new ArrayList<>();
+
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
                 for (CellPosition dir : DIRECTIONS) {
                     CellPosition currentCellPosition = new CellPosition(row, col);
                     ArrayList<CellPosition> currentSequence = new ArrayList<CellPosition>();
 
-                    while (currentCellPosition.getCell(mField).getState() == state) {
+                    while (currentCellPosition.getCell(mField) == cell) {
                         currentSequence.add(currentCellPosition);
                         CellPosition nextCellPosition = currentCellPosition.shift(dir);
 
@@ -114,7 +116,7 @@ public class TicTacToeField {
         StringBuilder stringBuilder = new StringBuilder();
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
-                switch (mField[row][col].getState()) {
+                switch (mField[row][col]) {
                     case EMPTY:
                         stringBuilder.append(' ');
                         break;
