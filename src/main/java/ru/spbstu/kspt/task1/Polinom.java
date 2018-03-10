@@ -1,4 +1,5 @@
 package ru.spbstu.kspt.task1;
+
 import java.util.ArrayList;
 
 public class Polinom {
@@ -10,6 +11,9 @@ public class Polinom {
     public Polinom(int order, String function) {
         this.coef = new ArrayList<>();
         this.order = order;
+        if (this.order < 0) {
+            throw new UnsupportedOperationException("Порядок полинома не может быть меньше нуля");
+        }
         this.function = function;
         if (!this.function.equals("")) {
             String[] parts = this.function.split(";");
@@ -17,9 +21,8 @@ public class Polinom {
                 if (!parts[i].isEmpty())
                     this.coef.add(Integer.parseInt(parts[i]));
             }
-        }
-        else {
-            for (int i = 0; i <= this.order; i++){
+        } else {
+            for (int i = 0; i <= this.order; i++) {
                 this.coef.add(0);
             }
         }
@@ -83,22 +86,18 @@ public class Polinom {
         return result;
     }
 
-    private int exponentation(int value, int power) {
-        int result = 1;
-        for (int i = 0; i < power; i++) result*=value;
-        return result;
-    }
-
-
     public int computation(int x) {
         int result = 0;
         for (int i = 0; i <= this.order; i++) {
-            result += exponentation(x, i) * this.coef.get(this.coef.size() - i - 1);
+            result += Math.pow(x, i) * this.coef.get(this.coef.size() - i - 1);
         }
         return result;
     }
 
     public Polinom quotient(Polinom pol) {
+        if (this.order < pol.order) {
+            throw new UnsupportedOperationException("Порядок делимого не может быть меньше порядка делителя");
+        }
         Polinom result = new Polinom(this.order - pol.order, "");
         ArrayList<Double> dividend = new ArrayList<>();
         ArrayList<Double> divider = new ArrayList<>();
@@ -111,7 +110,7 @@ public class Polinom {
         int k = 0;
         while (leadingMember <= pol.order) {
             resultToDouble.add(leadingMember, dividend.get(leadingMember) / divider.get(0));
-            for (int i = leadingMember; i <= pol.order ; i++) {
+            for (int i = leadingMember; i <= pol.order; i++) {
                 dividend.set(i, dividend.get(i) - (resultToDouble.get(leadingMember) * divider.get(k)));
                 k++;
             }
@@ -145,6 +144,9 @@ public class Polinom {
     }
 
     public Polinom remainder(Polinom pol) {
+        if (this.order < pol.order) {
+            throw new UnsupportedOperationException("Порядок делимого не может быть меньше порядка делителя");
+        }
         Polinom result = new Polinom(pol.order - 1, "");
         ArrayList<Double> dividend = new ArrayList<>();
         ArrayList<Double> divider = new ArrayList<>();
@@ -201,12 +203,19 @@ public class Polinom {
                     b = this.coef.get(i) / pol.coef.get(i);
                 else return false;
                 if (a != b) return false;
-            }
-            else {
+            } else {
                 if (this.coef.get(i) != 0) return false;
             }
         }
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 11;
+        int result;
+        result = prime * this.function.hashCode();
+        return result;
     }
 
     public static void main(String[] args) {
