@@ -12,7 +12,7 @@ class Main implements MainInterface {
 
     private static boolean checkNum(String numFormat) {
 
-        Pattern p = Pattern.compile("[\\d*#()\\-+]+");
+        Pattern p = Pattern.compile("[\\d*#\\-+]+");
         Matcher m = p.matcher(numFormat);
         return m.matches();
     }
