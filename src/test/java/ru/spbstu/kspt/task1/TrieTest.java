@@ -13,20 +13,43 @@ public class TrieTest {
     void exampleTest() {
         logger.info("Test started");
         Trie testTrie = new Trie();
-        assertEquals(false, testTrie.find("word"));
+        testTrie.insert("wolk");
+        testTrie.insert("kotAssFirst");
+        testTrie.insert("russian");
+        testTrie.insert("walt");
+        testTrie.insert("roll");
+        testTrie.insert("rrrrock");
         testTrie.insert("word");
+        testTrie.insert("world");
         assertEquals(true, testTrie.find("word"));
-        testTrie.insert("worry");
-        assertEquals(true, testTrie.find("worry"));
+        testTrie.insert("worty");
+        assertEquals(true, testTrie.find("worty"));
         assertEquals(true, testTrie.find("wor"));
         assertEquals(false, testTrie.find("hello"));
         testTrie.insert("kotlin");
         assertEquals(true, testTrie.find("kotlin"));
+        testTrie.insert("rrrrrrrrrr");
+        assertEquals(true, testTrie.find("rrrrrrrrrr"));
+        testTrie.delete("world");
+        assertEquals(false, testTrie.find("world"));
+        testTrie.delete("rrrrock");
+        assertEquals(false, testTrie.find("rrrrock"));
+        testTrie.delete("russian");
+        assertEquals(false, testTrie.find("russian"));
+        testTrie.delete("kotAssFirst");
+        assertEquals(false, testTrie.find("kotAssFirst"));
+        testTrie.delete("roll");
+        assertEquals(false, testTrie.find("roll"));
+        testTrie.delete("walt");
+        assertEquals(false, testTrie.find("walt"));
+        testTrie.delete("worty");
+        assertEquals(false, testTrie.find("worty"));
+        assertEquals(true, testTrie.find("wort"));
+        assertEquals(true, testTrie.find("word"));
         testTrie.delete("kotlin");
         assertEquals(false, testTrie.find("kotlin"));
-        testTrie.delete("word");
-        assertEquals(false, testTrie.find("word"));
-        assertEquals(true, testTrie.find("worry"));
+
+
         logger.info("Test finished");
     }
 }
