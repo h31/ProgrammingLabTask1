@@ -3,20 +3,20 @@ package ru.spbstu.kspt.task1;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Product {
+import static java.lang.System.in;
+
+class Product {
     private static Logger log = Logger.getLogger(Product.class.getName());
 
     private String name;
     private int code;
-    private int priceRub, priceCop;
+    private Price price;
     private int quantity;
 
-    public Product(String name, int code, int priceRub, int priceCop, int quantity) {
+    Product(int code, String name, Price price, int quantity) {
         try {
             this.name = name;
             this.code = code;
-            this.priceRub = priceRub;
-            this.priceCop = priceCop;
             this.quantity = quantity;
             log.log(Level.INFO, "New item of type 'product' is created: {0}", this);
         } catch (IllegalArgumentException ex) {
@@ -25,40 +25,32 @@ public class Product {
         log.fine("done");
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getCode() {
+    int getCode() {
         return code;
     }
 
-    public int getPriceRub() {
-        return priceRub;
+    String getName() {
+        return name;
     }
 
-    public int getPriceCop() {
-        return priceCop;
+    Price getPrice() {
+        return price;
     }
 
-    public int getQuantity() {
+    int getQuantity() {
         return quantity;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setCode(int code) {
         this.code = code;
     }
 
-    public void setPriceRub(int priceRub) {
-        this.priceRub = priceRub;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setPriceCop(int priceCop) {
-        this.priceCop = priceCop;
+    public void setPrice(Price price) {
+        this.price = price;
     }
 
     public void setQuantity(int quantity) {
@@ -67,8 +59,8 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product Name: " + name + "; Product Code: " + code + "; Product Price: " + priceRub +
-                " rub, " + priceCop + "cop; Number of Items: " + quantity;
+        return "Product Code: " + code + ", Product Name: " + name + ", Product Price: " + price +
+                "Number of Items: " + quantity;
     }
 
     @Override
@@ -79,18 +71,16 @@ public class Product {
         Product product = (Product) o;
 
         if (code != product.code) return false;
-        if (priceRub != product.priceRub) return false;
-        if (priceCop != product.priceCop) return false;
+        if (!price.equals(product.price)) return false;
         if (quantity != product.quantity) return false;
         return name != null ? name.equals(product.name) : product.name == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getName().hashCode();
+        int result = getName() != null ? getName().hashCode() : 0;
         result = 31 * result + getCode();
-        result = 31 * result + getPriceRub();
-        result = 31 * result + getPriceCop();
+        result = 31 * result + (getPrice() != null ? getPrice().hashCode() : 0);
         result = 31 * result + getQuantity();
         return result;
     }

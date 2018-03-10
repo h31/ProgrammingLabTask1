@@ -17,50 +17,56 @@ class PriceList implements PriceListInterface {
     final Map<Integer, Product> pricelist = new HashMap<>();
 
     @Override
-    public void addProduct(String name, int code, int priceRub, int priceCop, int quantity) {
+    public void addProduct(int code, String name, int priceRub, int priceCop, int quantity) {
         try {
-            pricelist.put(code, new Product(name, code, priceRub, priceCop, quantity));
+            pricelist.put(code, new Product(code, name, new Price(priceRub, priceCop), quantity));
         } catch (IllegalArgumentException ex) {
             log.log(Level.SEVERE, "Request is invalid", ex);
         }
     }
 
     @Override
-    public void removeProduct(int currentCode) {
+    public void removeProduct(int code) {
         try {
-            pricelist.remove(currentCode);
+            pricelist.remove(code);
+        } catch (IllegalArgumentException ex) {
+            log.log(Level.SEVERE, "Request is invalid", ex);
+            throw ex;
+        }
+    }
+
+    @Override
+    public void priceChange(int code, int newPriceRub, int newPriceCop) {
+        try {
+            Product productChanged = new Product(code, pricelist.get(code).getName(),
+                    new Price(newPriceRub, newPriceCop), pricelist.get(code).getQuantity());
+            pricelist.replace(code, productChanged);
         } catch (IllegalArgumentException ex) {
             log.log(Level.SEVERE, "Request is invalid", ex);
         }
     }
 
     @Override
-    public void priceChange(int currentCode, int newPriceRub, int newPriceCop) {
+    public void nameChange(int code, String newName) {
         try {
-            Product productChanged = new Product(pricelist.get(currentCode).getName(), currentCode, newPriceRub,
-                    newPriceCop, pricelist.get(currentCode).getQuantity());
-            pricelist.replace(currentCode, productChanged);
-        } catch (IllegalArgumentException ex) {
-                log.log(Level.SEVERE, "Request is invalid", ex);
-            }
-    }
-
-    @Override
-    public void nameChange(int currentCode, String newName) {
-        try {
-            Product productChanged = new Product(newName, currentCode, pricelist.get(currentCode).getPriceRub(),
-                    pricelist.get(currentCode).getPriceCop(), pricelist.get(currentCode).getQuantity());
-            pricelist.replace(currentCode, productChanged);
+            Product productChanged = new Product(code, newName, pricelist.get(code).getPrice(),
+                    pricelist.get(code).getQuantity());
+            pricelist.replace(code, productChanged);
         } catch (IllegalArgumentException ex) {
             log.log(Level.SEVERE, "Request is invalid", ex);
         }
     }
 
     @Override
-    public int totalCostExactProduct(int currentCode) {
-        return (pricelist.get(currentCode).getPriceRub() * 100 +
-                pricelist.get(currentCode).getPriceCop()) *
-                pricelist.get(currentCode).getQuantity();
+    public int totalCostExactProduct(int code) {
+        try {
+            return (pricelist.get(code).getPrice().getPriceRub() * 100 +
+                    pricelist.get(code).getPrice().getPriceCop()) *
+                    pricelist.get(code).getQuantity();
+        } catch (IllegalArgumentException ex) {
+            log.log(Level.SEVERE, "Request is invalid", ex);
+            throw ex;
+        }
     }
 
     @Override
@@ -76,34 +82,24 @@ class PriceList implements PriceListInterface {
     public void addProductByString(String product) {
         try {
             String[] strings = product.split(", ");
-            String currentName = strings[0];
-            int currentCode = Integer.parseInt(strings[1]);
-            int currentPriceRub = Integer.parseInt(strings[2]);
-            int currenPriceCop = Integer.parseInt(strings[3]);
-            int currentQuantity = Integer.parseInt(strings[4]);
-            addProduct(currentName, currentCode, currentPriceRub,
-                    currenPriceCop, currentQuantity);
-            log.log(Level.FINE, "Product {0} has just been added", new Product(currentName, currentCode,
-                    currentPriceRub, currenPriceCop, currentQuantity));
+            if (strings.length != 4 || strings[2].split(".").length != 2) {
+                throw new IllegalArgumentException("Request is invalid");
+            }
+            int currentCode = Integer.parseInt(strings[0]);
+            String currentName = strings[1];
+            int currentPriceRub = Integer.parseInt(strings[2].split(".")[0]);
+            int currentPriceCop = Integer.parseInt(strings[2].split(".")[1]);
+            int currentQuantity = Integer.parseInt(strings[3]);
+            addProduct(currentCode, currentName, currentPriceRub,
+                    currentPriceCop, currentQuantity);
+            log.log(Level.FINE, "Product {0} has just been added", new Product(currentCode, currentName,
+                    new Price(currentPriceRub, currentPriceCop), currentQuantity));
         } catch (IllegalArgumentException ex) {
             log.log(Level.SEVERE, "Request is invalid", ex);
         }
         log.fine("done");
     }
 
-    @Override
-    public String totalCostExactProductInRubles(int currentCode) {
-        int rubles = totalCostExactProduct(currentCode) / 100;
-        int copecks = totalCostExactProduct(currentCode) % 100;
-        return rubles + " rub " + copecks + " cop";
-    }
-
-    @Override
-    public String totalCostInRubles() {
-        int rubles = totalCost() / 100;
-        int copecks = totalCost() % 100;
-        return rubles + " rub " + copecks + " cop";
-    }
 
     @Override
     public boolean equals(Object o) {

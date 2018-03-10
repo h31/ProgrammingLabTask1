@@ -1,11 +1,11 @@
 package ru.spbstu.kspt.task1;
 
-public interface PriceListInterface {
-    void addProduct(String name, int code, int priceRub, int priceCop, int quantity);
+interface PriceListInterface {
+    void addProduct(int code, String name, int priceRub, int priceCop, int quantity);
 
     void removeProduct(int currentCode);
 
-    void priceChange(int currentCode, int currentPriceRub, int currentPriceCop);
+    void priceChange(int currentCode, int newPriceRub, int newPriceCop);
 
     void nameChange(int currentCode, String currentName);
 
@@ -14,8 +14,4 @@ public interface PriceListInterface {
     int totalCost();
 
     void addProductByString(String currentProduct);
-
-    String totalCostExactProductInRubles(int currentCode);
-
-    String totalCostInRubles();
 }
