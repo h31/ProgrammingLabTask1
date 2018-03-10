@@ -32,6 +32,16 @@ class PolinomTest {
     @Test
     void quotient() {
         assertEquals(new Polinom(2, "-2;-1;0"),
-                new Polinom(4, "-7;3;0;-3;-8").quotient(new Polinom(2, "3;-2;0")));
+                new Polinom(4, "-7;3;-7;-3;-8").quotient(new Polinom(2, "3;-2;4")));
+        assertEquals(new Polinom(2, "1;-1;2"),
+                new Polinom(6, "3;-4;2;8;-1;9;3").quotient(new Polinom(4, "5;5;-2;1;-7")));
     }
+
+//    @Test
+//    void remainder() {
+////        assertEquals(new Polinom(1, "0;-10"),
+////                new Polinom(4, "-7;3;-7;-3;-8").remainder(new Polinom(2, "3;-2;4")));
+//        assertEquals(new Polinom(3, "-6;9;3;17"),
+//                new Polinom(6, "3;-4;2;8;-1;9;3").remainder(new Polinom(4, "5;5;-2;1;-7")));
+//    }
 }
