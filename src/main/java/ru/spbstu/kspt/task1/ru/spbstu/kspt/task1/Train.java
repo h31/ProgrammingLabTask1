@@ -39,7 +39,6 @@ public class Train {
     @Override
     public boolean equals(Object obj){
         Train train = (Train) obj;
-        if (train == obj) return true;
 
         if ((train.name != this.name) || (train.terminal != this.terminal) || (train.table != this.table)) return false;
 

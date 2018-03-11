@@ -39,7 +39,7 @@ class TrainsTest {
         put("Kupchino", "15000");
         put("Nevsky", "20000");
         put("Gorkovsky", "30000");
-        put("Lesnaya", "40000");
+        put("Lesnaya", "51000");
 
     }};
 
@@ -52,7 +52,7 @@ class TrainsTest {
     Train trainResult = new Train("TEST", "DEVYATKINO", tableResult);
     Train trainResult2 = new Train("TEST2", "RYBACKOE", tableResult2);
     Train trainResult3 = new Train("TEST3", "VETERANOV", tableResult3);
-    Train trainResult4 = new Train("TEST3", "VETERANOV", tableResult4);
+    Train trainResult4 = new Train("TEST4", "LENINSKY", tableResult4);
     ArrayList<Train> list = new ArrayList() {{
         add(trainResult);
         add(trainResult2);
@@ -115,6 +115,6 @@ class TrainsTest {
     void searchTrain() {
         Train finded = trainsResult.searchTrain("50000", "Lesnaya");
 
-        assertEquals(finded, trainResult3);
+        assertEquals(finded, trainResult4);
     }
 }

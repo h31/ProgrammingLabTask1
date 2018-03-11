@@ -165,13 +165,14 @@ public class Trains {
 
     public Train searchTrain(String time, String station) {
         Train last = new Train();
-        for (int i = 0; i < Trains.size() - 1; i++) {
-            int division = 86400;
+        int division = 86400;
+        for (int i = 0; i < Trains.size(); i++) {
             Train train = Trains.get(i);
             Table table = train.getTable();
             if (table.haveThis(station)) {
+
                 int seconds = Integer.parseInt(table.get(station));
-                if (seconds - Integer.parseInt(time) < division) {
+                if ((seconds - Integer.parseInt(time) < division) && (seconds - Integer.parseInt(time) > 0)){
                     division = seconds - Integer.parseInt(time);
                     last = train;
                 }
