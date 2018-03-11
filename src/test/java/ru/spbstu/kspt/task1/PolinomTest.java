@@ -45,5 +45,8 @@ class PolinomTest {
         assertEquals(new Polinom(1, "1;-8"),
                 new Polinom(4, "2;-10;23;-22;-3").remainder
                         (new Polinom(2, "1;-3;5")));
+        assertEquals(new Polinom(0, "0"),
+                new Polinom(3, "3;-5;-6;8").remainder
+                        (new Polinom(2, "3;1;-4")));
     }
 }

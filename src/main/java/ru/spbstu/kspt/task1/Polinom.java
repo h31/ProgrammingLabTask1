@@ -134,6 +134,11 @@ public class Polinom {
                 }
                 break;
             }
+            if (i == this.order) {
+                Polinom resultZero = new Polinom(0, "0");
+                resultZero.coef.add(0);
+                return resultZero;
+            }
         }
         Polinom result = new Polinom(resultCoef.size() - 1, "");
         for (int i = 0; i <= result.order; i++) {
@@ -193,7 +198,7 @@ public class Polinom {
         Polinom pol = (Polinom) object;
         if (object.getClass() != this.getClass() || this.order != pol.order) return false;
         double a, b;
-
+        if (this.coef.get(0) == 0 && pol.coef.get(0) == 0) return true;
         if ((this.coef.get(0) % pol.coef.get(0)) == 0) {
             a = this.coef.get(0) / pol.coef.get(0);
         } else return false;
