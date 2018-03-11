@@ -25,7 +25,7 @@ class NumberWithDimensionTest {
     }
 
     @Test
-    void plus() throws IllegalArgumentException{
+    void plus() {
         logger.info("Начало теста на сложение с вещественным числом с размерностью, " +
                 "используя уже приготовленные размерности.");
         assertEquals(new NumberWithDimension(4.0,"км",
@@ -187,7 +187,7 @@ class NumberWithDimensionTest {
                         new Dimensions().getLengthDimensions()),
                 new NumberWithDimension(2.0,"км",
                         new Dimensions().getLengthDimensions())
-                        .plus(new NumberWithDimension(2.0,"км",
+                        .divideForDim(new NumberWithDimension(2.0,"км",
                                 new Dimensions().getWeightDimensions()))); }
         catch (IllegalArgumentException e) {
             System.out.println("Ошибка поймана.");
@@ -222,8 +222,7 @@ class NumberWithDimensionTest {
                         new Dimensions().getLengthDimensions()),
                 new NumberWithDimension(2.0,"км",
                         new Dimensions().getLengthDimensions())
-                        .plus(new NumberWithDimension(2.0,"км",
-                                new Dimensions().getWeightDimensions()))); }
+                        .translate("glhf")); }
         catch (IllegalArgumentException e) {
             System.out.println("Ошибка поймана.");
         }
@@ -265,7 +264,7 @@ class NumberWithDimensionTest {
                         new Dimensions().getLengthDimensions()),
                 new NumberWithDimension(2.0,"км",
                         new Dimensions().getLengthDimensions())
-                        .plus(new NumberWithDimension(2.0,"км",
+                        .compareTo(new NumberWithDimension(2.0,"км",
                                 new Dimensions().getWeightDimensions()))); }
         catch (IllegalArgumentException e) {
             System.out.println("Ошибка поймана.");
