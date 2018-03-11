@@ -3,7 +3,7 @@ package ru.spbstu.kspt.task1;
 import java.util.*;
 
 
-public class AddressBook {
+public class AddressBook implements AddressBookInterface{
     public Map<Person, Address> addressBook = new LinkedHashMap<>();
 
     public AddressBook() {
