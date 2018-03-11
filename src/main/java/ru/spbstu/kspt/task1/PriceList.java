@@ -3,47 +3,52 @@ package ru.spbstu.kspt.task1;
 import java.util.ArrayList;
 
 public class PriceList {
-    private ArrayList<Product> listOfProducts;
+    public ArrayList<Product> PriceList = new ArrayList<>();
 
-    public class Product {
-        String name;
-        int code;
-        int price;
+    PriceList(ArrayList list){
+        PriceList = list;
+    }
+    PriceList(){
 
-        Product(String name, int code, int price) {
-            this.name = name;
-            this.code = code;
-            this.price = price;
-        }
     }
 
-    public void addProduct(String name, int code, int price) {
-        Product product = new Product(name, code, price);
-        listOfProducts.add(product);
+    public void addProduct(Product product) {
+       // Product product = new Product(name, code, price);
+        PriceList.add(product);
     }
 
     public void removeProduct(String name) {
-        for (int i = 0; i <= listOfProducts.size(); i++)
-            if (listOfProducts.get(i).name.equals(name)) listOfProducts.remove(i);
+        for (int i = 0; i < PriceList.size(); i++)
+            if (PriceList.get(i).name.equals(name)) PriceList.remove(i);
     }
 
     public void changePrice(String name, int newPrice) {
-        for (int i = 0; i <= listOfProducts.size(); i++)
-            if (listOfProducts.get(i).name.equals(name)) listOfProducts.get(i).price = newPrice;
+        for (int i = 0; i < PriceList.size(); i++)
+            if (PriceList.get(i).name.equals(name)) PriceList.get(i).price = newPrice;
     }
 
     public void changeName(String name, String newName) {
-        for (int i = 0; i <= listOfProducts.size(); i++)
-            if (listOfProducts.get(i).name.equals(name)) listOfProducts.get(i).name = newName;
+        for (int i = 0; i < PriceList.size(); i++)
+            if (PriceList.get(i).name.equals(name)) PriceList.get(i).name = newName;
 
     }
 
     public int priceByCode(int code, int price, int amount) {
         int result = 0;
-        for (int i = 0; i <= listOfProducts.size(); i++)
-            if (listOfProducts.get(i).code == code) {
-                result = listOfProducts.get(i).price * amount / 100;
+        for (int i = 0; i < PriceList.size(); i++)
+            if (PriceList.get(i).code == code) {
+                result = PriceList.get(i).price * amount / 100;
             }
         return result;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        PriceList priceList = (PriceList) obj;
+        for (int i = 0; i < PriceList.size(); i++) {
+            if (PriceList.get(i) != priceList.PriceList.get(i)) return false;
+        }
+        return true;
+    }
 }
+
