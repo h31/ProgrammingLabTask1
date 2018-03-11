@@ -1,20 +1,36 @@
 package ru.spbstu.kspt.task1;
 
 interface NumberWithDimensionInterface {
-
-    double getNumber(); // Взятие вещественного числа из класса
-
-    String getDimension(); // Взятие размерности из класса в строковой форме
-
-    NumberWithDimension plus(NumberWithDimension other); // Сложение двух вещественных чисел с размерностью
-
-    NumberWithDimension minus(NumberWithDimension other); // Вычитание двух вещественных чисел с размерностью
-
-    NumberWithDimension multiply(double multi); // Умножение числа с размерностью на вещественное число
-
-    NumberWithDimension divide(double div); // Деление числа с размерностью на вещественное число
-
-    double divideForDim(NumberWithDimension other); // Деление двух вещественных чисел с размерностью
-
-    NumberWithDimension translation (String other); // Перевод числа с размерностью из одной величины в другую
+    /**
+     * Взятие вещественного числа из класса.
+     */
+    double getNumber(); //
+    /**
+     * Взятие размерности из класса в строковой форме.
+     */
+    String getDimension();
+    /**
+     * Сложение двух вещественных чисел с размерностью.
+     */
+    NumberWithDimension plus(NumberWithDimension other);
+    /**
+     * Вычитание двух вещественных чисел с размерностью.
+     */
+    NumberWithDimension minus(NumberWithDimension other);
+    /**
+     * Умножение числа с размерностью на вещественное число.
+     */
+    NumberWithDimension multiply(double multi);
+    /**
+     * Деление числа с размерностью на вещественное число.
+     */
+    NumberWithDimension divide(double div);
+    /**
+     * Деление числа с размерностью на другое число с размерностью.
+     */
+    double divideForDim(NumberWithDimension other);
+    /**
+     * Перевод числа с размерностью из одной величины в другую.
+     */
+    NumberWithDimension translate (String other);
 }

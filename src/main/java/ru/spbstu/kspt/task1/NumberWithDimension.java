@@ -1,22 +1,8 @@
 package ru.spbstu.kspt.task1;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.util.logging.Level;
 
 /**
  * Класс числа с размерностью
- *
- * plus - сложение размерных чисел
- *
- * minus - вычитание размерных чисел
- *
- * multiply - умножение размерного числа на вещественное
- *
- * divide - деление размерного числа на вещественное
- *
- * divideForDim - деление размерных чисел
  */
 class NumberWithDimension implements Comparable<NumberWithDimension>, NumberWithDimensionInterface {
 
@@ -24,7 +10,7 @@ class NumberWithDimension implements Comparable<NumberWithDimension>, NumberWith
 
     private String dimension;
 
-    private Dimension dimensionClass;
+    private Dimensions dimensionClass;
 
     @Override
     public double getNumber() {
@@ -36,70 +22,79 @@ class NumberWithDimension implements Comparable<NumberWithDimension>, NumberWith
         return dimension;
     }
 
-    NumberWithDimension(double number, String dimension, Dimension dimensionClass) {
+    NumberWithDimension(double number, String dimension, Dimensions dimensionClass) {
         this.number = number;
         this.dimension = dimension;
         this.dimensionClass = dimensionClass;
     }
 
-    @Override
-    public NumberWithDimension plus(NumberWithDimension other) { // Сложение размерных чисел
-        if(dimensionClass.getDimens().equals(other.dimensionClass.getDimens())) {
-            return new NumberWithDimension(number + other.number *
-                    (other.dimensionClass.getValueDimension(other.dimension) /
-                            dimensionClass.getValueDimension(dimension)), dimension, dimensionClass);
-        }
-        else {
+    /**
+     * Дублирующий метод для вычисления чисел с размерностью. Используется во многих дальнейших функциях.
+     */
+    private double calculation(NumberWithDimension other) {
+        if(!dimensionClass.equals(other.dimensionClass)) {
             throw new IllegalArgumentException("Размерности не совпадают");
         }
+        return other.number * (other.dimensionClass.getDimensionValue(other.dimension)
+                / dimensionClass.getDimensionValue(dimension));
     }
 
+    /**
+     * Сложение двух вещественных чисел с размерностью.
+     */
     @Override
-    public NumberWithDimension minus(NumberWithDimension other) { // Вычитание размерных чисел
-        if(dimensionClass.getDimens().equals(other.dimensionClass.getDimens())) {
-            return new NumberWithDimension(number - other.number *
-                    (other.dimensionClass.getValueDimension(other.dimension) /
-                            dimensionClass.getValueDimension(dimension)), dimension, dimensionClass);
-        }
-        else {
-            throw new IllegalArgumentException("Размерности не совпадают");
-        }
+    public NumberWithDimension plus(NumberWithDimension other) {
+        return new NumberWithDimension(number + calculation(other), dimension, dimensionClass);
     }
 
+    /**
+     * Вычитание двух вещественных чисел с размерностью.
+     */
     @Override
-    public NumberWithDimension multiply(double multi) { // Умножение на вещественное число
+    public NumberWithDimension minus(NumberWithDimension other) {
+        return new NumberWithDimension(number - calculation(other), dimension, dimensionClass);
+    }
+
+    /**
+     * Умножение вещественного числа с размерностью на вещественное число.
+     */
+    @Override
+    public NumberWithDimension multiply(double multi) {
         return new NumberWithDimension(number * multi, dimension, dimensionClass);
     }
 
+    /**
+     * Деление вещественного числа с размерностью на вещественное число.
+     */
     @Override
-    public NumberWithDimension divide(double div) { // Деление на вещественное число
+    public NumberWithDimension divide(double div) {
         return new NumberWithDimension(number / div, dimension, dimensionClass);
     }
 
+    /**
+     * Деление двух вещественных чисел друг на друга. В результате получаем вещественное число.
+     */
     @Override
-    public double divideForDim(NumberWithDimension other) { // Деление на другое число с размерностью
-        if(dimensionClass.getDimens().equals(other.dimensionClass.getDimens())) {
-            return number / (other.number * (other.dimensionClass.getValueDimension(other.dimension) /
-                    dimensionClass.getValueDimension(other.dimension)));
-        }
-        else {
-            throw new IllegalArgumentException("Размерности не совпадают");
-        }
+    public double divideForDim(NumberWithDimension other) {
+        return number / calculation(other);
     }
 
+    /**
+     * Перевод вещественного числа с размерностью из одной размерности в другую.
+     */
     @Override
-    public NumberWithDimension translation (String other) { //Переводим вещественное число из одной величины в другую
+    public NumberWithDimension translate(String other) {
         return new NumberWithDimension(number *
-                (dimensionClass.getValueDimension(dimension) / dimensionClass.getValueDimension(other)),
+                (dimensionClass.getDimensionValue(dimension) / dimensionClass.getDimensionValue(other)),
                 other, dimensionClass);
     }
 
+    /**
+     * Сравнение двух вещественных чисел с размерностью.
+     */
     @Override
-    public int compareTo(NumberWithDimension other) { //Cравниваем два числа, подводя их под одну величину
-        return (number * dimensionClass.getValueDimension(dimension)) > (other.number
-                * other.dimensionClass.getValueDimension(other.dimension)) ? 1 : (number
-                * dimensionClass.getValueDimension(dimension)) == (other.number
-                * other.dimensionClass.getValueDimension(other.dimension)) ? 0 : -1;
+    public int compareTo(NumberWithDimension other) {
+        return (number ) > (calculation(other)) ? 1 : (number) == (calculation(other)) ? 0 : -1;
     }
 
     @Override
