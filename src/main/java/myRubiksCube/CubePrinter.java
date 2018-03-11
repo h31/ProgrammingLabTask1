@@ -1,11 +1,11 @@
-package myClass;
+package myRubiksCube;
 
-public class PrintCube {
+public class CubePrinter {
 
     private char[][] arr;
     private int n;
 
-    PrintCube(int n) {
+    CubePrinter(int n) {
         this.arr = new char[n * 8 + 1][n * 18 + 1];
         this.n = n;
 

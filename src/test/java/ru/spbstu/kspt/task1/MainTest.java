@@ -1,6 +1,6 @@
 package ru.spbstu.kspt.task1;
 
-import myClass.Cube;
+import myRubiksCube.Cube;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ class testCube {
 
     @Test
     public void rotateUp() {
-        result.RotateUp();
+        result.rotateUp();
         assertArrayEquals(result.cube[0], actual.cube[2]);
         assertArrayEquals(result.cube[2], actual.cube[4]);
         assertArrayEquals(result.cube[4], actual.cube[5]);
@@ -35,7 +35,7 @@ class testCube {
 
     @Test
     void rotateRight() {
-        result.RotateRight();
+        result.rotateRight();
         assertArrayEquals(result.cube[1], actual.cube[5]);
         assertArrayEquals(result.cube[2], actual.cube[1]);
         assertArrayEquals(result.cube[3], actual.cube[2]);
@@ -44,7 +44,7 @@ class testCube {
 
     @Test
     public void rotateDown() {
-        result.RotateDown();
+        result.rotateDown();
         assertArrayEquals(result.cube[0], actual.cube[5]);
         assertArrayEquals(result.cube[2], actual.cube[0]);
         assertArrayEquals(result.cube[4], actual.cube[2]);
@@ -53,7 +53,7 @@ class testCube {
 
     @Test
     void rotateLeft() {
-        result.RotateLeft();
+        result.rotateLeft();
         assertArrayEquals(result.cube[5], actual.cube[1]);
         assertArrayEquals(result.cube[1], actual.cube[2]);
         assertArrayEquals(result.cube[2], actual.cube[3]);
