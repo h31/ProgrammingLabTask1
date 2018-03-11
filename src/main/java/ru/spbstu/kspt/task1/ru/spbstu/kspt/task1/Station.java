@@ -17,4 +17,11 @@ public class Station{
     public String getTable() {
         return this.table.toString();
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setTable(Table table){
+        this.table = table;
+    }
 }
