@@ -81,10 +81,10 @@ class TrainsTest {
 
     @Test
     void setTable() {
-        tableTest.addObjToTable("15000", "Kupchino");
-        tableTest.addObjToTable("20000", "Nevsky");
-        tableTest.addObjToTable("30000", "Gorkovsky");
-        tableTest.addObjToTable("40000", "Lesnaya");
+        tableTest.addObjToTable("Kupchino","15000");
+        tableTest.addObjToTable("Nevsky", "20000");
+        tableTest.addObjToTable("Gorkovsky", "30000");
+        tableTest.addObjToTable("Lesnaya", "35000");
 
         assertEquals(tableTest, tableResult);
     }
@@ -102,7 +102,6 @@ class TrainsTest {
     void deleteTrain() {
         trainsTest.addTrain(trainResult);
         trainsTest.addTrain(trainResult2);
-        trainsTest.addTrain(trainResult3);
         trainsTest.addTrain(trainResult3);
         trainsTest.addTrain(trainResult4);
         trainsTest.addTrain(trainResult4);
