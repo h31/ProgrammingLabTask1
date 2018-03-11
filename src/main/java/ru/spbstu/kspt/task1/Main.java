@@ -1,16 +1,58 @@
 package ru.spbstu.kspt.task1;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Main class
  */
 public class Main {
-    private static final Logger logger = LogManager.getLogger(Main.class);
+    //private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
-        logger.debug("Logging example");
-        System.out.println("Hello World!");
+        List<List<Integer>> mm = new ArrayList<>();
+        List<Integer> m1 = new ArrayList<>();
+        m1.add(0);
+        m1.add(3);
+        m1.add(1);
+        m1.add(-9);
+        mm.add(m1);
+        List<Integer> m2 = new ArrayList<>();
+        m2.add(0);
+        m2.add(0);
+        m2.add(99);
+        m2.add(17);
+        mm.add(m2);
+        List<Integer> m3 = new ArrayList<>();
+        m3.add(9);
+        m3.add(-1);
+        m3.add(0);
+        m3.add(-1);
+        mm.add(m3);
+        List<Integer> m4 = new ArrayList<>();
+        m4.add(1000);
+        m4.add(-999);
+        m4.add(1314);
+        m4.add(0);
+        mm.add(m4);
+        List<String> nname = new ArrayList<>();
+        nname.add("red");
+        nname.add("yell");
+        nname.add("blue");
+        nname.add("green");
+        DirectGraph directGraph = new DirectGraph(mm, nname);
+
+        System.out.println(directGraph);
+
+        System.out.println(directGraph.output("red"));
+        System.out.println(directGraph.input("green"));
+        System.out.println(directGraph.addVertex("abc"));
+        System.out.println(directGraph.deleteVertex("abc"));
+        System.out.println(directGraph.renameVertex("yell", "yellow"));
+        System.out.println(directGraph.renameVertex("yellow", "yell"));
+        System.out.println(directGraph.addEdge("red", "yell", 666));
+        System.out.println(directGraph.deleteEdge("red", "yell"));
+        System.out.println(directGraph.renameEdge("blue", "red", 520));
     }
 }
