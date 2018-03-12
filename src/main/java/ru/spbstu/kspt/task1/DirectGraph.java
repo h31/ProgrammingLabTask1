@@ -2,10 +2,7 @@ package ru.spbstu.kspt.task1;
 
 import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class DirectGraph {
 
@@ -249,25 +246,29 @@ public class DirectGraph {
         return this.addEdge(start, end, newName);
     }
 
-    public List<Pair<String, Integer>> output(String s) { // |
-        List<Pair<String, Integer>> list = new ArrayList<>();
+    public List<HashMap<String, Integer>> output(String s) { // |
+        List<HashMap<String, Integer>> list = new ArrayList<>();
         int location = this.name.indexOf(s);
         if (location == -1) throw new IllegalArgumentException("Can't fine this vertex");
         for (int i = 0; i < this.matrix.size(); i++) {
             if (this.matrix.get(i).get(location) != null) {
-                list.add(new Pair(this.name.get(i), this.matrix.get(i).get(location)));
+                HashMap map = new HashMap();
+                map.put(this.name.get(i), this.matrix.get(i).get(location));
+                list.add(map);
             }
         }
         return list;
     }
 
-    public List<Pair<String, Integer>> input(String s) { //___
-        List<Pair<String, Integer>> list = new ArrayList<>();
+    public List<HashMap<String, Integer>> input(String s) { //___
+        List<HashMap<String, Integer>> list = new ArrayList<>();
         int location = this.name.indexOf(s);
         if (location == -1) throw new IllegalArgumentException("Can't fine this vertex");
         for (int i = 0; i < this.matrix.size(); i++) {
             if (this.matrix.get(i).get(location) != null) {
-                list.add(new Pair(this.name.get(i), this.matrix.get(location).get(i)));
+                HashMap map = new HashMap();
+                map.put(this.name.get(i), this.matrix.get(location).get(i));
+                list.add(map);
             }
         }
         return list;

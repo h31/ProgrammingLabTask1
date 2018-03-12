@@ -8,7 +8,6 @@ import java.util.List;
  * Main class
  */
 public class Main {
-    //private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
         List<List<Integer>> mm = new ArrayList<>();
