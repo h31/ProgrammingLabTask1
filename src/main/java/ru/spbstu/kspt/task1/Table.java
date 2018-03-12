@@ -42,28 +42,24 @@ public class Table {
         return res + " " + pairMap.get(res);
     }
 
-    private ArrayList<Double> splitDifference() {
+    private Double[] diff() {
         int n = pairMap.size();
-        ArrayList<Double> difference = new ArrayList();
-        for (Map.Entry<Double, Double> entry : pairMap.entrySet()) {
-            difference.add(entry.getValue());
-        }
-        for (int j = 1; j < n; j++) {
-            for (int i = n - 1; i > j - 1; i--) {
-                difference.set(i, (difference.get(i) - difference.get(i - 1)) /
-                        ((Double) pairMap.values().toArray()[i] - (Double) pairMap.values().toArray()[i - j]));
-            }
-        }
-        return difference;
+        Double[] a = new Double[n];
+        for (int i = 0; i < n; i++)
+            a[i] = (Double) pairMap.values().toArray()[i];
+        for (int j = 1; j < n; j++)
+            for (int i = n - 1; i > j - 1; i--)
+                    a[i] = (a[i] - a[i - 1])
+                            /((Double)pairMap.keySet().toArray()[i] - (Double)pairMap.keySet().toArray()[i - j]);
+        return a;
     }
 
-    public double calculateNewtonPolynomialValue(double x0) {
-        ArrayList<Double> difference = this.splitDifference();
-        int n = difference.size() - 1;
-        double fun = difference.get(n);
-        for (int i = n - 1; i > -1; i--) {
-            fun = fun * (x0 - (Double) (pairMap.values().toArray()[i])) + difference.get(n);
-        }
-        return fun;
+    public Double calculateNewtonPolynom(double x0) {
+        Double[] a = diff();
+        int n = a.length - 1;
+        Double temp = a[n];
+        for (int i = n - 1; i > -1;  i--)
+            temp = temp * (x0 - (Double) pairMap.keySet().toArray()[i]) + a[i];
+        return temp;
     }
 }
