@@ -48,7 +48,7 @@ public class Trie {
 
         for (char ch : str.toLowerCase().toCharArray()) {
 
-            if (!node.children.keySet().contains(ch)) {
+            if (!node.children.containsKey(ch)) {
                 return false;
             } else {
                 node = node.children.get(ch);
@@ -56,11 +56,7 @@ public class Trie {
 
         }
 
-        if (node.leaf) {
-            return true;
-        } else {
-            return false;
-        }
+        return node.leaf;
 
     }
 
@@ -77,6 +73,41 @@ public class Trie {
             }
 
         }
+
+    }
+
+
+    public void search(String prefix) {
+        TrieNode node = root;
+
+        for (char ch : prefix.toCharArray()) {
+            node = node.children.get(ch);
+        }
+
+        StringBuilder word = new StringBuilder().append(prefix);
+
+        searchHelp(word, prefix, node);
+
+        System.out.println("_________________");
+    }
+
+
+    private static void searchHelp(StringBuilder word, String prefix, TrieNode node) {
+
+        for (Character ch : node.children.keySet()) {
+
+            word.append(ch);
+
+            searchHelp(word, prefix, node.children.get(ch));
+
+            word.replace(0, word.length(), prefix);
+
+        }
+
+        if (node.leaf) {
+            System.out.println(word);
+        }
+
 
     }
 
