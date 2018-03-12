@@ -1,46 +1,66 @@
 package ru.spbstu.kspt.task1;
 
-import java.util.*;
-
 public class HashTable {
-    private String[] key;
-    private int size;
-    private String free = null;
-    private String deleted = "deleted";
+        private HashCreate[] table;
+        private static int size = 8;
 
-    public HashTable(int size){
-        this.size = size;
-        key = new String[this.size];
-        Arrays.fill(key, free);
+        HashTable() {
+            table = new HashCreate[size];
+            for (int i = 0; i < size; i++)
+                table[i] = null;
+        }
+
+    public HashCreate[] add (int key, int value) {
+        int hash = key % size;
+        int initial = -1;
+        int indexOfDeletedEntry = -1;
+        while (hash != initial
+                && (table[hash] == DeletedEntry.getUniqueDeletedEntry() || table[hash] != null
+                && table[hash].getKey() != key)) {
+            if (initial == -1)
+                initial = hash;
+            if (table[hash] == DeletedEntry.getUniqueDeletedEntry())
+                indexOfDeletedEntry = hash;
+            hash = (hash + 1) % size;
+        }
+        if ((table[hash] == null || hash == initial)
+                && indexOfDeletedEntry != -1)
+            table[indexOfDeletedEntry] = new HashCreate(key, value);
+        else if (initial != hash)
+            if (table[hash] != DeletedEntry.getUniqueDeletedEntry()
+                    && table[hash] != null && table[hash].getKey() == key)
+                table[hash].setValue(value);
+            else
+                table[hash] = new HashCreate(key, value);
+            return table;
     }
 
-    public void add(String x) {
-        int i = 0;
-        while (i <size) {
-            if (key[i] == free || key[i] == deleted) {
-                key[i] = x;
-            }
-            i++;
+    public int get(int key) {
+        int hash = key % size;
+        int initial = -1;
+        while (hash != initial && (table[hash] == DeletedEntry.getUniqueDeletedEntry() || table[hash] != null
+                && table[hash].getKey() != key)) {
+            if (initial == -1)
+                initial = hash;
+            hash = (hash + 1) % size;
         }
+        if (table[hash] == null || hash == initial) return -1;
+        else
+            return table[hash].getValue();
     }
 
-    public boolean find(String x){
-        int i = 0;
-        while (i < size) {
-            if (key[i] == x) return true;
-            if (key[i] == free) return false;
-            i++;
-        }
-        return false;
-    }
 
-    public void delete (String x){
-        int i = 0;
-        while (i < size) {
-            if (key[i] == x){
-                key[i] = deleted;
-            }
-            i++;
+    public HashCreate[] delete(int key) {
+        int hash = key % size;
+        int initial = -1;
+        while (hash != initial && (table[hash] == DeletedEntry.getUniqueDeletedEntry() || table[hash] != null
+                && table[hash].getKey() != key)) {
+            if (initial == -1)
+                initial = hash;
+            hash = (hash + 1) % size;
         }
+        if (hash != initial && table[hash] != null)
+            table[hash] = DeletedEntry.getUniqueDeletedEntry();
+        return table;
     }
 }
