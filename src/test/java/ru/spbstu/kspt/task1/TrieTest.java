@@ -26,7 +26,6 @@ public class TrieTest {
         assertEquals(true, testTrie.find("word"));
         testTrie.insert("worty");
         assertEquals(true, testTrie.find("worty"));
-        //assertEquals(true, testTrie.find("wor"));
         assertEquals(false, testTrie.find("hello"));
         testTrie.insert("kotlin");
         assertEquals(true, testTrie.find("kotlin"));

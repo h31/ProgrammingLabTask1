@@ -24,9 +24,11 @@ public class Trie {
 
             if (!node.children.containsKey(ch)) {
                 node.children.put(ch, new TrieNode());
+
                 if (node != root) {
                     node.children.get(ch).turned = true;
                 }
+
             } else {
 
                 if (node.turned) {
@@ -69,8 +71,7 @@ public class Trie {
         for (char ch : str.toLowerCase().toCharArray()) {
 
             if (node.turned) {
-                node.children.put('@', node.children.remove(ch));
-                node = node.children.get('@');
+                node = node.children.remove(ch);
             } else {
                 node = node.children.get(ch);
             }
