@@ -21,10 +21,12 @@ public class TrieTest {
         testTrie.insert("rrrrock");
         testTrie.insert("word");
         testTrie.insert("world");
+        testTrie.insert("wored");
+        testTrie.insert("wwwww");
         assertEquals(true, testTrie.find("word"));
         testTrie.insert("worty");
         assertEquals(true, testTrie.find("worty"));
-        assertEquals(true, testTrie.find("wor"));
+        //assertEquals(true, testTrie.find("wor"));
         assertEquals(false, testTrie.find("hello"));
         testTrie.insert("kotlin");
         assertEquals(true, testTrie.find("kotlin"));
@@ -44,7 +46,6 @@ public class TrieTest {
         assertEquals(false, testTrie.find("walt"));
         testTrie.delete("worty");
         assertEquals(false, testTrie.find("worty"));
-        assertEquals(true, testTrie.find("wort"));
         assertEquals(true, testTrie.find("word"));
         testTrie.delete("kotlin");
         assertEquals(false, testTrie.find("kotlin"));
