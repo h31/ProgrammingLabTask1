@@ -1,5 +1,7 @@
 package ru.spbstu.kspt.task1;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import static java.lang.Math.abs;
@@ -16,10 +18,10 @@ public class Sequence {
         this.endPosition = endPosition;
     }
 
-    public static final CellPosition[] DIRECTIONS = new CellPosition[]{
+    public static final List<CellPosition> DIRECTIONS = Arrays.asList(
             new CellPosition(-1, 1), new CellPosition(0, 1),
             new CellPosition(1, 0), new CellPosition(1, 1)
-    };
+    );
 
     public void add(CellPosition newCellPosition) {
         if (startPosition == null) this.startPosition = newCellPosition;
@@ -41,10 +43,8 @@ public class Sequence {
         else directionCol = deltaCol / abs(deltaCol);
 
         CellPosition direction = new CellPosition(directionRow, directionCol);
-        for (CellPosition dir : DIRECTIONS) {
-            if (dir.equals(direction)) return direction;
-        }
 
+        if (DIRECTIONS.contains(direction)) return direction;
         return null;
     }
 
