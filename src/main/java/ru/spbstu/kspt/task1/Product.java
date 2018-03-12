@@ -3,6 +3,7 @@ package ru.spbstu.kspt.task1;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static java.lang.Integer.parseInt;
 import static java.lang.System.in;
 
 class Product {
@@ -22,6 +23,7 @@ class Product {
             log.log(Level.INFO, "New item of type 'product' is created: {0}", this);
         } catch (IllegalArgumentException ex) {
             log.log(Level.SEVERE, "Arguments are inappropriate.", ex);
+            throw ex;
         }
         log.fine("done");
     }
@@ -42,20 +44,27 @@ class Product {
         return quantity;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    void setEverything(int code, String name, Price price, int quantity) {
+        try {
+            this.code = code;
+            this.name = name;
+            this.price = price;
+            this.quantity = quantity;
+        } catch (IllegalArgumentException ex) {
+            log.log(Level.SEVERE, "Arguments are inappropriate.", ex);
+            throw ex;
+        }
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPrice(Price price) {
-        this.price = price;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    Price priceFromString(String price) {
+        if (price.split(".").length != 2) {
+            throw new IllegalArgumentException("Request is invalid");
+        }
+        try {
+            return new Price(parseInt(price.split(".")[0]), parseInt(price.split(".")[1]));
+        } catch (IllegalArgumentException ex) {
+            log.log(Level.SEVERE, "Request is invalid", ex);
+            throw ex;
+        }
     }
 
     @Override

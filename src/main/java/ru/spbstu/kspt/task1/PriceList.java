@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static java.lang.Integer.parseInt;
+
 /**
  * Main class
  */
@@ -22,6 +24,7 @@ class PriceList implements PriceListInterface {
             pricelist.put(code, new Product(code, name, new Price(priceRub, priceCop), quantity));
         } catch (IllegalArgumentException ex) {
             log.log(Level.SEVERE, "Request is invalid", ex);
+            throw ex;
         }
     }
 
@@ -43,6 +46,7 @@ class PriceList implements PriceListInterface {
             pricelist.replace(code, productChanged);
         } catch (IllegalArgumentException ex) {
             log.log(Level.SEVERE, "Request is invalid", ex);
+            throw ex;
         }
     }
 
@@ -54,15 +58,14 @@ class PriceList implements PriceListInterface {
             pricelist.replace(code, productChanged);
         } catch (IllegalArgumentException ex) {
             log.log(Level.SEVERE, "Request is invalid", ex);
+            throw ex;
         }
     }
 
     @Override
     public int totalCostExactProduct(int code) {
         try {
-            return (pricelist.get(code).getPrice().getPriceRub() * 100 +
-                    pricelist.get(code).getPrice().getPriceCop()) *
-                    pricelist.get(code).getQuantity();
+            return pricelist.get(code).getPrice().totalCostExactProduct() * pricelist.get(code).getQuantity();
         } catch (IllegalArgumentException ex) {
             log.log(Level.SEVERE, "Request is invalid", ex);
             throw ex;
@@ -78,24 +81,37 @@ class PriceList implements PriceListInterface {
         return sum;
     }
 
+    Price priceFromString(String price) {
+        if (price.split(".").length != 2) {
+            throw new IllegalArgumentException("Request is invalid");
+        }
+        try {
+            return new Price(parseInt(price.split(".")[0]), parseInt(price.split(".")[1]));
+        } catch (IllegalArgumentException ex) {
+            log.log(Level.SEVERE, "Request is invalid", ex);
+            throw ex;
+        }
+    }
+
+
     @Override
     public void addProductByString(String product) {
         try {
             String[] strings = product.split(", ");
-            if (strings.length != 4 || strings[2].split(".").length != 2) {
+            if (strings.length != 4) {
                 throw new IllegalArgumentException("Request is invalid");
             }
             int currentCode = Integer.parseInt(strings[0]);
             String currentName = strings[1];
-            int currentPriceRub = Integer.parseInt(strings[2].split(".")[0]);
-            int currentPriceCop = Integer.parseInt(strings[2].split(".")[1]);
+            Price currentPrice = priceFromString(strings[2]);
             int currentQuantity = Integer.parseInt(strings[3]);
-            addProduct(currentCode, currentName, currentPriceRub,
-                    currentPriceCop, currentQuantity);
+            addProduct(currentCode, currentName, currentPrice.getPriceRub(),
+                    currentPrice.getPriceCop(), currentQuantity);
             log.log(Level.FINE, "Product {0} has just been added", new Product(currentCode, currentName,
-                    new Price(currentPriceRub, currentPriceCop), currentQuantity));
+                    currentPrice, currentQuantity));
         } catch (IllegalArgumentException ex) {
             log.log(Level.SEVERE, "Request is invalid", ex);
+            throw ex;
         }
         log.fine("done");
     }
