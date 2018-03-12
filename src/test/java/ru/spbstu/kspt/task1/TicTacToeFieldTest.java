@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class TicTacToeFieldTest {
     private static final Logger logger = LogManager.getLogger(TicTacToeFieldTest.class);
@@ -31,12 +32,18 @@ public class TicTacToeFieldTest {
 
         testField.addCross(1, 1);
 
-        StringBuilder coordinates = new StringBuilder();
-        for (CellPosition cell : testField.longestCrossSequence()) {
-            coordinates.append(cell.toString());
-        }
+        assertEquals("[0,0][2,2]", testField.longestCrossSequence().toString());
+        assertEquals("[1,1]", testField.longestCrossSequence().getDirection().toString());
 
-        assertEquals("[0,0][2,2]", coordinates.toString());
+        TicTacToeField otherField = new TicTacToeField(3);
+        otherField.addCross(0, 0);
+        otherField.addCross(1, 1);
+        otherField.addCross(2, 2);
+        assertNotEquals(testField, otherField);
+
+        otherField.addNought(2, 0);
+        otherField.addNought(2, 1);
+        assertEquals(testField, otherField);
 
         logger.info("Final Field: \n" + testField.toString());
         logger.info("Test finished");

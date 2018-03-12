@@ -1,9 +1,9 @@
 package ru.spbstu.kspt.task1;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static ru.spbstu.kspt.task1.Cell.*;
+import static ru.spbstu.kspt.task1.Sequence.DIRECTIONS;
 
 
 public class TicTacToeField {
@@ -48,18 +48,14 @@ public class TicTacToeField {
         return cellOnField(cellPosition.getRow(), cellPosition.getCol());
     }
 
-    private final CellPosition[] DIRECTIONS = new CellPosition[]{
-            new CellPosition(-1, 1), new CellPosition(0, 1), new CellPosition(1, 0), new CellPosition(1, 1)
-    };
-
-    private ArrayList<CellPosition> longestSequence(Cell cell) {
-        ArrayList<CellPosition> result = new ArrayList<>();
+    private Sequence longestSequence(Cell cell) {
+        Sequence result = new Sequence();
 
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
                 for (CellPosition dir : DIRECTIONS) {
                     CellPosition currentCellPosition = new CellPosition(row, col);
-                    ArrayList<CellPosition> currentSequence = new ArrayList<CellPosition>();
+                    Sequence currentSequence = new Sequence();
 
                     while (currentCellPosition.getCell(mField) == cell) {
                         currentSequence.add(currentCellPosition);
@@ -79,36 +75,20 @@ public class TicTacToeField {
         return result;
     }
 
-    public ArrayList<CellPosition> longestCrossSequence() {
-        ArrayList<CellPosition> longestSequence = longestSequence(CROSS);
-        ArrayList<CellPosition> result = new ArrayList<CellPosition>();
-
-        if (!longestSequence.isEmpty()) {
-            result.add(longestSequence.get(0));
-            result.add(longestSequence.get(longestSequence.size() - 1));
-        }
-
-        return result;
+    public Sequence longestCrossSequence() {
+        return longestSequence(CROSS);
     }
 
-    public ArrayList<CellPosition> longestNoughtSequence() {
-        ArrayList<CellPosition> longestSequence = longestSequence(NOUGHT);
-        ArrayList<CellPosition> result = new ArrayList<CellPosition>();
-
-        if (!longestSequence.isEmpty()) {
-            result.add(longestSequence.get(0));
-            result.add(longestSequence.get(longestSequence.size() - 1));
-        }
-
-        return result;
+    public Sequence longestNoughtSequence() {
+        return longestSequence(NOUGHT);
     }
 
     public int longestCrossSequenceSize() {
-        return longestSequence(CROSS).size();
+        return longestCrossSequence().size();
     }
 
     public int longestNoughtSequenceSize() {
-        return longestSequence(NOUGHT).size();
+        return longestNoughtSequence().size();
     }
 
     @Override
@@ -152,7 +132,7 @@ public class TicTacToeField {
 
         for (int row = 0; row < this.size; row++) {
             for (int col = 0; col < this.size; col++) {
-                if (this.mField[row][col] != this.mField[row][col]) return false;
+                if (!this.mField[row][col].equals(other.mField[row][col])) return false;
             }
         }
 

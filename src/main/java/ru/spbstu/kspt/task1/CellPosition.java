@@ -1,5 +1,7 @@
 package ru.spbstu.kspt.task1;
 
+import java.util.Objects;
+
 public class CellPosition {
     private final int row;
     private final int col;
@@ -23,6 +25,20 @@ public class CellPosition {
 
     public int getCol() {
         return col;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CellPosition that = (CellPosition) o;
+        return row == that.row &&
+                col == that.col;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, col);
     }
 
     @Override
