@@ -13,7 +13,7 @@ import static java.lang.Integer.parseInt;
  * Main class
  */
 
-class PriceList implements PriceListInterface {
+public class PriceList implements PriceListInterface {
     private static Logger log = Logger.getLogger(PriceList.class.getName());
 
     final Map<Integer, Product> pricelist = new HashMap<>();
@@ -82,11 +82,11 @@ class PriceList implements PriceListInterface {
     }
 
     Price priceFromString(String price) {
-        if (price.split(".").length != 2) {
+        if (price.split(",").length != 2) {
             throw new IllegalArgumentException("Request is invalid");
         }
         try {
-            return new Price(parseInt(price.split(".")[0]), parseInt(price.split(".")[1]));
+            return new Price(parseInt(price.split(",")[0]), parseInt(price.split(",")[1]));
         } catch (IllegalArgumentException ex) {
             log.log(Level.SEVERE, "Request is invalid", ex);
             throw ex;

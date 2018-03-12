@@ -1,7 +1,5 @@
 package ru.spbstu.kspt.task1;
 
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,6 +27,20 @@ class PriceListTest {
                 550, 00, 10);
         assertNotEquals(newPricelist.pricelist, testMap);
         log.log(Level.FINE, "Test on adding a product has finished");
+    }
+
+    @Test
+    void testAddIncorrectProduct() {
+        try {
+            log.log(Level.FINE, "Test on adding a product has started");
+            PriceList newPricelist = new PriceList();
+            Map<Integer, Product> testMap = new HashMap<>();
+            newPricelist.addProduct(001, "Popcorn", -98, 99, 5);
+            newPricelist.addProduct(002, "Cookies",
+                    550, 00, 10);
+        } catch (IllegalArgumentException ex) {
+            log.log(Level.FINE, "Test on adding a product has finished");
+        }
     }
 
     @Test
@@ -128,9 +140,9 @@ class PriceListTest {
                 new Price(99, 99), 5));
         testMap.put(002, new Product(002, "Cookies",
                 new Price(500, 00),10));
-        newPricelist.addProductByString("001, Popcorn, 99.99, 5");
-        newPricelist.addProductByString("002, Cookies, 500.00, 10");
-        assertNotEquals(newPricelist, testMap);
+        newPricelist.addProductByString("001, Popcorn, 99,99, 5");
+        newPricelist.addProductByString("002, Cookies, 500,00, 10");
+        assertEquals(newPricelist.pricelist, testMap);
         log.log(Level.FINE, "Test on adding a new product by the string received has finished");
     }
 }

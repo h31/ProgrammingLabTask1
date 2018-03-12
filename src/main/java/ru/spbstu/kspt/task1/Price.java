@@ -3,8 +3,6 @@ package ru.spbstu.kspt.task1;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static java.lang.Integer.parseInt;
-
 
 class Price {
     private static Logger log = Logger.getLogger(Product.class.getName());
