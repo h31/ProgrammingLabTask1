@@ -12,7 +12,7 @@ public class TicTacToeFieldTest {
 
     @Test
     void standartTest() {
-        logger.info("Test started");
+        logger.info("Standart Test started");
 
         TicTacToeField testField = new TicTacToeField(3);
 
@@ -46,12 +46,12 @@ public class TicTacToeFieldTest {
         assertEquals(testField, otherField);
 
         logger.info("Final Field: \n" + testField.toString());
-        logger.info("Test finished");
+        logger.info("Standart Test finished");
     }
 
     @Test
     void sequenceTest() {
-        logger.info("Diagonal Test started");
+        logger.info("Sequence Test started");
 
         TicTacToeField testField = new TicTacToeField(4);
 
