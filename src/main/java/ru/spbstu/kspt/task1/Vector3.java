@@ -36,7 +36,7 @@ public class Vector3 {
         return new Vector3(-x, -y, -z);
     }
 
-    private double length() {
+    public double length() {
         return sqrt(x * x + y * y + z * z);
     }
 

@@ -4,7 +4,7 @@ public interface QuaternionInterface {
 
     Quaternion multiplyOnScalar(double scalar1);
 
-    Quaternion conjugate();
+    Quaternion getConjugate();
 
     double abs();
 
@@ -23,5 +23,4 @@ public interface QuaternionInterface {
     double determineAngle();
 
     Vector3 determineAxis();
-
 }

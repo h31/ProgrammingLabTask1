@@ -1,6 +1,5 @@
 package ru.spbstu.kspt.task1;
 
-import org.apache.commons.math3.util.FastMath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,21 +17,19 @@ public class Quaternion implements QuaternionInterface {
 
     public double scalar;
 
-    Quaternion(Vector3 vector, double scalar) {
+    public Quaternion(Vector3 vector, double scalar) {
         this.vector = vector;
         this.scalar = scalar;
         logger.debug("Quaternion value is " + this);
     }
 
-    Quaternion(double angle, Vector3 axis) {
+    public static Quaternion getByAxisAndAngle(double angle, Vector3 axis) {
         Vector3 vector = axis.normalize();
         double scalar = cos(angle / 2.0);
         double x = vector.x * sin(angle / 2.0);
         double y = vector.y * sin(angle / 2.0);
         double z = vector.z * sin(angle / 2.0);
-        this.vector = new Vector3(x, y, z).inverse();
-        this.scalar = scalar;
-        logger.debug("Quaternion value is " + this);
+        return new Quaternion(new Vector3(x, y, z).inverse(), scalar);
     }
 
     public Vector3 getVector() {
@@ -52,7 +49,7 @@ public class Quaternion implements QuaternionInterface {
                 scalar1 * this.scalar);
     }
 
-    public Quaternion conjugate() {
+    public Quaternion getConjugate() {
         return new Quaternion(new Vector3(-vector.x, -vector.y, -vector.z), scalar);
     }
 
@@ -69,7 +66,7 @@ public class Quaternion implements QuaternionInterface {
     }
 
     public Quaternion inverse() {
-        return this.conjugate().multiplyOnScalar(1 / pow(this.getNorm(), 2.0));
+        return this.getConjugate().multiplyOnScalar(1 / pow(this.getNorm(), 2.0));
     }
 
     public double getNorm() {
@@ -98,7 +95,7 @@ public class Quaternion implements QuaternionInterface {
         } else if (q.scalar > 0) {
             return 2 * acos(-q.scalar);
         }
-        return (FastMath.acos(q.scalar) * 2.0);
+        return (acos(q.scalar) * 2.0);
     }
 
     public Vector3 determineAxis() {
@@ -132,13 +129,14 @@ public class Quaternion implements QuaternionInterface {
 
     @Override
     public String toString() {
-        String s = "" + vector.x + "i ";
-        if (vector.y > 0) s += "+ " + vector.y + "j ";
-        else s += "- " + Math.abs(vector.y) + "j ";
-        if (vector.z > 0) s += "+ " + vector.z + "k ";
-        else s += "- " + Math.abs(vector.z) + "k ";
-        if (scalar > 0) s += "+ " + scalar;
-        else s += "- " + Math.abs(scalar);
-        return s;
+        StringBuilder s = new StringBuilder();
+        s.append("").append(vector.x).append("i ");
+        if (vector.y > 0) s.append("+ ").append(vector.y).append("j ");
+        else s.append("- ").append(Math.abs(vector.y)).append("j ");
+        if (vector.z > 0) s.append("+ ").append(vector.z).append("k ");
+        else s.append("- ").append(Math.abs(vector.z)).append("k ");
+        if (scalar > 0) s.append("+ ").append(scalar);
+        else s.append("- ").append(Math.abs(scalar));
+        return s.toString();
     }
 }
