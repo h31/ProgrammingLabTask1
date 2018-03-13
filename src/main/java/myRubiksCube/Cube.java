@@ -69,11 +69,11 @@ public class Cube {
         rotateUp();
     }
 
-    public void spin(int numCube) {
-        rotate(numCube, 2);
+    public void spin(int direction) {
+        rotate(direction, 2);
         char c;
         for (int i = 0; i < size; ++i) {
-            if (numCube == 1) {
+            if (direction == 1) {
                 c = cube[1][size - i - 1][size - 1];
                 cube[1][size - i - 1][size - 1] = cube[4][0][size - i - 1];
                 cube[4][0][size - i - 1] = cube[3][i][0];
