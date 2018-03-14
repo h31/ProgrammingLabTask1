@@ -10,6 +10,7 @@ public class Product {
         this.roublePrice = roublePrice;
         this.copeikaPrice = copeikaPrice;
     }
+    Product(){}
 
     @Override
     public boolean equals(Object o) {
@@ -22,7 +23,12 @@ public class Product {
         if (copeikaPrice != product.copeikaPrice) return false;
         return name != null ? name.equals(product.name) : product.name == null;
     }
-
+    public int getRoublePrice(){
+        return this.roublePrice;
+    }
+    public int getCopeikaPrice(){
+        return this.copeikaPrice;
+    }
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;

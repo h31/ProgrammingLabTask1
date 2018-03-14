@@ -32,8 +32,10 @@ public class PriceList {
 
     }
 
-    public int priceByCode(int code, int roublePrice, int copeikaPrice, int amount) {
-        return (PriceList.get(code).roublePrice + PriceList.get(code).copeikaPrice / 100) * amount;
+    public double priceByCode(int code, int amount) {
+        Product product = new Product();
+        product = PriceList.get(code);
+        return (product.getRoublePrice() + product.getCopeikaPrice() / 100.0) * amount;
     }
 
     @Override

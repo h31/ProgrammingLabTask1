@@ -41,8 +41,8 @@ class MainTest {
         testList.addProduct(1283, bread);
         testList.addProduct(1376, cereal);
         testList.addProduct(1438, tea);
-        testList.addProduct(1438, tea);
-        testList.removeProduct(1438);
+        testList.addProduct(1439, tea);
+        testList.removeProduct(1439);
         assertEquals(testList, list);
     }
 
@@ -74,8 +74,7 @@ class MainTest {
         testList.addProduct(1283, bread);
         testList.addProduct(1376, cereal);
         testList.addProduct(1438, tea);
-        testList.priceByCode(1283, 36, 50, 2);
-        assertEquals(testList.priceByCode(1283, 36, 50, 2), 73);
+        assertEquals(testList.priceByCode(1283, 2), 73.0);
     }
 
 }
