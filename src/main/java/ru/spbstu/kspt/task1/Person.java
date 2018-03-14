@@ -3,7 +3,9 @@ package ru.spbstu.kspt.task1;
 import java.util.Objects;
 
 public class Person {
-    public String name;
+    private String name;
+
+    public String getName() { return this.name; }
 
     public Person(String name) {
         this.name = name;
@@ -11,7 +13,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return name;
+        return name + ": ";
     }
 
     @Override

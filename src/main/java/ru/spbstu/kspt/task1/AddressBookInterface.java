@@ -12,9 +12,9 @@ public interface AddressBookInterface {
 
     Address getAddress(Person person);
 
-    List<Person> findOnStreet(String street);
+    List<Person> findPersonsOnStreet(String street);
 
-    List<Person> findOnHouse(String street, Integer house);
+    List<Person> findPersonsOnHouse(String street, int house);
 
     Map<Person, Address> getAddressBook();
 }
