@@ -11,7 +11,7 @@ public class Trie {
     static class TrieNode {
         Map<Character, TrieNode> children = new TreeMap<>();
         boolean leaf;
-        boolean turned;
+        boolean brunch;
     }
 
     TrieNode root = new TrieNode();
@@ -26,16 +26,12 @@ public class Trie {
                 node.children.put(ch, new TrieNode());
 
                 if (node != root) {
-                    node.children.get(ch).turned = true;
+                    node.children.get(ch).brunch = true;
                 }
 
-            } else {
+            } else if (node.brunch) node.brunch = false;
 
-                if (node.turned) {
-                    node.turned = false;
-                }
 
-            }
             node = node.children.get(ch);
         }
 
@@ -66,7 +62,7 @@ public class Trie {
 
         for (char ch : str.toLowerCase().toCharArray()) {
 
-            if (node.turned) {
+            if (node.brunch) {
                 node = node.children.remove(ch);
             } else {
                 node = node.children.get(ch);
@@ -81,8 +77,17 @@ public class Trie {
         TrieNode node = root;
 
         for (char ch : prefix.toCharArray()) {
-            node = node.children.get(ch);
+
+            if (node.children.containsKey(ch)) {
+                node = node.children.get(ch);
+            } else {
+                System.out.println("No results for: " + prefix);
+                return;
+            }
+
         }
+
+        System.out.println("Results for: " + prefix);
 
         StringBuilder word = new StringBuilder().append(prefix);
 
@@ -95,7 +100,6 @@ public class Trie {
     private static void searchHelp(StringBuilder word, String prefix, TrieNode node) {
 
         for (Character ch : node.children.keySet()) {
-
             word.append(ch);
 
             searchHelp(word, prefix, node.children.get(ch));
@@ -107,7 +111,6 @@ public class Trie {
         if (node.leaf) {
             System.out.println(word);
         }
-
 
     }
 
