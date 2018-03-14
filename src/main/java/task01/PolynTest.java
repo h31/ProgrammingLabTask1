@@ -2,11 +2,11 @@ package task01;
 
 public class PolynTest {
     public static void main(String[] args) {
-        double ar[] = new double[]{2, 1, 6, 0};
+        int ar[] = new int[]{2, 1, 6, 0};
         Polyn p = new Polyn(ar);
         System.out.print("p: ");
         p.print();
-        double ar1[] = new double[]{0, -2, 4};
+        int ar1[] = new int[]{0, -2, 4};
         Polyn p1 = new Polyn(ar1);
         System.out.print("p1: ");
         p1.print();

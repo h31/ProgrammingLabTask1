@@ -2,40 +2,38 @@ package task01;
 import java.util.Arrays;
 
 public class Polyn {
-    private double array[];
+    private int array[];
     private int degree;
 
     public int getDegree() {
         return array.length - 1;
     }
 
-    public Polyn(double[] array) {
-        this.array = new double[array.length];
-        for (int i = 0; i < this.array.length; i++) {
-            this.array[i] = array[i];
-        }
+    public Polyn(int[] array) {
+        this.array = new int[array.length];
+        System.arraycopy(array, 0, this.array, 0, array.length);
         this.degree = getDegree();
     }
 
     private Polyn(int degree) {
         this.degree = degree;
-        this.array = new double[this.degree + 1];
+        this.array = new int[this.degree + 1];
     }
 
     public Polyn(Polyn p) {
         this.degree = p.degree;
-        this.array = new double[this.degree + 1];
+        this.array = new int[this.degree + 1];
         System.arraycopy(p.array, 0, this.array, 0, p.degree + 1);
     }
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder("");
-        boolean flag = true;
+        boolean isZero = true;
         for (int i = this.degree; i >= 0; i--) {
             if (this.array[i] == 0) continue;
             if (i == 0) {
                 if (this.array[i] < 0) s.append(this.array[i]);
-                else if (flag == false) s.append("+" + this.array[i]);
+                else if (!isZero) s.append("+" + this.array[i]);
                 else s.append(this.array[i]);
                 break;
             }
@@ -45,10 +43,10 @@ public class Polyn {
                 } else s.append(this.array[i]);
             }
             if (this.array[i] > 0) {
-                if (flag == false) s.append("+");
+                if (!isZero) s.append("+");
                 if (this.array[i] != 1) s.append(this.array[i]);
             }
-            if (this.array[i] != 0) flag = false;
+            if (this.array[i] != 0) isZero = false;
             if (i == 1) s.append("x");
             else s.append("x^" + i);
         }
@@ -127,7 +125,7 @@ public class Polyn {
         Polyn res = new Polyn(this.degree);
         Polyn res1 = new Polyn(this.degree);
         Polyn divisorChange;
-        double coef;
+        int coef;
         while (dividend.degree >= p2.degree) {
             coef = dividend.array[dividend.degree] / p2.array[p2.degree];
             res.array[dividend.degree - p2.degree] = coef;
@@ -152,7 +150,7 @@ public class Polyn {
         Polyn res = new Polyn(this.degree);
         Polyn res1 = new Polyn(this.degree);
         Polyn divisorChange;
-        double coef;
+        int coef;
         while (dividend.degree >= p2.degree) {
             coef = dividend.array[dividend.degree] / p2.array[p2.degree];
             res.array[dividend.degree - p2.degree] = coef;
@@ -172,10 +170,10 @@ public class Polyn {
             if (this.array[i] != 0) break;
         }
         if (i == this.degree) return;
-        double newar[] = new double[this.degree + 1];
+        int newar[] = new int[this.degree + 1];
         System.arraycopy(this.array, 0, newar, 0, this.degree + 1);
         this.degree = i;
-        this.array = new double[this.degree + 1];
+        this.array = new int[this.degree + 1];
         System.arraycopy(newar, 0, this.array, 0, this.degree + 1);
     }
 }
