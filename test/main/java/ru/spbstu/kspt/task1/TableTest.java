@@ -5,16 +5,17 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TableTest {
-    private Table test = new Table();
 
     @Test
     public void addValue() {
+        Table test = new Table();
         test.addValue(1.0D, 2.0D);
         test.addValue(2.0D, 2.0D);
         assertEquals(test.showTable(), "1.0 2.0\n2.0 2.0\n");
     }
     @Test
     public void dellValue() {
+        Table test = new Table();
         test.addValue(1.0D, 9.0D);
         assertEquals(test.showTable(), "1.0 9.0\n");
         test.dellValue(1.0D);
@@ -23,6 +24,7 @@ public class TableTest {
 
     @Test
     public void findClosestPair() {
+        Table test = new Table();
         test.addValue(1.0D, 2.0D);
         test.addValue(3.0D, 4.0D);
         test.addValue(10.0D, 11.0D);
@@ -31,6 +33,7 @@ public class TableTest {
 
     @Test
     public void calculateNewtonPolynomialValue() {
+        Table test = new Table();
         test.addValue(0.0D, 1.272D);
         test.addValue(0.2D, 4.465D);
         test.addValue(0.4D, 5.644D);

@@ -33,15 +33,18 @@ public class Table {
     }
 
     public String findClosestPair(double x0) {// найти ближайшее значени для х0
-//        double diff = Double.MAX_VALUE;
-//        double res = 0;
-//        for (Map.Entry<Double, Double> entry : pairMap.entrySet())
-//            if (diff > Math.abs(entry.getKey() - x0)) {
-//                diff = Math.abs(entry.getKey() - x0);
-//                res = entry.getKey();
-//            }
-//        return res + " " + pairMap.get(res);
-          return "";
+        int low = 0;
+        int up = pairMap.size();
+        while (low != up){
+            int comp = (low + up) / 2;
+            if((x0 - (double) pairMap.keySet().toArray()[comp]) < 0.01)
+                return pairMap.keySet().toArray()[comp] + " " + pairMap.values().toArray()[comp];
+            else if (x0 < (double)pairMap.keySet().toArray()[comp])
+                up = comp;
+            else
+                low = ++comp;
+        }
+        return "";
     }
 
     private Double[] diff() {
