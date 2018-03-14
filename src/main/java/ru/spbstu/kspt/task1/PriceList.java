@@ -1,54 +1,55 @@
 package ru.spbstu.kspt.task1;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PriceList {
-    public ArrayList<Product> PriceList = new ArrayList<>();
+    public HashMap<Integer, Product> PriceList = new HashMap<>();
 
-    PriceList(ArrayList list){
-        PriceList = list;
-    }
-    PriceList(){
 
+    PriceList(HashMap pricelist) {
+        PriceList = pricelist;
     }
 
-    public void addProduct(Product product) {
-       // Product product = new Product(name, code, price);
-        PriceList.add(product);
-    }
-
-    public void removeProduct(String name) {
-        for (int i = 0; i < PriceList.size(); i++)
-            if (PriceList.get(i).name.equals(name)) PriceList.remove(i);
-    }
-
-    public void changePrice(String name, int newPrice) {
-        for (int i = 0; i < PriceList.size(); i++)
-            if (PriceList.get(i).name.equals(name)) PriceList.get(i).price = newPrice;
-    }
-
-    public void changeName(String name, String newName) {
-        for (int i = 0; i < PriceList.size(); i++)
-            if (PriceList.get(i).name.equals(name)) PriceList.get(i).name = newName;
+    PriceList() {
 
     }
 
-    public int priceByCode(int code, int price, int amount) {
-        int result = 0;
-        for (int i = 0; i < PriceList.size(); i++)
-            if (PriceList.get(i).code == code) {
-                result = PriceList.get(i).price * amount / 100;
-            }
-        return result;
+    public void addProduct(int code, Product product) {
+        PriceList.put(code, product);
+    }
+
+    public void removeProduct(int code) {
+        PriceList.remove(code);
+    }
+
+    public void changePrice(int code, int newRoublePrice, int newCopeikaPrice) {
+        PriceList.get(code).roublePrice = newRoublePrice;
+        PriceList.get(code).copeikaPrice = newCopeikaPrice;
+    }
+
+    public void changeName(int code, String newName) {
+        PriceList.get(code).name = newName;
+
+    }
+
+    public int priceByCode(int code, int roublePrice, int copeikaPrice, int amount) {
+        return (PriceList.get(code).roublePrice + PriceList.get(code).copeikaPrice / 100) * amount;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        PriceList priceList = (PriceList) obj;
-        for (int i = 0; i < PriceList.size(); i++) {
-            if (PriceList.get(i) != priceList.PriceList.get(i)) return false;
-        }
-        return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PriceList priceList = (PriceList) o;
+
+        return PriceList != null ? PriceList.equals(priceList.PriceList) : priceList.PriceList == null;
     }
+
+    @Override
+    public int hashCode() {
+        return PriceList != null ? PriceList.hashCode() : 0;
+    }
+
 }
 
