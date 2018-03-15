@@ -35,16 +35,23 @@ public class Table {
     public String findClosestPair(double x0) {// найти ближайшее значени для х0
         int low = 0;
         int up = pairMap.size();
+        int comp = -1;
+        double dif = (double) pairMap.values().toArray()[pairMap.size()-1];
+        int res = -1;
         while (low != up){
-            int comp = (low + up) / 2;
-            if((x0 - (double) pairMap.keySet().toArray()[comp]) < 0.01)
+            comp = (low + up) / 2;
+            if(dif > (x0 - (double) pairMap.keySet().toArray()[comp])){
+                dif = x0 - (double) pairMap.keySet().toArray()[comp];
+                res = comp;
+            }
+            if(dif < 0.01)
                 return pairMap.keySet().toArray()[comp] + " " + pairMap.values().toArray()[comp];
-            else if (x0 < (double)pairMap.keySet().toArray()[comp])
+            else if (Double.compare((double)pairMap.keySet().toArray()[comp], x0) < 0)
                 up = comp;
             else
                 low = ++comp;
         }
-        return "";
+        return pairMap.keySet().toArray()[res] + " " + pairMap.values().toArray()[res];
     }
 
     private Double[] diff() {
