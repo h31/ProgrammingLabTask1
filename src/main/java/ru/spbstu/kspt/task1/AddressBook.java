@@ -68,7 +68,7 @@ public class AddressBook implements AddressBookInterface{
     public String toString() {
         StringBuilder result = new StringBuilder();
         for (Map.Entry<Person, Address> mapSet : addressBook.entrySet()) {
-            result.append(mapSet.getKey()).append(mapSet.getValue()).append("\n");
+            result.append(mapSet.getKey()).append(": ").append(mapSet.getValue()).append("\n");
         }
         return result.toString();
     }

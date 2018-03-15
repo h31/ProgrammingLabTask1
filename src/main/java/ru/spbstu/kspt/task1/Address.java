@@ -42,7 +42,7 @@ public class Address {
 
     @Override
     public String toString() {
-        return " ул. " + street + ", д. " + house + ", кв. " + flat;
+        return "ул. " + street + ", д. " + house + ", кв. " + flat;
     }
 
     @Override
