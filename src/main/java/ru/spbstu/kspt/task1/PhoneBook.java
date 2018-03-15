@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 class PhoneBook implements PhoneBookInterface {
     Map<String, ArrayList<String>> book = new HashMap<>();
 
-    private Pattern p = Pattern.compile("[\\d*#\\-+]+");
+    private static Pattern p = Pattern.compile("[\\d*#\\-+]+");
     
     private boolean checkNum(String number) {
         Matcher m = p.matcher(number);
