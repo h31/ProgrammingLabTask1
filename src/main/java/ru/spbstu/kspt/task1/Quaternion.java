@@ -6,18 +6,15 @@ import org.apache.logging.log4j.Logger;
 /**
  * Quaternion class
  */
-
-
-
 public class Quaternion {
 
     private static final Logger logger = LogManager.getLogger(Quaternion.class);
 
 
-        private double a;
-        private double b;
-        private double c;
-        private double d;
+        public double a;
+        public double b;
+        public double c;
+        public double d;
 
         public Quaternion(double a, double b, double c, double d) {
             this.a = a;
@@ -43,7 +40,7 @@ public class Quaternion {
             return new Quaternion(p.a + q.a, p.b + q.b, p.c + q.c, p.d + q.d);
         }
 
-        public static Quaternion minus(Quaternion p, Quaternion q) {
+        public Quaternion minus(Quaternion p, Quaternion q) {
             return new Quaternion(p.a - q.a, p.b - q.b, p.c - q.c, p.d - q.d);
         }
 
@@ -51,7 +48,7 @@ public class Quaternion {
             return new Quaternion(p.a * cst, p.b * cst, p.c * cst, p.d * cst);
         }
 
-        public static Quaternion mult(Quaternion p, Quaternion q) {
+        public Quaternion mult(Quaternion p, Quaternion q) {
             return new Quaternion(p.a * q.a - p.b * q.b - p.c * q.c - p.d * q.d,
                     p.a * q.b + p.b * q.a + p.c * q.d - p.d * q.c,
                     p.a * q.c - p.b * q.d + p.c * q.a + p.d * q.b,
