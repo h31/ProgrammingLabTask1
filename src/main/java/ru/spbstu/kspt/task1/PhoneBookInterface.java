@@ -12,7 +12,7 @@ interface PhoneBookInterface {
 
         void delNumber(String name, String number);
 
-        List<String> searchByPerson(String name);
+        ArrayList<String> searchByPerson(String name);
 
         String searchByNum(String number);
 }
