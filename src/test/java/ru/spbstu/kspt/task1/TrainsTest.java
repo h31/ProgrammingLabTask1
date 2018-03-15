@@ -1,12 +1,9 @@
 import org.junit.jupiter.api.Test;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import ru.spbstu.kspt.task1.Table;
+import ru.spbstu.kspt.task1.TimeTable;
 import ru.spbstu.kspt.task1.Train;
 import ru.spbstu.kspt.task1.Trains;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,45 +11,45 @@ import static org.junit.jupiter.api.Assertions.*;
 class TrainsTest {
 
     LinkedHashMap map = new LinkedHashMap() {{
-        put("Kupchino", "15000");
-        put("Nevsky", "20000");
-        put("Gorkovsky", "30000");
-        put("Lesnaya", "35000");
+        put("Kupchino", 15000);
+        put("Nevsky", 20000);
+        put("Gorkovsky", 30000);
+        put("Lesnaya", 35000);
 
     }};
     LinkedHashMap map2 = new LinkedHashMap() {{
-        put("Kupchino", "15000");
-        put("Nevsky", "20000");
-        put("Gorkovsky", "30000");
-        put("Lesnaya", "31000");
+        put("Kupchino", 15000);
+        put("Nevsky", 20000);
+        put("Gorkovsky", 30000);
+        put("Lesnaya", 31000);
 
     }};
 
     LinkedHashMap map3 = new LinkedHashMap() {{
-        put("Kupchino", "15000");
-        put("Nevsky", "20000");
-        put("Gorkovsky", "30000");
-        put("Lesnaya", "36000");
+        put("Kupchino", 15000);
+        put("Nevsky", 20000);
+        put("Gorkovsky", 30000);
+        put("Lesnaya", 36000);
 
     }};
     LinkedHashMap map4 = new LinkedHashMap() {{
-        put("Kupchino", "15000");
-        put("Nevsky", "20000");
-        put("Gorkovsky", "30000");
-        put("Lesnaya", "51000");
+        put("Kupchino", 15000);
+        put("Nevsky", 20000);
+        put("Gorkovsky", 30000);
+        put("Lesnaya", 51000);
 
     }};
 
 
-    Table tableResult = new Table(map);
-    Table tableResult2 = new Table(map2);
-    Table tableResult3 = new Table(map3);
-    Table tableResult4 = new Table(map4);
+    TimeTable timeTableResult = new TimeTable(map);
+    TimeTable timeTableResult2 = new TimeTable(map2);
+    TimeTable timeTableResult3 = new TimeTable(map3);
+    TimeTable timeTableResult4 = new TimeTable(map4);
 
-    Train trainResult = new Train("TEST", "DEVYATKINO", tableResult);
-    Train trainResult2 = new Train("TEST2", "RYBACKOE", tableResult2);
-    Train trainResult3 = new Train("TEST3", "VETERANOV", tableResult3);
-    Train trainResult4 = new Train("TEST4", "LENINSKY", tableResult4);
+    Train trainResult = new Train("TEST", "DEVYATKINO", timeTableResult);
+    Train trainResult2 = new Train("TEST2", "RYBACKOE", timeTableResult2);
+    Train trainResult3 = new Train("TEST3", "VETERANOV", timeTableResult3);
+    Train trainResult4 = new Train("TEST4", "LENINSKY", timeTableResult4);
     ArrayList<Train> list = new ArrayList() {{
         add(trainResult);
         add(trainResult2);
@@ -64,7 +61,7 @@ class TrainsTest {
     Trains trainsTest = new Trains();
     Trains trainsResult = new Trains(list);
     Train trainTest = new Train();
-    Table tableTest = new Table();
+    TimeTable timeTableTest = new TimeTable();
 
 
     @Test
@@ -81,12 +78,12 @@ class TrainsTest {
 
     @Test
     void setTable() {
-        tableTest.addObjToTable("Kupchino","15000");
-        tableTest.addObjToTable("Nevsky", "20000");
-        tableTest.addObjToTable("Gorkovsky", "30000");
-        tableTest.addObjToTable("Lesnaya", "35000");
+        timeTableTest.addStringToTable("Kupchino",15000);
+        timeTableTest.addStringToTable("Nevsky", 20000);
+        timeTableTest.addStringToTable("Gorkovsky", 30000);
+        timeTableTest.addStringToTable("Lesnaya", 35000);
 
-        assertEquals(tableTest, tableResult);
+        assertEquals(timeTableTest, timeTableResult);
     }
 
     @Test
@@ -112,7 +109,7 @@ class TrainsTest {
 
     @Test
     void searchTrain() {
-        Train finded = trainsResult.searchTrain("50000", "Lesnaya");
+        Train finded = trainsResult.searchTrain(50000, "Lesnaya");
 
         assertEquals(finded, trainResult4);
     }
