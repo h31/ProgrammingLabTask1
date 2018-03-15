@@ -35,17 +35,17 @@ public class Main {
         m4.add(1314);
         m4.add(0);
         mm.add(m4);
-        List<String> nname = new ArrayList<>();
-        nname.add("red");
-        nname.add("yell");
-        nname.add("blue");
-        nname.add("green");
-        DirectGraph directGraph = new DirectGraph(mm, nname);
+        List<String> name = new ArrayList<>();
+        name.add("red");
+        name.add("yell");
+        name.add("blue");
+        name.add("green");
+        DirectGraph directGraph = new DirectGraph(mm, name);
 
         System.out.println(directGraph);
 
-        System.out.println(directGraph.output("red"));
-        System.out.println(directGraph.input("green"));
+        System.out.println(directGraph.getOutputList("red"));
+        System.out.println(directGraph.getInputList("green"));
         System.out.println(directGraph.addVertex("abc"));
         System.out.println(directGraph.deleteVertex("abc"));
         System.out.println(directGraph.renameVertex("yell", "yellow"));
@@ -53,5 +53,6 @@ public class Main {
         System.out.println(directGraph.addEdge("red", "yell", 666));
         System.out.println(directGraph.deleteEdge("red", "yell"));
         System.out.println(directGraph.renameEdge("blue", "red", 520));
+
     }
 }

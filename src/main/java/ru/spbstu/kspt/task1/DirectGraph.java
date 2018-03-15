@@ -6,32 +6,32 @@ import java.util.*;
 
 public class DirectGraph {
 
-    List<List<Integer>> matrix;
-    List<String> name;
+    private List<List<Integer>> matrix;
+    private List<String> name;
 
     public DirectGraph(List<List<Integer>> m, List<String> n) {
-        List<List<Integer>> matri = new ArrayList<>();
+        List<List<Integer>> newMatrix = new ArrayList<>();
         List<String> names = new ArrayList<>();
         int i;
-        if (m.size() != n.size()) throw new IllegalArgumentException("Extra vertex");
+        // if (m.size() != n.size()) throw new IllegalArgumentException("Extra vertex");
         for (i = 0; i < n.size(); i++) {
             names.add(n.get(i));
         }
         for (i = 0; i < m.size(); i++) {
-            if (m.get(i).size() != n.size()) throw new IllegalArgumentException("Extra vertex");
-            matri.add(new ArrayList<>());
+            //  if (m.get(i).size() != n.size()) throw new IllegalArgumentException("Extra vertex");
+            newMatrix.add(new ArrayList<>());
             for (int j = 0; j < m.get(i).size(); j++) {
-                List<Integer> list = matri.get(i);
+                List<Integer> list = newMatrix.get(i);
                 list.add(m.get(i).get(j));
-                matri.set(i, list);
+                newMatrix.set(i, list);
             }
         }
-        this.matrix = matri;
+        this.matrix = newMatrix;
         this.name = names;
         Set<String> nameFailed = new HashSet<>();
-        int size = matri.size();
-        for (i = 0; i < matri.size(); i++) {
-            if (matri.get(i).size() > size) size = matri.get(i).size();
+        int size = newMatrix.size();
+        for (i = 0; i < newMatrix.size(); i++) {
+            if (newMatrix.get(i).size() > size) size = newMatrix.get(i).size();
         }
 
         for (i = 0; i < size; i++) {
@@ -69,16 +69,16 @@ public class DirectGraph {
     }
 
     public List<List<Integer>> getMatrix() {
-        List<List<Integer>> matr = new ArrayList<>();
+        List<List<Integer>> matrix0 = new ArrayList<>();
         for (int i = 0; i < this.matrix.size(); i++) {
-            matr.add(new ArrayList<>());
+            matrix0.add(new ArrayList<>());
             for (int j = 0; j < this.matrix.size(); j++) {
                 List<Integer> list = new ArrayList<>();
                 list.add(this.matrix.get(i).get(j));
-                matr.set(i, list);
+                matrix0.set(i, list);
             }
         }
-        return matr;
+        return matrix0;
     }
 
     public List<String> getName() {
@@ -89,8 +89,9 @@ public class DirectGraph {
         return str;
     }
 
-    public int maxLength() {
-        int maxLength = 0;
+    //  _____
+    public int maxLength() { //get a max length to align each grid   |     |
+        int maxLength = 0;                                        //  _____
         int i, number;
         for (i = 0; i < this.name.size(); i++) {
             if (this.name.get(i).length() > maxLength) {
@@ -106,7 +107,6 @@ public class DirectGraph {
                     if (number > maxLength) maxLength = number;
                 }
             }
-
         }
         return maxLength;
     }
@@ -120,80 +120,84 @@ public class DirectGraph {
             sb.append("Empty graph" + "\n");
         } else {
             sb.append("|");
-            for (a = 0; a < maxLength; a++) {
+            for (a = 0; a < maxLength; a++) { //Align each grid
                 sb.append(" ");
-            }
-            for (i = 0; i < this.name.size(); i++) {
+            } //finish the first grid
+
+            for (i = 0; i < this.name.size(); i++) { //add straight line in front of each element
                 sb.append("|" + this.name.get(i));
-                for (a = 0; a < maxLength - this.name.get(i).length(); a++) {
+                for (a = 0; a < maxLength - this.name.get(i).length(); a++) { //Align grid
                     sb.append(" ");
                 }
-            }
+            } //finish the name row
             sb.append("|" + "\n");
+
             String s = "";
             for (i = 0; i < this.name.size() * (maxLength + 1) + maxLength + 2; i++) {
                 sb.append("_");
                 s += "_";
-            }
+            } //get a row and make it's length = each row's length;
             sb.append("\n");
+
             for (i = 0; i < this.name.size(); i++) {
-                sb.append("|" + this.name.get(i));
-                for (a = 0; a < maxLength - this.name.get(i).length(); a++) {
+                sb.append("|" + this.name.get(i)); //add name to the first grid
+                for (a = 0; a < maxLength - this.name.get(i).length(); a++) {  //Align grid
                     sb.append(" ");
                 }
                 sb.append("|");
+
                 for (int j = 0; j < this.name.size(); j++) {
                     if (this.matrix.get(i).get(j) != null) {
                         sb.append(this.matrix.get(i).get(j));
                         weight = this.matrix.get(i).get(j);
                         if (weight < 0) weight = Integer.toString(0 - weight).length() + 1;
                         else weight = Integer.toString(weight).length();
-                        for (a = 0; a < maxLength - weight; a++) {
+                        for (a = 0; a < maxLength - weight; a++) { //get a length to align grid
                             sb.append(" ");
                         }
                         sb.append("|");
                     } else {
                         sb.append("-");
-                        for (a = 0; a < maxLength - 1; a++) sb.append(" ");
+                        for (a = 0; a < maxLength - 1; a++) sb.append(" "); //align grid
                         sb.append("|");
                     }
                 }
-                sb.append("\n" + s + "\n");
+                sb.append("\n" + s + "\n"); //add the last row,like:  ______________
             }
         }
         return sb.toString();
     }
 
-    private DirectGraph changeV() {// string
+    private DirectGraph changeVertex() {// string
         int i;
         int size = this.name.size();
-        List<List<Integer>> m0 = this.matrix;
+        List<List<Integer>> matrix = this.matrix;
         for (i = 0; i < size; i++)
-            if (i >= this.matrix.size()) m0.add(new ArrayList<>());
-        this.matrix = m0;
+            if (i >= this.matrix.size()) matrix.add(new ArrayList<>());
+        this.matrix = matrix;
         for (i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 if (j >= this.matrix.get(i).size()) {
                     List<Integer> list = this.matrix.get(i);
                     list.add(null);
-                    m0.set(i, list);
+                    matrix.set(i, list);
                 }
             }
-            this.matrix = m0;
+            this.matrix = matrix;
         }
         return this;
     }
 
     public DirectGraph addVertex(String str) {
         this.name.add(str);
-        return changeV();
+        return changeVertex();
     }
 
-    public DirectGraph renameVertex(String old, String new1) {
+    public DirectGraph renameVertex(String old, String fresh) {
         int oldNumber = this.name.indexOf(old);
         if (oldNumber == -1) throw new IllegalArgumentException("There's no this vertex");
-        this.name.set(oldNumber, new1);
-        return changeV();
+        this.name.set(oldNumber, fresh);
+        return changeVertex();
     }
 
     public DirectGraph deleteVertex(String str) {
@@ -246,29 +250,25 @@ public class DirectGraph {
         return this.addEdge(start, end, newName);
     }
 
-    public List<HashMap<String, Integer>> output(String s) { // |
-        List<HashMap<String, Integer>> list = new ArrayList<>();
+    public List<Pair<String, Integer>> getOutputList(String s) { // |
+        List<Pair<String, Integer>> list = new ArrayList<>();
         int location = this.name.indexOf(s);
         if (location == -1) throw new IllegalArgumentException("Can't fine this vertex");
         for (int i = 0; i < this.matrix.size(); i++) {
             if (this.matrix.get(i).get(location) != null) {
-                HashMap map = new HashMap();
-                map.put(this.name.get(i), this.matrix.get(i).get(location));
-                list.add(map);
+                list.add(new Pair<>(this.name.get(i), this.matrix.get(i).get(location)));
             }
         }
         return list;
     }
 
-    public List<HashMap<String, Integer>> input(String s) { //___
-        List<HashMap<String, Integer>> list = new ArrayList<>();
+    public List<Pair<String, Integer>> getInputList(String s) { //___
+        List<Pair<String, Integer>> list = new ArrayList<>();
         int location = this.name.indexOf(s);
         if (location == -1) throw new IllegalArgumentException("Can't fine this vertex");
         for (int i = 0; i < this.matrix.size(); i++) {
             if (this.matrix.get(i).get(location) != null) {
-                HashMap map = new HashMap();
-                map.put(this.name.get(i), this.matrix.get(location).get(i));
-                list.add(map);
+                list.add(new Pair<>(this.name.get(i), this.matrix.get(location).get(i)));
             }
         }
         return list;
