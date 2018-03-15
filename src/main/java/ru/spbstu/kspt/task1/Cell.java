@@ -1,10 +1,10 @@
 package ru.spbstu.kspt.task1;
 
-class HashCreate {
+class Cell {
     private int key;
     private int value;
 
-    HashCreate(int key, int value) {
+    Cell(int key, int value) {
         this.key = key;
         this.value = value;
     }
