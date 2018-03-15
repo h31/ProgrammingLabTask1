@@ -1,6 +1,8 @@
 package ru.spbstu.kspt.task1;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Address {
     private String street;
@@ -17,16 +19,18 @@ public class Address {
     }
 
     public Address(String address) {
-        if (address.matches("ул\\.\\s+.+,\\s+д\\.\\s+\\d+,\\s+кв\\.\\s+\\d+")) {
-            String[] addressParts = address.replaceAll(",", "").split("\\s+");
-            this.street = addressParts[1];
-            this.house = Integer.parseInt(addressParts[3]);
-            this.flat = Integer.parseInt(addressParts[5]);
+        Pattern addressPattern = Pattern.compile("ул\\.\\s+(.+),\\s+д\\.\\s+(\\d+),\\s+кв\\.\\s+(\\d+)");
+        Matcher matcher = addressPattern.matcher(address);
+        if (matcher.matches()) {
+            this.street = matcher.group(1);
+            this.house = Integer.parseInt(matcher.group(2));
+            this.flat = Integer.parseInt(matcher.group(3));
         } else {
             throw new IllegalArgumentException("Неверный формат адреса. " +
                     "Он должен быть вида ул. Улица, д. Номер дома, кв. Номер квартиры.");
         }
     }
+
 
     public String getStreet() {
         return this.street;

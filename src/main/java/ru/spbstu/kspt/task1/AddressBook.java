@@ -3,7 +3,7 @@ package ru.spbstu.kspt.task1;
 import java.util.*;
 
 
-public class AddressBook implements AddressBookInterface{
+public class AddressBook implements AddressBookInterface {
 
     public Map<Person, Address> addressBook = new LinkedHashMap<>();
 
@@ -17,9 +17,9 @@ public class AddressBook implements AddressBookInterface{
 
     public void removePerson(Person person) {
         if (addressBook.containsKey(person)) {
-            throw new IllegalArgumentException("Этого человека нет в адресной книге. Удаление невозможно.");
-        } else {
             addressBook.remove(person);
+        } else {
+            throw new IllegalArgumentException("Этого человека нет в адресной книге. Удаление невозможно.");
         }
     }
 
@@ -41,9 +41,9 @@ public class AddressBook implements AddressBookInterface{
 
     public List<Person> findPersonsOnStreet(String street) {
         List<Person> listOfPerson = new ArrayList<>();
-        for (Map.Entry<Person, Address> mapSet : addressBook.entrySet()) {
-            if (Objects.equals(mapSet.getValue().getStreet(), street)) {
-                listOfPerson.add(mapSet.getKey());
+        for (Map.Entry<Person, Address> addressBookRecord : addressBook.entrySet()) {
+            if (Objects.equals(addressBookRecord.getValue().getStreet(), street)) {
+                listOfPerson.add(addressBookRecord.getKey());
             }
         }
         return listOfPerson;
@@ -51,10 +51,10 @@ public class AddressBook implements AddressBookInterface{
 
     public List<Person> findPersonsOnHouse(String street, int house) {
         List<Person> listOfPerson = new ArrayList<>();
-        for (Map.Entry<Person, Address> mapSet : addressBook.entrySet()) {
-            if (Objects.equals(mapSet.getValue().getStreet(), street) &&
-                    mapSet.getValue().getHouse() == house) {
-                listOfPerson.add(mapSet.getKey());
+        for (Map.Entry<Person, Address> addressBookRecord : addressBook.entrySet()) {
+            if (Objects.equals(addressBookRecord.getValue().getStreet(), street) &&
+                    addressBookRecord.getValue().getHouse() == house) {
+                listOfPerson.add(addressBookRecord.getKey());
             }
         }
         return listOfPerson;
@@ -67,8 +67,8 @@ public class AddressBook implements AddressBookInterface{
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (Map.Entry<Person, Address> mapSet : addressBook.entrySet()) {
-            result.append(mapSet.getKey()).append(": ").append(mapSet.getValue()).append("\n");
+        for (Map.Entry<Person, Address> addressBookRecord : addressBook.entrySet()) {
+            result.append(addressBookRecord.getKey()).append(": ").append(addressBookRecord.getValue()).append("\n");
         }
         return result.toString();
     }

@@ -5,7 +5,9 @@ import java.util.Objects;
 public class Person {
     private String name;
 
-    public String getName() { return this.name; }
+    public String getName() {
+        return this.name;
+    }
 
     public Person(String name) {
         this.name = name;
