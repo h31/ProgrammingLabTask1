@@ -1,8 +1,8 @@
 package ru.spbstu.kspt.task1;
 
-import java.util.ArrayList;
+import java.util.List;
 
-interface MainInterface {
+interface PhoneBookInterface {
 
         void addPerson(String name, String[] numbers);
 
@@ -12,7 +12,7 @@ interface MainInterface {
 
         void delNumber(String name, String number);
 
-        ArrayList<String> searchByPerson(String name);
+        List<String> searchByPerson(String name);
 
         String searchByNum(String number);
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MainTest {
-    private Main phoneBook = new Main();
+    private PhoneBook phoneBook = new PhoneBook();
 
     @Test
     void addPerson() {

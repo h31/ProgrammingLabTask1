@@ -7,22 +7,22 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class Main implements MainInterface {
+class PhoneBook implements PhoneBookInterface {
     Map<String, ArrayList<String>> book = new HashMap<>();
 
-    private static boolean checkNum(String numFormat) {
-
-        Pattern p = Pattern.compile("[\\d*#\\-+]+");
-        Matcher m = p.matcher(numFormat);
+    private Pattern p = Pattern.compile("[\\d*#\\-+]+");
+    
+    private boolean checkNum(String number) {
+        Matcher m = p.matcher(number);
         return m.matches();
     }
 
     public void addPerson(String name, String[] numbers) {
-        ArrayList<String> list = new ArrayList<>();
-        list.addAll(Arrays.asList(numbers));
-        for (String i : list) {
+        for (String i : numbers) {
             if (!checkNum(i)) throw new IllegalArgumentException("Wrong format");
         }
+        ArrayList<String> list = new ArrayList<>();
+        list.addAll(Arrays.asList(numbers));
         book.put(name, list);
     }
 
@@ -32,7 +32,8 @@ class Main implements MainInterface {
     }
 
     public void addNumber(String name, String number) {
-        if (!book.containsKey(name)) throw new IllegalArgumentException("invalid person");
+        if (!book.containsKey(name))
+            throw new IllegalArgumentException("invalid person");
         if (checkNum(number))
             book.get(name).add(number);
         else throw new IllegalArgumentException("Wrong format");
@@ -65,7 +66,7 @@ class Main implements MainInterface {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Main main = (Main) o;
+        PhoneBook main = (PhoneBook) o;
 
         return book != null ? book.equals(main.book) : main.book == null;
     }
