@@ -40,7 +40,7 @@ public class Main {
         name.add("yell");
         name.add("blue");
         name.add("green");
-        DirectGraph directGraph = new DirectGraph(mm, name);
+        DirectedGraph directGraph = new DirectedGraph(mm, name);
 
         System.out.println(directGraph);
 

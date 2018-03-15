@@ -4,12 +4,12 @@ import javafx.util.Pair;
 
 import java.util.*;
 
-public class DirectGraph {
+public class DirectedGraph {
 
     private List<List<Integer>> matrix;
     private List<String> name;
 
-    public DirectGraph(List<List<Integer>> m, List<String> n) {
+    public DirectedGraph(List<List<Integer>> m, List<String> n) {
         List<List<Integer>> newMatrix = new ArrayList<>();
         List<String> names = new ArrayList<>();
         int i;
@@ -57,8 +57,8 @@ public class DirectGraph {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof DirectGraph) {
-            DirectGraph graph = (DirectGraph) obj;
+        if (obj instanceof DirectedGraph) {
+            DirectedGraph graph = (DirectedGraph) obj;
             return getMatrix().equals(graph.getMatrix());
         }
         return false;
@@ -168,7 +168,7 @@ public class DirectGraph {
         return sb.toString();
     }
 
-    private DirectGraph changeVertex() {// string
+    private DirectedGraph changeVertex() {// string
         int i;
         int size = this.name.size();
         List<List<Integer>> matrix = this.matrix;
@@ -188,19 +188,19 @@ public class DirectGraph {
         return this;
     }
 
-    public DirectGraph addVertex(String str) {
+    public DirectedGraph addVertex(String str) {
         this.name.add(str);
         return changeVertex();
     }
 
-    public DirectGraph renameVertex(String old, String fresh) {
+    public DirectedGraph renameVertex(String old, String fresh) {
         int oldNumber = this.name.indexOf(old);
         if (oldNumber == -1) throw new IllegalArgumentException("There's no this vertex");
         this.name.set(oldNumber, fresh);
         return changeVertex();
     }
 
-    public DirectGraph deleteVertex(String str) {
+    public DirectedGraph deleteVertex(String str) {
         int i, ver;
         ver = this.name.indexOf(str);
         if (ver == -1) throw new IllegalArgumentException("There's no this vertex");
@@ -214,7 +214,7 @@ public class DirectGraph {
         return this;
     }
 
-    private DirectGraph changeEdge() {// number
+    private DirectedGraph changeEdge() {// number
         int i;
         int size = this.name.size();
         if (this.matrix.size() > this.name.size()) size = this.matrix.size();
@@ -231,7 +231,7 @@ public class DirectGraph {
         return this;
     }
 
-    public DirectGraph addEdge(String begin, String end, Integer number) {
+    public DirectedGraph addEdge(String begin, String end, Integer number) {
         int endNumber = this.name.indexOf(end);
         int beginNumber = this.name.indexOf(begin);
         List<Integer> list = this.matrix.get(endNumber);
@@ -242,11 +242,11 @@ public class DirectGraph {
         return changeEdge();
     }
 
-    public DirectGraph deleteEdge(String start, String end) {
+    public DirectedGraph deleteEdge(String start, String end) {
         return this.addEdge(start, end, null);
     }
 
-    public DirectGraph renameEdge(String start, String end, Integer newName) {
+    public DirectedGraph renameEdge(String start, String end, Integer newName) {
         return this.addEdge(start, end, newName);
     }
 
