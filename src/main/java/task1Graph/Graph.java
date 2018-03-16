@@ -4,25 +4,31 @@ import java.util.*;
 
 public class Graph {
 
-    private Map <String, Integer> vertices;
-    private Vector<Arc> arcs;
+    private Map<String, Integer> vertices = new HashMap<>();
+    private List<Arc> arcs;
 
     public class Arc {
 
         private String name;
         private int weight;
-        private Integer begin;
-        private Integer end;
+        private int begin;
+        private int end;
 
-        public void printArc() {
-            System.out.println("Дуга " + name + ", соединяющая " + begin + " и " + end + ", вес = "+ weight);
+        @Override
+        public String toString() {
+            return "Arc{" +
+                    "name='" + name + '\'' +
+                    ", weight=" + weight +
+                    ", begin=" + begin +
+                    ", end=" + end +
+                    '}';
         }
 
-        Arc(String n, int w, String p1, String p2) {
+        Arc(String n, int w, String beginVertexName, String endVertexName) {
             name = n;
             weight = w;
-            begin = vertices.get(p1);
-            end = vertices.get(p2);
+            begin = vertices.get(beginVertexName);
+            end = vertices.get(endVertexName);
         }
 
         public Integer getArcBegin() {
@@ -30,25 +36,42 @@ public class Graph {
         }
 
         public Integer getArcEnd() {
-            return end;
+            return this.end;
         }
 
         public String getArcName() {
-            return name;
+            return this.name;
         }
 
         public int getArcWeight() {
-            return weight;
+            return this.weight;
         }
     }
 
-    Graph(Map <String, Integer> vertices, Vector<Arc> arcs) {
-        this.vertices = vertices;
-        this.arcs = arcs;
+    public Graph() {
+        vertices.put("A", 0);
+        vertices.put("B", 1);
+        vertices.put("C", 2);
+        vertices.put("D", 3);
+        vertices.put("E", 4);
+
+        Arc ab = new Arc("AB", 3, "A", "B");
+        Arc bc = new Arc("BC", 3, "B", "C");
+        Arc ae = new Arc("AE", 3, "A", "E");
+        Arc ec = new Arc("EC", 3, "E", "C");
+        Arc ca = new Arc("CA", 3, "C", "A");
+    }
+
+    public Map<String, Integer> getVertices() {
+        return vertices;
+    }
+
+    public List<Arc> getArcs() {
+        return arcs;
     }
 
     public void addVertex(String name) {
-        vertices.put(name, vertices.size() + 1);
+        vertices.put(name, vertices.size());
     }
 
     public void addArc(String name, int weight, String firstVertex, String secondVertex) {
@@ -57,11 +80,11 @@ public class Graph {
     }
 
     public void deleteVertex(String vertexName) {
-        vertices.remove(vertexName);
         for (int i = 0; i < arcs.size(); i++) {
-            if (arcs.get(i).begin.equals(vertices.get(vertexName))) arcs.remove(i);
-            if (arcs.get(i).end.equals(vertices.get(vertexName))) arcs.remove(i);
+            if (arcs.get(i).begin == vertices.get(vertexName)) arcs.remove(i);
+            if (arcs.get(i).end == vertices.get(vertexName)) arcs.remove(i);
         }
+        vertices.remove(vertexName);
     }
 
     public void deleteArc(String arcName) {
@@ -70,23 +93,27 @@ public class Graph {
     }
 
     public void changeVertexName(String oldName, String newName) {
+        if (!vertices.containsKey(oldName)) throw new IllegalArgumentException("Вершины с таким именем не существует");
         vertices.put(newName, vertices.get(oldName));
         vertices.remove(oldName);
     }
 
     public void changeArcWeight(String arcName, int newWeight) {
-        for (Arc arc : arcs) if (arc.name.equals(arcName)) arc.weight = newWeight;
+        for (Arc arc : arcs) if (arc.name.equals(arcName)) {
+            arc.weight = newWeight;
+            break;
+        }
     }
 
     public ArrayList<String> getOutList(String vertexName) {
         ArrayList<String> result = new ArrayList();
-        for (Arc arc : arcs) if (vertices.get(vertexName).equals(arc.begin)) result.add(arc.name);
+        for (Arc arc : arcs) if (vertices.get(vertexName) == arc.begin) result.add(arc.name);
         return result;
     }
 
     public ArrayList<String> getInList(String vertexName) {
         ArrayList<String> result = new ArrayList();
-        for (Arc arc : arcs) if (vertices.get(vertexName).equals(arc.end)) result.add(arc.name);
+        for (Arc arc : arcs) if (vertices.get(vertexName) == arc.end) result.add(arc.name);
         return result;
     }
 }
