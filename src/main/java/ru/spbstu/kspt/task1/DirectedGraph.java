@@ -9,20 +9,20 @@ public class DirectedGraph {
     private List<List<Integer>> matrix;
     private List<String> name;
 
-    public DirectedGraph(List<List<Integer>> m, List<String> n) {
+    public DirectedGraph(List<List<Integer>> matrix, List<String> name) {
         List<List<Integer>> newMatrix = new ArrayList<>();
         List<String> names = new ArrayList<>();
         int i;
-        // if (m.size() != n.size()) throw new IllegalArgumentException("Extra vertex");
-        for (i = 0; i < n.size(); i++) {
-            names.add(n.get(i));
+        if (matrix.size() != name.size()) throw new IllegalArgumentException("Extra vertex");
+        for (i = 0; i < name.size(); i++) {
+            names.add(name.get(i));
         }
-        for (i = 0; i < m.size(); i++) {
-            //  if (m.get(i).size() != n.size()) throw new IllegalArgumentException("Extra vertex");
+        for (i = 0; i < matrix.size(); i++) {
+            if (matrix.get(i).size() != name.size()) throw new IllegalArgumentException("Extra vertex");
             newMatrix.add(new ArrayList<>());
-            for (int j = 0; j < m.get(i).size(); j++) {
+            for (int j = 0; j < matrix.get(i).size(); j++) {
                 List<Integer> list = newMatrix.get(i);
-                list.add(m.get(i).get(j));
+                list.add(matrix.get(i).get(j));
                 newMatrix.set(i, list);
             }
         }
@@ -104,7 +104,7 @@ public class DirectedGraph {
                     } else {
                         number = Integer.toString(0 - this.matrix.get(i).get(j)).length() + 1;
                     }
-                    if (number > maxLength) maxLength = number;
+                    maxLength = Math.max(maxLength, number);
                 }
             }
         }
