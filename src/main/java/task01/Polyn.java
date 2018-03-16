@@ -84,7 +84,7 @@ public class Polyn {
                 res.array, min + 1, max - min);
         else if (max == p2.degree) System.arraycopy(p2.array, min + 1,
                 res.array, min + 1, max - min);
-        res.deleteIt();
+        res.deleteZero();
         return res;
     }
 
@@ -109,7 +109,7 @@ public class Polyn {
                 res.array[i + j] += this.array[i] * p2.array[j];
             }
         }
-        res.deleteIt();
+        res.deleteZero();
         return res;
     }
 
@@ -119,8 +119,8 @@ public class Polyn {
             res.array[0] = 1;
             return res;
         }
-        this.deleteIt();
-        p2.deleteIt();
+        this.deleteZero();
+        p2.deleteZero();
         Polyn dividend = new Polyn(this);
         Polyn res = new Polyn(this.degree);
         Polyn res1 = new Polyn(this.degree);
@@ -134,7 +134,7 @@ public class Polyn {
             divisorChange = p2.mul(res1);
             dividend = dividend.sub(divisorChange);
         }
-        res.deleteIt();
+        res.deleteZero();
         return res;
     }
 
@@ -144,8 +144,8 @@ public class Polyn {
             res.array[0] = 1;
             return res;
         }
-        this.deleteIt();
-        p2.deleteIt();
+        this.deleteZero();
+        p2.deleteZero();
         Polyn dividend = new Polyn(this);
         Polyn res = new Polyn(this.degree);
         Polyn res1 = new Polyn(this.degree);
@@ -159,11 +159,11 @@ public class Polyn {
             divisorChange = p2.mul(res1);
             dividend = dividend.sub(divisorChange);
         }
-        dividend.deleteIt();
+        dividend.deleteZero();
         return dividend;
     }
 
-    private void deleteIt() {
+    private void deleteZero() {
         int i;
         if (this.degree == 0) return;
         for (i = this.degree; i >= 0; i--) {
