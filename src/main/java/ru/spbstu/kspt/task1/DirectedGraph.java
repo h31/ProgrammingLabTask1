@@ -111,40 +111,39 @@ public class DirectedGraph {
         return maxLength;
     }
 
+    public String alignGrids(Integer numberLength, Integer maxLength) {
+        String string = "";
+        for (int i = 0; i < maxLength - numberLength; i++) {
+            string += " ";
+        }
+        return string;
+    }
+
+    public String getStraightLow(Integer gridLength) {
+        String string = "";
+        for (int i = 0; i < this.name.size() * (gridLength + 1) + gridLength + 2; i++) {
+            string += "_";
+        }
+        return string;
+    }
+
     @Override
     public String toString() {
-        int i, weight, a;
+        int i, weight;
         int maxLength = maxLength();
         StringBuilder sb = new StringBuilder();
         if (this.matrix.size() == 0) {
             sb.append("Empty graph" + "\n");
         } else {
-            sb.append("|");
-            for (a = 0; a < maxLength; a++) { //Align each grid
-                sb.append(" ");
-            } //finish the first grid
+            sb.append("|" + alignGrids(0, maxLength));
 
             for (i = 0; i < this.name.size(); i++) { //add straight line in front of each element
-                sb.append("|" + this.name.get(i));
-                for (a = 0; a < maxLength - this.name.get(i).length(); a++) { //Align grid
-                    sb.append(" ");
-                }
-            } //finish the name row
-            sb.append("|" + "\n");
-
-            String s = "";
-            for (i = 0; i < this.name.size() * (maxLength + 1) + maxLength + 2; i++) {
-                sb.append("_");
-                s += "_";
-            } //get a row and make it's length = each row's length;
-            sb.append("\n");
+                sb.append("|" + this.name.get(i) + alignGrids(this.name.get(i).length(), maxLength));//Align grid
+            }
+            sb.append("|" + "\n" + getStraightLow(maxLength) + "\n");
 
             for (i = 0; i < this.name.size(); i++) {
-                sb.append("|" + this.name.get(i)); //add name to the first grid
-                for (a = 0; a < maxLength - this.name.get(i).length(); a++) {  //Align grid
-                    sb.append(" ");
-                }
-                sb.append("|");
+                sb.append("|" + this.name.get(i) + alignGrids(this.name.get(i).length(), maxLength) + "|");
 
                 for (int j = 0; j < this.name.size(); j++) {
                     if (this.matrix.get(i).get(j) != null) {
@@ -152,17 +151,12 @@ public class DirectedGraph {
                         weight = this.matrix.get(i).get(j);
                         if (weight < 0) weight = Integer.toString(0 - weight).length() + 1;
                         else weight = Integer.toString(weight).length();
-                        for (a = 0; a < maxLength - weight; a++) { //get a length to align grid
-                            sb.append(" ");
-                        }
-                        sb.append("|");
+                        sb.append(alignGrids(weight, maxLength) + "|");
                     } else {
-                        sb.append("-");
-                        for (a = 0; a < maxLength - 1; a++) sb.append(" "); //align grid
-                        sb.append("|");
+                        sb.append("-" + alignGrids(1, maxLength) + "|");
                     }
                 }
-                sb.append("\n" + s + "\n"); //add the last row,like:  ______________
+                sb.append("\n" + getStraightLow(maxLength) + "\n"); //add the last row,like:  ______________
             }
         }
         return sb.toString();
