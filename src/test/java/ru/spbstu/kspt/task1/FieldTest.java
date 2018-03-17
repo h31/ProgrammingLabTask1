@@ -25,19 +25,20 @@ class FieldTest {
         fieldTest.addCross(1, 1);
         fieldTest.addCross(2, 1);
         fieldTest.addCross(2, 2);
-        assertEquals(3, fieldTest.searchLongestSequenceHorizontally(1));
+        assertEquals(3, fieldTest.searchLongestSequenceDiagonally(1));
 
         fieldTest.addCross(0, 0);
         fieldTest.addCross(1, 1);
         fieldTest.addCross(2, 1);
         fieldTest.addCross(2, 2);
-        assertEquals(0, fieldTest.searchLongestSequenceHorizontally(0));
+        assertEquals(0, fieldTest.searchLongestSequenceDiagonally(0));
 
         fieldTest.addCross(0, 0);
         fieldTest.addCross(3, 1);
         fieldTest.addCross(2, 1);
         fieldTest.addCross(2, 2);
-        assertEquals(3, fieldTest.searchLongestSequenceHorizontally(1));
+        fieldTest.addCross(2, 4);
+        assertEquals(3, fieldTest.searchLongestSequenceDiagonally(1));
 
         logger.info("Test finished");
     }
