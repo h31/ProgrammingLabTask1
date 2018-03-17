@@ -123,6 +123,29 @@ public class Polinomial {
     }
 
     @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        if (this.function[this.degree] >= 0)
+            result.append(this.function[this.degree]).append("x^").append(this.degree);
+        else
+            result.append(" - ").append(Math.abs(this.function[this.degree]));
+        for (int i = this.degree - 1; i > 0; i--) {
+            if (this.function[i] >= 0) {
+                result.append(" + ");
+            } else {
+                result.append(" - ");
+            }
+            result.append(Math.abs(this.function[i])).append("x^").append(i);
+        }
+        if (this.function[0] >= 0)
+            result.append(" + ");
+        else
+            result.append(" - ");
+        result.append(this.function[0]);
+        return result.toString();
+    }
+
+    @Override
     public int hashCode() {
         return 11 * Arrays.hashCode(this.function);
     }

@@ -36,4 +36,10 @@ class PolinomialTest {
         assertEquals(new Polinomial(new int[]{0}),
                 new Polinomial(new int[]{8,-6,-5,3}).divide(new Polinomial(new int[]{-4,1,3}), false));
     }
+    @Test
+    void equals() {
+        Polinomial polinomialFirst = new Polinomial(new int[]{9,-3,4,7});
+        Polinomial polinomialSecond = new Polinomial(new int[]{9,-3,4,7});
+        assertEquals(polinomialFirst, polinomialSecond);
+    }
 }
