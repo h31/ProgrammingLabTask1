@@ -1,5 +1,5 @@
 public enum CrossesOrNoughts {
     CROSS,
-    EMPTY,
+    NOTHING,
     NOUGHT;
 }
