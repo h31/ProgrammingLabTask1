@@ -1,20 +1,25 @@
-public class Field {
-    private final int: width;
-    private final int: height;
+package ru.spbstu.kspt.task1;
 
-    private final int size;
+import java.util.Arrays;
+
+import static ru.spbstu.kspt.task1.CrossesOrNoughts.CROSS;
+import static ru.spbstu.kspt.task1.CrossesOrNoughts.NOTHING;
+import static ru.spbstu.kspt.task1.CrossesOrNoughts.NOUGHT;
+
+public class Field {
+    private int size;
     private CrossesOrNoughts[][] field;
 
 
     public Field(int size) {
         this.size = size;
         if (size <= 0){
-            throw new IllegalArgumentException()
+            throw new IllegalArgumentException();
         }
         field = new CrossesOrNoughts[size][size];
 
-        for (int width = 0; width < size; width++) {
-            for (int height = 0; height < size; height++) {
+        for (int height = 0; height < size; height++) {
+            for (int width = 0; width < size; width++) {
                 field[width][height] = NOTHING;
             }
         }
@@ -24,28 +29,28 @@ public class Field {
         field[width][height] = cell;
     }
 
-    public addCross(int width, int height){
-        putValue(width, height, CROSS)
+    public void addCross(int width, int height){
+        putValue(width, height, CROSS);
     }
 
-    public devastate(int width, int height){
-        putValue(width, height, NOTHING)
+    public void devastate(int width, int height){
+        putValue(width, height, NOTHING);
     }
 
-    public addNought(int width, int height)
+    public void addNought(int width, int height)
     {
-        putValue(width, height, NOUGHT)
+        putValue(width, height, NOUGHT);
     }
 
-    public searchLongestSequenceHorizontally(int xoro){
-        private int: max;
-        private int: sumNeedful;
-        private CrossesOrNoughts: cell;
-        if xoro = 0 {
-            cell = NOUGHT
+    public int searchLongestSequenceHorizontally(int choice){
+        int max;
+        int sumNeedful;
+        CrossesOrNoughts cell;
+        if (choice == 0) {
+            cell = NOUGHT;
         }
         else {
-            cell = CROSS
+            cell = CROSS;
         }
         max = 0;
         sumNeedful = 0;
@@ -61,19 +66,20 @@ public class Field {
                     sumNeedful = 0;
                 }
             }
+            sumNeedful = 0;
         }
         return max;
     }
 
-    public searchLongestSequenceVertically(CrossesOrNoughts cell){
-        private int: max;
-        private int: sumNeedful;
-        private CrossesOrNoughts: cell;
-        if xoro = 0 {
-            cell = NOUGHT
+    public int searchLongestSequenceVertically(int choice){
+        int max;
+        int sumNeedful;
+        CrossesOrNoughts cell;
+        if (choice == 0) {
+            cell = NOUGHT;
         }
         else {
-            cell = CROSS
+            cell = CROSS;
         }
         max = 0;
         sumNeedful = 0;
@@ -89,35 +95,38 @@ public class Field {
                     sumNeedful = 0;
                 }
             }
+            sumNeedful = 0;
         }
         return max;
     }
 
-    public searchLongestSequenceDiagonally(int xoro){
-        private int: max;
-        private int: i;
-        private int: sumNeedful;
-        private CrossesOrNoughts: cell;
-        if xoro = 0 {
-            cell = NOUGHT
+    public int searchLongestSequenceDiagonally(int choice){
+        int max;
+        int max2;
+        int i;
+        int sumNeedful;
+        CrossesOrNoughts cell;
+        if (choice == 0) {
+            cell = NOUGHT;
         }
         else {
-            cell = CROSS
+            cell = CROSS;
         }
         max = 0;
+        max2 = 0;
         sumNeedful = 0;
         for (int height = 0; height < size; height++) {
             for (int width = 0; width < size; width++) {
                 i = 0;
                 if (field[width][height] == cell) {
                     sumNeedful += 1;
-                    max = sumNeedful;
-                    while (i + width + 1 < size) {
+                    if (max == 0) max = sumNeedful;
+                    while ((i + width + 1) < size) {
                         i++;
                         if (field[width][height] == field[width + i][height + i]){
                             sumNeedful += 1;
                             if (sumNeedful > max) {
-                                max = sumNeedful
+                                max = sumNeedful;
                             }
                         }
                         else {
@@ -125,10 +134,10 @@ public class Field {
                         }
                     }
                 }
+                sumNeedful = 0;
             }
         }
 
-        i = 0;
         sumNeedful = 0;
 
         for (int height = 0; height < size; height++) {
@@ -136,13 +145,13 @@ public class Field {
                 i = 0;
                 if (field[width][height] == cell) {
                     sumNeedful += 1;
-                    max = sumNeedful;
-                    while (i + height + 1 < size) {
+                    if (max2 == 0) max2 = sumNeedful;
+                    while ((i + height + 1) < size) {
                         i++;
                         if (field[width][height] == field[width - i][height + i]){
                             sumNeedful += 1;
                             if (sumNeedful > max) {
-                                max = sumNeedful
+                                max2 = sumNeedful;
                             }
                         }
                         else {
@@ -152,7 +161,11 @@ public class Field {
                 }
             }
         }
-        return max;
+        if (max2 > max) {
+            return max2;
+        } else {
+            return max;
+        }
     }
 
     @Override
@@ -162,38 +175,35 @@ public class Field {
             for (int width = 0; width < size; width++) {
                 switch (field[width][height]) {
                     case CROSS:
-                        stringField.append('x');
+                        stringField.append("x");
                         break;
                     case NOTHING:
-                        stringField.append(' ');
+                        stringField.append(" ");
                         break;
                     case NOUGHT:
-                        stringField.append('o');
+                        stringField.append("o");
                         break;
                 }
+                stringField.append('.');
             }
         }
         return stringField.toString();
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        if (!super.equals(object)) return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        Field field1 = (Field) object;
+        Field field1 = (Field) o;
 
         if (size != field1.size) return false;
-        if (!java.util.Arrays.deepEquals(field, field1.field)) return false;
-
-        return true;
+        return Arrays.deepEquals(field, field1.field);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + size;
+        int result = size;
         result = 31 * result + Arrays.deepHashCode(field);
         return result;
     }

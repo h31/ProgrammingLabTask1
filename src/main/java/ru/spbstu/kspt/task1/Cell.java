@@ -1,15 +1,13 @@
+package ru.spbstu.kspt.task1;
+
 public class Cell {
-    private final int x;
+    private int width;
 
-    private final int y;
+    private int height;
 
-    public CrossesOrNoughts(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    if (x < 0 || y < 0) {
-        throw new IllegalArgumentException()
+    public void CrossesOrNoughts(int width, int height) {
+        this.width = width;
+        this.height = height;
     }
 
     @Override
@@ -24,16 +22,16 @@ public class Cell {
 
         Cell cell = (Cell) object;
 
-        if (x != cell.x) return false;
-        if (y != cell.y) return false;
+        if (width != cell.width) return false;
+        if (height != cell.height) return false;
 
         return true;
     }
 
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + x;
-        result = 31 * result + y;
+        result = 31 * result + width;
+        result = 31 * result + height;
         return result;
     }
 }
