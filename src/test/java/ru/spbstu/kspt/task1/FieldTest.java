@@ -5,7 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FieldTest {
+class FieldTest {
     private static final Logger logger = LogManager.getLogger(FieldTest.class);
 
     @Test
@@ -38,8 +38,6 @@ public class FieldTest {
         fieldTest.addCross(2, 1);
         fieldTest.addCross(2, 2);
         assertEquals(3, fieldTest.searchLongestSequenceHorizontally(1));
-
-
 
         logger.info("Test finished");
     }
