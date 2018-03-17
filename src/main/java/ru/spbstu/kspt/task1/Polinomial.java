@@ -13,21 +13,35 @@ public class Polinomial {
         this.degree = function.length - 1;
     }
 
-    public Polinomial summarize(Polinomial pol) {
-
+    public Polinomial summarizeOrSubtract(Polinomial pol, String request) {
+        if (!request.equals("Summarize") && !request.equals("Subtract"))
+                throw new IllegalArgumentException("Неверный запрос: введите Summarize или Subtract");
         int maxDegree = Math.max(this.degree, pol.degree);
         int minDegree = Math.min(this.degree, pol.degree);
         int[] resultFunction = new int[maxDegree + 1];
-        for (int i = 0; i <= maxDegree; i++) {
-            if (i <= minDegree) {
-                resultFunction[i] = this.function[i] + pol.function[i];
-            } else {
-                if (this.function.length > minDegree) resultFunction[i] = this.function[i];
-                else resultFunction[i] = pol.function[i];
+        if (request.equals("Summarize")) {
+            for (int i = 0; i <= maxDegree; i++) {
+                if (i <= minDegree) {
+                    resultFunction[i] = this.function[i] + pol.function[i];
+                } else {
+                    if (this.function.length > minDegree) resultFunction[i] = this.function[i];
+                    else resultFunction[i] = pol.function[i];
+                }
+            }
+        } else {
+            for (int i = 0; i <= maxDegree; i++) {
+                if (i <= minDegree) {
+                    resultFunction[i] = this.function[i] - pol.function[i];
+                } else {
+                    if (this.function.length > minDegree) resultFunction[i] = this.function[i];
+                    else resultFunction[i] = -pol.function[i];
+                }
             }
         }
         return new Polinomial(resultFunction);
     }
+
+
 
     @Override
     public boolean equals(Object object) {
