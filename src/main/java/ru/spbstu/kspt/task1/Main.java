@@ -13,4 +13,5 @@ public class Main {
         logger.debug("Logging example");
         System.out.println("Hello World!");
     }
+
 }
