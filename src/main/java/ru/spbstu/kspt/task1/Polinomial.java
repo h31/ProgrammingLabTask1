@@ -41,7 +41,13 @@ public class Polinomial {
         return new Polinomial(resultFunction);
     }
 
-
+    public int evaluate(int x) {
+        int result = 0;
+        for (int i = 0; i <= this.degree; i++) {
+            result += Math.pow(x, i) * this.function[i];
+        }
+        return result;
+    }
 
     @Override
     public boolean equals(Object object) {

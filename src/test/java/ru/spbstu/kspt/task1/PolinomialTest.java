@@ -14,4 +14,10 @@ class PolinomialTest {
                 new Polinomial(new int[]{-4,3,-1,1,2,1}).
                         summarizeOrSubtract(new Polinomial(new int[]{5,-1,4,-2}), "Subtract"));
     }
+    @Test
+    void evaluate() {
+        assertEquals(102, new Polinomial(new int[]{-8,-1,-6,3,7}).evaluate(2));
+        assertEquals(7, new Polinomial(new int[]{7}).evaluate(2));
+
+    }
 }
