@@ -14,5 +14,5 @@ interface PhoneBookInterface {
 
         List<String> searchByPerson(String name);
 
-        String searchByNum(String number);
+        Object searchByNum(String number);
 }

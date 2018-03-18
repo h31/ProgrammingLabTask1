@@ -50,12 +50,10 @@ class PhoneBook implements PhoneBookInterface {
 
     public String searchByNum(String number) {
         if (!checkNum(number)) throw new IllegalArgumentException("Wrong format");
-        for (String name : book.keySet()) {
-            for (String num : book.get(name)) {
-                if (number.equals(num)) return name;
-            }
+        for (Map.Entry i : book.entrySet()) {
+            if (i.getValue().toString().contains(number)) return String.valueOf(i.getKey());
         }
-        throw new IllegalArgumentException("invalid number"); 
+        throw new IllegalArgumentException("invalid number");
     }
 
     @Override
