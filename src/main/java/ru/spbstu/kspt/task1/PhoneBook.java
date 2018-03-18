@@ -16,7 +16,7 @@ class PhoneBook implements PhoneBookInterface {
 
     public void addPerson(String name, List<String> numbers) {
         for (String i : numbers) {
-            if (!checkNum(i)) throw new IllegalArgumentException("Wrong format");
+            if (!checkNum(i)) throw new IllegalArgumentException("Wrong format"); 
         }
         ArrayList<String> list = new ArrayList<>();
         list.addAll(numbers);
