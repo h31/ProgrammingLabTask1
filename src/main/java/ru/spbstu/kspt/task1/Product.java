@@ -2,15 +2,15 @@ package ru.spbstu.kspt.task1;
 
 public class Product {
     String name;
-    int roublePrice;
     int copeikaPrice;
 
-    public Product(String name, int roublePrice, int copeikaPrice) {
+    public Product(String name, int copeikaPrice) {
         this.name = name;
-        this.roublePrice = roublePrice;
         this.copeikaPrice = copeikaPrice;
     }
-    Product(){}
+    private Product(){}
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -19,21 +19,29 @@ public class Product {
 
         Product product = (Product) o;
 
-        if (roublePrice != product.roublePrice) return false;
         if (copeikaPrice != product.copeikaPrice) return false;
         return name != null ? name.equals(product.name) : product.name == null;
     }
-    public int getRoublePrice(){
-        return this.roublePrice;
-    }
-    public int getCopeikaPrice(){
-        return this.copeikaPrice;
-    }
+
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + roublePrice;
         result = 31 * result + copeikaPrice;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", copeikaPrice=" + copeikaPrice +
+                '}';
+    }
+
+    public int getCopeikaPrice() {
+        return copeikaPrice;
+    }
+    public String getName(){
+        return this.name;
     }
 }

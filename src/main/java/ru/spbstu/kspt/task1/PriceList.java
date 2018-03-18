@@ -1,41 +1,63 @@
 package ru.spbstu.kspt.task1;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class PriceList {
-    public HashMap<Integer, Product> PriceList = new HashMap<>();
+    private Map<Integer, Product> PriceList = new HashMap<Integer, Product>();
 
 
-    PriceList(HashMap pricelist) {
+    public PriceList(Map pricelist) {
         PriceList = pricelist;
     }
 
-    PriceList() {
+    public PriceList() {
 
+    }
+
+    public Map<Integer, Product> getPriceList() {
+        return PriceList;
     }
 
     public void addProduct(int code, Product product) {
-        PriceList.put(code, product);
+        if (PriceList.containsKey(code)) {
+            throw new IllegalArgumentException("Товар с таким кодом уже существует");
+        } else
+            PriceList.put(code, product);
     }
 
     public void removeProduct(int code) {
-        PriceList.remove(code);
+        if (!PriceList.containsKey(code)) {
+            throw new IllegalArgumentException("Товара с таким кодом не существует");
+        } else
+            PriceList.remove(code);
     }
 
-    public void changePrice(int code, int newRoublePrice, int newCopeikaPrice) {
-        PriceList.get(code).roublePrice = newRoublePrice;
-        PriceList.get(code).copeikaPrice = newCopeikaPrice;
+    public void changePrice(int code, int newCopeikaPrice) {
+        if (newCopeikaPrice <= 0 || !PriceList.containsKey(code)) {
+            throw new IllegalArgumentException("Неверный ввод цены или кода продукта");
+        } else {
+            PriceList.get(code).copeikaPrice = newCopeikaPrice;
+        }
     }
 
-    public void changeName(int code, String newName) {
-        PriceList.get(code).name = newName;
+//    public void changeName(int code, String newName) {
+//        for (int i = 0; i < PriceList.size(); i++) {
+//            if (PriceList.get(i).name.equals(newName)) {
+//                throw new IllegalArgumentException("Продукт с таким названием уже существует под другим кодом");
+//            } else {
+//                PriceList.get(code).name = newName;
+//            }
+//        }
+//    }
 
-    }
-
-    public double priceByCode(int code, int amount) {
-        Product product = new Product();
-        product = PriceList.get(code);
-        return (product.getRoublePrice() + product.getCopeikaPrice() / 100.0) * amount;
+    public int priceByCode(int code, int amount) {
+        if (amount >= 0 && PriceList.containsKey(code)) {
+            return PriceList.get(code).getCopeikaPrice() * amount;
+        } else {
+            throw new IllegalArgumentException("Отрицательное число товаров");
+        }
     }
 
     @Override
@@ -53,5 +75,11 @@ public class PriceList {
         return PriceList != null ? PriceList.hashCode() : 0;
     }
 
-}
+    @Override
+    public String toString() {
+        return "PriceList{" +
+                "PriceList=" + PriceList +
+                '}';
+    }
 
+}
