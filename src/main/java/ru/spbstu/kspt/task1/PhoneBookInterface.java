@@ -4,7 +4,7 @@ import java.util.List;
 
 interface PhoneBookInterface {
 
-        void addPerson(String name, String[] numbers);
+        void addPerson(String name, List<String> numbers);
 
         void delPerson(String name);
 

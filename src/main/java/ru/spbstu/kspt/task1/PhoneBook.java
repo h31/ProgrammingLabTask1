@@ -1,9 +1,6 @@
 package ru.spbstu.kspt.task1;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,12 +14,12 @@ class PhoneBook implements PhoneBookInterface {
         return m.matches();
     }
 
-    public void addPerson(String name, String[] numbers) {
+    public void addPerson(String name, List<String> numbers) {
         for (String i : numbers) {
             if (!checkNum(i)) throw new IllegalArgumentException("Wrong format");
         }
         ArrayList<String> list = new ArrayList<>();
-        list.addAll(Arrays.asList(numbers));
+        list.addAll(numbers);
         book.put(name, list);
     }
 
@@ -46,7 +43,7 @@ class PhoneBook implements PhoneBookInterface {
         book.get(name).remove(number);
     }
 
-    public ArrayList<String> searchByPerson(String name) {
+    public List<String> searchByPerson(String name) {
         if (book.containsKey(name)) return book.get(name);
         else throw new IllegalArgumentException("invalid person");
     }
@@ -69,6 +66,13 @@ class PhoneBook implements PhoneBookInterface {
         PhoneBook main = (PhoneBook) o;
 
         return book != null ? book.equals(main.book) : main.book == null;
+    }
+
+    @Override
+    public String toString() {
+        return "PhoneBook{" +
+                "book=" + book +
+                '}';
     }
 
     @Override
