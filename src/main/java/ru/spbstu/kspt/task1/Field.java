@@ -121,7 +121,7 @@ public class Field {
                 if (field[width][height] == cell) {
                     sumNeedful += 1;
                     if (max == 0) max = sumNeedful;
-                    while ((i + width + 1) < size) {
+                    while ((i + width + 1) < size && (i + height + 1) < size) {
                         i++;
                         if (field[width][height] == field[width + i][height + i]){
                             sumNeedful += 1;
@@ -141,16 +141,18 @@ public class Field {
         sumNeedful = 0;
 
         for (int height = 0; height < size; height++) {
-            for (int width = size - 1; width == 0; width--) {
+            int width = size;
+            while (width >= 1) {
+                width--;
                 i = 0;
                 if (field[width][height] == cell) {
                     sumNeedful += 1;
                     if (max2 == 0) max2 = sumNeedful;
-                    while ((i + height + 1) < size) {
+                    while ((width - i > 0) && (i + height + 1 < size)) {
                         i++;
                         if (field[width][height] == field[width - i][height + i]){
                             sumNeedful += 1;
-                            if (sumNeedful > max) {
+                            if (sumNeedful > max2) {
                                 max2 = sumNeedful;
                             }
                         }
@@ -160,6 +162,7 @@ public class Field {
                     }
                 }
             }
+            sumNeedful = 0;
         }
         if (max2 > max) {
             return max2;
