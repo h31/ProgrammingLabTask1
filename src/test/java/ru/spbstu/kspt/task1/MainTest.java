@@ -20,7 +20,7 @@ class MainTest {
         phoneList.add("+79215466775");
         phoneList.add("89214855645");
 
-        assertEquals(phoneList, phoneBook.book.get("Tony"));
+        assertEquals(phoneList, phoneBook.book.get("Tony")); 
         assertTrue(phoneBook.book.containsKey("Daniel"));
         assertTrue(phoneBook.book.get("Tonya").isEmpty());
         assertThrows(IllegalArgumentException.class, () ->
