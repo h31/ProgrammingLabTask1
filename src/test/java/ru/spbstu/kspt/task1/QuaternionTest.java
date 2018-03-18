@@ -70,4 +70,11 @@ class QuaternionTest {
         double p = 2.0;
         assertEquals(new Quaternion (1.0, 1.5, 2.0, 2.5), q.divide(q, p));
     }
+
+    @Test
+    void angleDetermination(){
+       Quaternion q = new Quaternion(2.0, 4.0, 3.0, 5.0);
+       assertEquals(0.7610, q.angleDetermination(q), 1e-4);
+
+    }
 }
