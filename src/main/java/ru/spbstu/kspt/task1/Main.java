@@ -24,17 +24,17 @@ public class Main {
         }
         return matrix;
     }
+
     public static void main(String[] args) {
         List<List<Integer>> matrix0 = Array2DToList(new Integer[][]{{0, 3, 1, -9}, {0, 0, 99, 17}, {9, -1, 0, -1}, {1000, -999, 1314, 0}});
-        List<String> names = Arrays.asList(new String[]{"red", "yell", "blue", "green"});
+        List<String> names = new ArrayList<>(Arrays.asList(new String[]{"red", "yell", "blue", "green"}));
         DirectedGraph directGraph = new DirectedGraph(matrix0, names);
 
         System.out.println(directGraph);
-
-        System.out.println(directGraph.getOutputList("red"));
-        System.out.println(directGraph.getInputList("green"));
         System.out.println(directGraph.addVertex("abc"));
         System.out.println(directGraph.deleteVertex("abc"));
+        System.out.println(directGraph.getOutputList("red"));
+        System.out.println(directGraph.getInputList("green"));
         System.out.println(directGraph.renameVertex("yell", "yellow"));
         System.out.println(directGraph.renameVertex("yellow", "yell"));
         System.out.println(directGraph.addEdge("red", "yell", 666));

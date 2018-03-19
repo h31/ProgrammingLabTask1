@@ -25,7 +25,7 @@ public class DirectedGraphTest {
     }
 
     List<List<Integer>> matrix0 = Array2DToList(new Integer[][]{{0, 3, 1, -9}, {0, 0, 99, 17}, {9, -1, 0, -1}, {1000, -999, 1314, 0}});
-    List<String> names = Arrays.asList(new String[]{"red", "yell", "blue", "green"});
+    List<String> names = new ArrayList<>(Arrays.asList(new String[]{"red", "yell", "blue", "green"}));
     DirectedGraph graph = new DirectedGraph(matrix0, names);
 
     @Test
@@ -64,7 +64,7 @@ public class DirectedGraphTest {
     public void addVertex() {
         List<List<Integer>> matrix1 = Array2DToList(new Integer[][]{{0, 3, 1, -9, null}, {0, 0, 99, 17, null}, {9, -1, 0, -1, null}, {1000, -999, 1314, 0, null},
                 {null, null, null, null, null}});
-        List<String> addName = Arrays.asList(new String[]{"red", "yell", "blue", "green", "white"});
+        List<String> addName = new ArrayList<>(Arrays.asList(new String[]{"red", "yell", "blue", "green", "white"}));
         DirectedGraph graphA = new DirectedGraph(matrix1, addName);
         assertEquals(graphA, graph.addVertex("white"));
     }
@@ -72,16 +72,16 @@ public class DirectedGraphTest {
     @Test
     public void deleteVertex() {
         List<List<Integer>> matrixD = Array2DToList(new Integer[][]{{0, 1, -9}, {9, 0, -1}, {1000, 1314, 0}});
-        List<String> nameD = Arrays.asList(new String[]{"red", "blue", "green"});
+        List<String> nameD = new ArrayList<>(Arrays.asList(new String[]{"red", "blue", "green"}));
         DirectedGraph graphD = new DirectedGraph(matrixD, nameD);
         assertEquals(graphD, graph.deleteVertex("yell"));
     }
 
     @Test
     public void renameVertex() {
-        List<String> nameR = Arrays.asList(new String[]{"pink", "yell", "blue", "green"});
+        List<String> nameR = new ArrayList<>(Arrays.asList(new String[]{"pink", "yell", "blue", "green"}));
         DirectedGraph graphR = new DirectedGraph(matrix0, nameR);
-        List<String> nameR1 = Arrays.asList(new String[]{"red", "yellow", "blue", "green"});
+        List<String> nameR1 =new ArrayList<>( Arrays.asList(new String[]{"red", "yellow", "blue", "green"}));
         DirectedGraph graphR1 = new DirectedGraph(matrix0, nameR1);
 
         assertEquals(graphR, graph.renameVertex("red", "pink"));
@@ -91,7 +91,7 @@ public class DirectedGraphTest {
     public void addEdge() {
         List<List<Integer>> matrixAE = Array2DToList(new Integer[][]{{0, 3, 1, -9}, {0, 0, 99, 17}, {9, -1, 0, -1}, {119, -999, 1314, 0}});
         DirectedGraph graphAE = new DirectedGraph(matrixAE, names);
-        List<List<Integer>> matrixAE1 = Array2DToList(new Integer[][]{{0, 3, 1, -9}, {666, 0, 99, 17}, {9, -1, 0, -1}, {1000, -999, 1314, 0}});
+        List<List<Integer>> matrixAE1 = Array2DToList(new Integer[][]{{0, 3, 1, -9}, {666, 0, 99, 17}, {9, -1, 0, -1}, {119, -999, 1314, 0}});
         DirectedGraph graphAE1 = new DirectedGraph(matrixAE1, names);
 
         assertEquals(graphAE, graph.addEdge("red", "green", 119));
@@ -100,7 +100,7 @@ public class DirectedGraphTest {
 
     @Test
     public void deleteEdge() {
-        List<List<Integer>> matrixDE = Array2DToList(new Integer[][]{{0, 3, 1, -9}, {0, 0, 99, null}, {9, -1, 0, -1}, {1000, -999, 1314, 0}});
+        List<List<Integer>> matrixDE = Array2DToList(new Integer[][]{{0, 3, 1, -9}, {0, 0, 99, null}, {null, -1, 0, -1}, {1000, -999, 1314, 0}});
         DirectedGraph graphDE = new DirectedGraph(matrixDE, names);
         List<List<Integer>> matrixDE1 = Array2DToList(new Integer[][]{{0, 3, 1, -9}, {0, 0, 99, 17}, {null, -1, 0, -1}, {1000, -999, 1314, 0}});
         DirectedGraph graphDE1 = new DirectedGraph(matrixDE1, names);
@@ -114,7 +114,7 @@ public class DirectedGraphTest {
     public void renameEdge() {
         List<List<Integer>> matrixRE = Array2DToList(new Integer[][]{{0, 3, 520, -9}, {0, 0, 99, 17}, {9, -1, 0, -1}, {1000, -999, 1314, 0}});
         DirectedGraph graphRE = new DirectedGraph(matrixRE, names);
-        List<List<Integer>> matrixRE1 = Array2DToList(new Integer[][]{{0, 3, 1, -9}, {0, 0, 250, 17}, {9, -1, 0, -1}, {1000, -999, 1314, 0}});
+        List<List<Integer>> matrixRE1 = Array2DToList(new Integer[][]{{0, 3, 520, -9}, {0, 0, 250, 17}, {9, -1, 0, -1}, {1000, -999, 1314, 0}});
         DirectedGraph graphRE1 = new DirectedGraph(matrixRE1, names);
 
         assertEquals(graphRE, graph.renameEdge("blue", "red", 520));
