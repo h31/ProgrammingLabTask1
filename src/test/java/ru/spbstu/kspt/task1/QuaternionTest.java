@@ -37,7 +37,7 @@ class QuaternionTest {
         Quaternion q = new Quaternion(2.0, 3.0, 4.0, 5.0);
         Quaternion p = new Quaternion (3.0, 4.0, 5.0, 6.0);
         Quaternion l = new Quaternion (5.0, 7.0, 9.0, 11.0);
-        assertEquals(l, q.plus(q, p));
+        assertEquals(l, q.plus(p));
     }
 
     @Test
@@ -45,7 +45,7 @@ class QuaternionTest {
         Quaternion q = new Quaternion(2.0, 3.0, 4.0, 5.0);
         Quaternion p = new Quaternion(3.0, 4.0, 5.0, 6.0);
         Quaternion l = new Quaternion(-1.0, -1.0, -1.0, -1.0);
-        assertEquals(l, q.minus(q, p));
+        assertEquals(l, q.minus(p));
     }
 
     @Test
@@ -61,7 +61,7 @@ class QuaternionTest {
         Quaternion q = new Quaternion(2.0, 3.0, 4.0, 5.0);
         Quaternion p = new Quaternion(3.0, 4.0, 5.0, 6.0);
         Quaternion l = new Quaternion(-56.0, 16.0, 24.0, 26.0);
-        assertEquals(l, q.mult(q, p));
+        assertEquals(l, q.mult(p));
         }
 
     @Test
@@ -72,9 +72,9 @@ class QuaternionTest {
     }
 
     @Test
-    void angleDetermination(){
+    void angleDeterminate(){
        Quaternion q = new Quaternion(2.0, 4.0, 3.0, 5.0);
-       assertEquals(0.7610, q.angleDetermination(q), 1e-4);
+       assertEquals(0.7610, q.angleDetermine(q), 1e-4);
 
     }
 }

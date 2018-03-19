@@ -23,7 +23,6 @@ public class Quaternion {
             this.d = d;
         }
 
-
         public Quaternion conjugate() {
             return new Quaternion(a, -b, -c, -d);
         }
@@ -36,23 +35,23 @@ public class Quaternion {
             return Quaternion.divide(this.conjugate(), a * a + b * b + c * c + d * d);
         }
 
-        public  Quaternion plus(Quaternion p, Quaternion q) {
-            return new Quaternion(p.a + q.a, p.b + q.b, p.c + q.c, p.d + q.d);
+        public Quaternion plus(Quaternion p) {
+            return new Quaternion(this.a + p.a, this.b + p.b, this.c + p.c, this.d + p.d);
         }
 
-        public Quaternion minus(Quaternion p, Quaternion q) {
-            return new Quaternion(p.a - q.a, p.b - q.b, p.c - q.c, p.d - q.d);
+        public Quaternion minus(Quaternion p) {
+            return new Quaternion(this.a - p.a, this.b - p.b, this.c - p.c, this.d - p.d);
         }
 
         public Quaternion multConst(Quaternion p, double cst) {
             return new Quaternion(p.a * cst, p.b * cst, p.c * cst, p.d * cst);
         }
 
-        public Quaternion mult(Quaternion p, Quaternion q) {
-            return new Quaternion(p.a * q.a - p.b * q.b - p.c * q.c - p.d * q.d,
-                    p.a * q.b + p.b * q.a + p.c * q.d - p.d * q.c,
-                    p.a * q.c - p.b * q.d + p.c * q.a + p.d * q.b,
-                    p.a * q.d + p.b * q.c - p.c * q.b + p.d * q.a);
+        public Quaternion mult(Quaternion p) {
+            return new Quaternion(this.a * p.a - this.b * p.b - this.c * p.c - this.d * p.d,
+                    this.a * p.b + this.b * p.a + this.c * p.d - this.d * p.c,
+                    this.a * p.c - this.b * p.d + this.c * p.a + this.d * p.b,
+                    this.a * p.d + this.b * p.c - this.c * p.b + this.d * p.a);
         }
 
         public static Quaternion divide(Quaternion p, double divisor) throws ArithmeticException {
@@ -94,16 +93,16 @@ public class Quaternion {
                 ((d < 0)? " - " : " + ") + Math.abs(d) + "*k";
           }
 
-    public static Quaternion rotation(Axis d, double angle) {
+    public static Quaternion buildOfQuaternion(Axis d, double angle) {
         double s = Math.sin(angle / 2.0) ;
         return new Quaternion(d.x * s, d.y * s,d.z  * s, Math.cos(angle / 2.0));
     }
 
-    public static Axis axisDetermination(Quaternion q){
-        return new Axis (q.a, q.b, q.c);
+    public Axis axisDetermine(Quaternion q) {
+        return new Axis(q.a, q.b, q.c);
     }
 
-    public static double angleDetermination(Quaternion q){
+    public double angleDetermine(Quaternion q){
         return Math.acos(q.d /  Math.sqrt(q.a * q.a + q.b * q.b + q.c * q.c)) * 2.0;
     }
 }
