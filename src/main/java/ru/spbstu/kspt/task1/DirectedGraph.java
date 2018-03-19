@@ -10,56 +10,22 @@ public class DirectedGraph {
     private List<String> name;
 
     public DirectedGraph(List<List<Integer>> matrix, List<String> name) {
-        List<List<Integer>> newMatrix = new ArrayList<>();
-        List<String> names = new ArrayList<>();
-        int i;
+        List<List<Integer>> newMatrix = matrix;
+        List<String> names = name;
         if (matrix.size() != name.size()) throw new IllegalArgumentException("Extra vertex");
-        for (i = 0; i < name.size(); i++) {
-            names.add(name.get(i));
-        }
-        for (i = 0; i < matrix.size(); i++) {
-            if (matrix.get(i).size() != name.size()) throw new IllegalArgumentException("Extra vertex");
-            newMatrix.add(new ArrayList<>());
-            for (int j = 0; j < matrix.get(i).size(); j++) {
-                List<Integer> list = newMatrix.get(i);
-                list.add(matrix.get(i).get(j));
-                newMatrix.set(i, list);
-            }
-        }
+
         this.matrix = newMatrix;
         this.name = names;
-        Set<String> nameFailed = new HashSet<>();
-        int size = newMatrix.size();
-        for (i = 0; i < newMatrix.size(); i++) {
-            if (newMatrix.get(i).size() > size) size = newMatrix.get(i).size();
-        }
 
-        for (i = 0; i < size; i++) {
-            if (name.size() < i + 1) {
-                String str = Integer.toString(i + 1);
-                this.name.add(str);
-            }
-        }
-        for (i = 0; i < name.size(); i++) nameFailed.add(name.get(i));
-        if (name.size() != nameFailed.size()) throw new IllegalArgumentException("Duplicate name");
-
-        for (i = 0; i < names.size(); i++) {
-            for (int j = this.matrix.get(i).size(); j < names.size(); j++) {
-                List<Integer> list = this.matrix.get(i);
-                list.add(null);
-                this.matrix.set(i, list);
-            }
-            if (matrix.size() <= i) {
-                this.matrix.add(new ArrayList<>());
-            }
-        }
+        Set<String> checkNames = new HashSet<>(name);
+        if (name.size() != checkNames.size()) throw new IllegalArgumentException("Duplicate name");
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof DirectedGraph) {
-            DirectedGraph graph = (DirectedGraph) obj;
-            return getMatrix().equals(graph.getMatrix());
+            DirectedGraph directedGraph = (DirectedGraph) obj;
+            return getMatrix().equals(directedGraph.getMatrix());
         }
         return false;
     }
@@ -70,29 +36,19 @@ public class DirectedGraph {
 
     public List<List<Integer>> getMatrix() {
         List<List<Integer>> matrix0 = new ArrayList<>();
-        for (int i = 0; i < this.matrix.size(); i++) {
-            matrix0.add(new ArrayList<>());
-            for (int j = 0; j < this.matrix.size(); j++) {
-                List<Integer> list = new ArrayList<>();
-                list.add(this.matrix.get(i).get(j));
-                matrix0.set(i, list);
-            }
-        }
+        matrix0.addAll(this.matrix);
         return matrix0;
     }
 
     public List<String> getName() {
         List<String> str = new ArrayList<>();
-        for (int i = 0; i < this.name.size(); i++) {
-            str.add(this.name.get(i));
-        }
+        str.addAll(this.name);
         return str;
     }
 
-    //  _____
-    public int maxLength() { //get a max length to align each grid   |     |
-        int maxLength = 0;                                        //  _____
-        int i, number;
+    private int maxLength() {
+        int maxLength = 0;
+        int i, length;
         for (i = 0; i < this.name.size(); i++) {
             if (this.name.get(i).length() > maxLength) {
                 maxLength = this.name.get(i).length();
@@ -100,18 +56,18 @@ public class DirectedGraph {
             for (int j = 0; j < this.matrix.get(i).size(); j++) {
                 if (this.matrix.get(i).get(j) != null) {
                     if (this.matrix.get(i).get(j) >= 0) {
-                        number = Integer.toString(this.matrix.get(i).get(j)).length();
+                        length = Integer.toString(this.matrix.get(i).get(j)).length();
                     } else {
-                        number = Integer.toString(0 - this.matrix.get(i).get(j)).length() + 1;
+                        length = Integer.toString(0 - this.matrix.get(i).get(j)).length() + 1;
                     }
-                    maxLength = Math.max(maxLength, number);
+                    maxLength = Math.max(maxLength, length);
                 }
             }
         }
         return maxLength;
     }
 
-    public String alignGrids(Integer numberLength, Integer maxLength) {
+    public String alignGrids(int numberLength, int maxLength) {
         String string = "";
         for (int i = 0; i < maxLength - numberLength; i++) {
             string += " ";
@@ -119,7 +75,7 @@ public class DirectedGraph {
         return string;
     }
 
-    public String getStraightLow(Integer gridLength) {
+    public String getStraightLow(int gridLength) {
         String string = "";
         for (int i = 0; i < this.name.size() * (gridLength + 1) + gridLength + 2; i++) {
             string += "_";
@@ -132,9 +88,7 @@ public class DirectedGraph {
         int i, weight;
         int maxLength = maxLength();
         StringBuilder sb = new StringBuilder();
-        if (this.matrix.size() == 0) {
-            sb.append("Empty graph" + "\n");
-        } else {
+        if (this.matrix.size() != 0) {
             sb.append("|" + alignGrids(0, maxLength));
 
             for (i = 0; i < this.name.size(); i++) { //add straight line in front of each element
@@ -162,7 +116,7 @@ public class DirectedGraph {
         return sb.toString();
     }
 
-    private DirectedGraph changeVertex() {// string
+    private DirectedGraph changeVertex() {
         int i;
         int size = this.name.size();
         List<List<Integer>> matrix = this.matrix;
@@ -188,9 +142,9 @@ public class DirectedGraph {
     }
 
     public DirectedGraph renameVertex(String old, String fresh) {
-        int oldNumber = this.name.indexOf(old);
-        if (oldNumber == -1) throw new IllegalArgumentException("There's no this vertex");
-        this.name.set(oldNumber, fresh);
+        int indexOfOld = this.name.indexOf(old);
+        if (indexOfOld == -1) throw new IllegalArgumentException("There's no this vertex");
+        this.name.set(indexOfOld, fresh);
         return changeVertex();
     }
 
@@ -201,7 +155,6 @@ public class DirectedGraph {
         for (i = 0; i < this.matrix.size(); i++) {
             List<Integer> list = this.matrix.get(i);
             list.remove(ver);
-            this.matrix.set(i, list);
         }
         this.matrix.remove(ver);
         this.name.remove(ver);
@@ -225,14 +178,14 @@ public class DirectedGraph {
         return this;
     }
 
-    public DirectedGraph addEdge(String begin, String end, Integer number) {
-        int endNumber = this.name.indexOf(end);
-        int beginNumber = this.name.indexOf(begin);
-        List<Integer> list = this.matrix.get(endNumber);
-        if (endNumber == -1 || beginNumber == -1) throw new IllegalArgumentException("There's no this vertex");
-        list.remove(beginNumber);
-        list.add(beginNumber, number);
-        this.matrix.set(endNumber, list);
+    public DirectedGraph addEdge(String begin, String end, Integer weight) {
+        int indexOfEnd = this.name.indexOf(end);
+        int indexOfBegin = this.name.indexOf(begin);
+        List<Integer> list = this.matrix.get(indexOfEnd);
+        if (indexOfEnd == -1 || indexOfBegin == -1) throw new IllegalArgumentException("There's no this vertex");
+        list.remove(indexOfBegin);
+        list.add(indexOfBegin, weight);
+        this.matrix.set(indexOfEnd, list);
         return changeEdge();
     }
 

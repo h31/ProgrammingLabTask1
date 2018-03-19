@@ -2,45 +2,32 @@ package ru.spbstu.kspt.task1;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Main class
  */
+
+
 public class Main {
 
+    private static List<List<Integer>> Array2DToList(Integer[][] x) {
+        List<List<Integer>> matrix = new ArrayList<>();
+        for (int i = 0; i < x.length; i++) {
+            matrix.add(new ArrayList<>());
+            for (int j = 0; j < x[i].length; j++) {
+                List<Integer> list = matrix.get(i);
+                list.add(x[i][j]);
+                matrix.set(i, list);
+            }
+        }
+        return matrix;
+    }
     public static void main(String[] args) {
-        List<List<Integer>> mm = new ArrayList<>();
-        List<Integer> m1 = new ArrayList<>();
-        m1.add(0);
-        m1.add(3);
-        m1.add(1);
-        m1.add(-9);
-        mm.add(m1);
-        List<Integer> m2 = new ArrayList<>();
-        m2.add(0);
-        m2.add(0);
-        m2.add(99);
-        m2.add(17);
-        mm.add(m2);
-        List<Integer> m3 = new ArrayList<>();
-        m3.add(9);
-        m3.add(-1);
-        m3.add(0);
-        m3.add(-1);
-        mm.add(m3);
-        List<Integer> m4 = new ArrayList<>();
-        m4.add(1000);
-        m4.add(-999);
-        m4.add(1314);
-        m4.add(0);
-        mm.add(m4);
-        List<String> name = new ArrayList<>();
-        name.add("red");
-        name.add("yell");
-        name.add("blue");
-        name.add("green");
-        DirectedGraph directGraph = new DirectedGraph(mm, name);
+        List<List<Integer>> matrix0 = Array2DToList(new Integer[][]{{0, 3, 1, -9}, {0, 0, 99, 17}, {9, -1, 0, -1}, {1000, -999, 1314, 0}});
+        List<String> names = Arrays.asList(new String[]{"red", "yell", "blue", "green"});
+        DirectedGraph directGraph = new DirectedGraph(matrix0, names);
 
         System.out.println(directGraph);
 

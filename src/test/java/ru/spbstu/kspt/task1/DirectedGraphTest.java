@@ -4,19 +4,12 @@ import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DirectedGraphTest {
-
-    private static List<String> ArrayToList(String[] y) {
-        List<String> str = new ArrayList<>();
-        for (int i = 0; i < y.length; i++) {
-            str.add(y[i]);
-        }
-        return str;
-    }
 
     private static List<List<Integer>> Array2DToList(Integer[][] x) {
         List<List<Integer>> matrix = new ArrayList<>();
@@ -32,7 +25,7 @@ public class DirectedGraphTest {
     }
 
     List<List<Integer>> matrix0 = Array2DToList(new Integer[][]{{0, 3, 1, -9}, {0, 0, 99, 17}, {9, -1, 0, -1}, {1000, -999, 1314, 0}});
-    List<String> names = ArrayToList(new String[]{"red", "yell", "blue", "green"});
+    List<String> names = Arrays.asList(new String[]{"red", "yell", "blue", "green"});
     DirectedGraph graph = new DirectedGraph(matrix0, names);
 
     @Test
@@ -71,7 +64,7 @@ public class DirectedGraphTest {
     public void addVertex() {
         List<List<Integer>> matrix1 = Array2DToList(new Integer[][]{{0, 3, 1, -9, null}, {0, 0, 99, 17, null}, {9, -1, 0, -1, null}, {1000, -999, 1314, 0, null},
                 {null, null, null, null, null}});
-        List<String> addName = ArrayToList(new String[]{"red", "yell", "blue", "green", "white"});
+        List<String> addName = Arrays.asList(new String[]{"red", "yell", "blue", "green", "white"});
         DirectedGraph graphA = new DirectedGraph(matrix1, addName);
         assertEquals(graphA, graph.addVertex("white"));
     }
@@ -79,22 +72,21 @@ public class DirectedGraphTest {
     @Test
     public void deleteVertex() {
         List<List<Integer>> matrixD = Array2DToList(new Integer[][]{{0, 1, -9}, {9, 0, -1}, {1000, 1314, 0}});
-        List<String> nameD = ArrayToList(new String[]{"red", "blue", "green"});
+        List<String> nameD = Arrays.asList(new String[]{"red", "blue", "green"});
         DirectedGraph graphD = new DirectedGraph(matrixD, nameD);
         assertEquals(graphD, graph.deleteVertex("yell"));
     }
 
     @Test
     public void renameVertex() {
-        List<String> nameR = ArrayToList(new String[]{"pink", "yell", "blue", "green"});
+        List<String> nameR = Arrays.asList(new String[]{"pink", "yell", "blue", "green"});
         DirectedGraph graphR = new DirectedGraph(matrix0, nameR);
-        List<String> nameR1 = ArrayToList(new String[]{"red", "yellow", "blue", "green"});
+        List<String> nameR1 = Arrays.asList(new String[]{"red", "yellow", "blue", "green"});
         DirectedGraph graphR1 = new DirectedGraph(matrix0, nameR1);
 
         assertEquals(graphR, graph.renameVertex("red", "pink"));
         assertEquals(graphR1, graph.renameVertex("yell", "yellow"));
     }
-
     @Test
     public void addEdge() {
         List<List<Integer>> matrixAE = Array2DToList(new Integer[][]{{0, 3, 1, -9}, {0, 0, 99, 17}, {9, -1, 0, -1}, {119, -999, 1314, 0}});
