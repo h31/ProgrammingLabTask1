@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
     private static final Logger logger = LogManager.getLogger(MainTest.class);
-    private Graph g = new Graph();
+    Graph g = new Graph();
 
     @Test
     void exampleTest() {
@@ -21,21 +21,22 @@ class MainTest {
         logger.info("Test finished");
     }
 
+    int s = g.getVertices().size();
+
     @Test
     void addVertexTest() {
         logger.info("Test started");
-        int s = g.getVertices().size();
         g.addVertex("H");
         assertEquals(s + 1, g.getVertices().size());
         logger.info("Test finished");
     }
-    /*
+
     @Test
     void deleteVertexTest() {
         logger.info("Test started");
-        int s = g.getVertices().size();
         logger.info(s);
-        g.deleteVertex("A");
+        logger.info(g.getArcs().size());
+        //g.deleteVertex("A");
         logger.info(s);
         assertEquals(s - 1, g.getVertices().size());
         logger.info("Test finished");
@@ -75,5 +76,4 @@ class MainTest {
         assertEquals(1, g.getArcs().size());
         logger.info("Test finished");
     }
-    */
 }

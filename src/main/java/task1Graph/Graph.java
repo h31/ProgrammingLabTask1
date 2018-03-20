@@ -5,7 +5,12 @@ import java.util.*;
 public class Graph {
 
     private Map<String, Integer> vertices = new HashMap<>();
-    private List<Arc> arcs;
+    private ArrayList<Arc> arcs;
+    private ArrayList<Arc> newArcs;
+
+    private void setArcs(ArrayList<Arc> arcs) {
+        this.arcs = arcs;
+    }
 
     public class Arc {
 
@@ -24,7 +29,7 @@ public class Graph {
                     '}';
         }
 
-        Arc(String n, int w, String beginVertexName, String endVertexName) {
+        public Arc(String n, int w, String beginVertexName, String endVertexName) {
             name = n;
             weight = w;
             begin = vertices.get(beginVertexName);
@@ -49,17 +54,25 @@ public class Graph {
     }
 
     public Graph() {
-        vertices.put("A", 0);
-        vertices.put("B", 1);
-        vertices.put("C", 2);
-        vertices.put("D", 3);
-        vertices.put("E", 4);
+        this.vertices.put("A", 0);
+        this.vertices.put("B", 1);
+        this.vertices.put("C", 2);
+        this.vertices.put("D", 3);
+        this.vertices.put("E", 4);
 
         Arc ab = new Arc("AB", 3, "A", "B");
         Arc bc = new Arc("BC", 3, "B", "C");
         Arc ae = new Arc("AE", 3, "A", "E");
         Arc ec = new Arc("EC", 3, "E", "C");
         Arc ca = new Arc("CA", 3, "C", "A");
+
+        newArcs.add(ab);
+        newArcs.add(bc);
+        newArcs.add(ae);
+        newArcs.add(ec);
+        newArcs.add(ca);
+
+        setArcs(newArcs);
     }
 
     public Map<String, Integer> getVertices() {
@@ -80,9 +93,10 @@ public class Graph {
     }
 
     public void deleteVertex(String vertexName) {
+        int currentVertex = vertices.getOrDefault(vertexName, -1);
         for (int i = 0; i < arcs.size(); i++) {
-            if (arcs.get(i).begin == vertices.get(vertexName)) arcs.remove(i);
-            if (arcs.get(i).end == vertices.get(vertexName)) arcs.remove(i);
+            if (arcs.get(i).begin == currentVertex) arcs.remove(i);
+            if (arcs.get(i).end == currentVertex) arcs.remove(i);
         }
         vertices.remove(vertexName);
     }
