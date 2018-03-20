@@ -10,12 +10,10 @@ public class DirectedGraph {
     private List<String> name;
 
     public DirectedGraph(List<List<Integer>> matrix, List<String> name) {
-        List<List<Integer>> newMatrix = matrix;
-        List<String> names = name;
         if (matrix.size() != name.size()) throw new IllegalArgumentException("Extra vertex");
 
-        this.matrix = newMatrix;
-        this.name = names;
+        this.matrix = new ArrayList<>(matrix);
+        this.name = new ArrayList<>(name);
 
         Set<String> checkNames = new HashSet<>(name);
         if (name.size() != checkNames.size()) throw new IllegalArgumentException("Duplicate name");
@@ -67,18 +65,18 @@ public class DirectedGraph {
         return maxLength;
     }
 
-    public String alignGrids(int numberLength, int maxLength) {
-        String string = "";
+    private StringBuilder alignGrids(int numberLength, int maxLength) {
+        StringBuilder string = new StringBuilder();
         for (int i = 0; i < maxLength - numberLength; i++) {
-            string += " ";
+            string.append(" ");
         }
         return string;
     }
 
-    public String getStraightLow(int gridLength) {
-        String string = "";
+    private StringBuilder getStraightLow(int gridLength) {
+        StringBuilder string = new StringBuilder();
         for (int i = 0; i < this.name.size() * (gridLength + 1) + gridLength + 2; i++) {
-            string += "_";
+            string.append("_");
         }
         return string;
     }
@@ -119,25 +117,21 @@ public class DirectedGraph {
     private DirectedGraph changeVertex() {
         int i;
         int size = this.name.size();
-        List<List<Integer>> matrix = this.matrix;
         for (i = 0; i < size; i++)
-            if (i >= this.matrix.size()) matrix.add(new ArrayList<>());
-        this.matrix = matrix;
+            if (i >= this.matrix.size()) this.matrix.add(new ArrayList<>());
         for (i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 if (j >= this.matrix.get(i).size()) {
                     List<Integer> list = this.matrix.get(i);
                     list.add(null);
-                    matrix.set(i, list);
                 }
             }
-            this.matrix = matrix;
         }
         return this;
     }
 
-    public DirectedGraph addVertex(String str) {
-        this.name.add(str);
+    public DirectedGraph addVertex(String vertexName) {
+        this.name.add(vertexName);
         return changeVertex();
     }
 
@@ -166,7 +160,7 @@ public class DirectedGraph {
         int size = this.name.size();
         if (this.matrix.size() > this.name.size()) size = this.matrix.size();
         for (i = 0; i < this.matrix.size(); i++) {
-            if (this.matrix.get(i).size() > size) size = this.matrix.get(i).size();
+            size = Math.max(this.matrix.get(i).size(), size);
         }
         for (i = this.name.size(); i < size; i++) {
             String string = Integer.toString(i + 1);
@@ -197,9 +191,9 @@ public class DirectedGraph {
         return this.addEdge(start, end, newName);
     }
 
-    public List<Pair<String, Integer>> getOutputList(String s) { // |
+    public List<Pair<String, Integer>> getOutputList(String vertexName) { // |
         List<Pair<String, Integer>> list = new ArrayList<>();
-        int location = this.name.indexOf(s);
+        int location = this.name.indexOf(vertexName);
         if (location == -1) throw new IllegalArgumentException("Can't fine this vertex");
         for (int i = 0; i < this.matrix.size(); i++) {
             if (this.matrix.get(i).get(location) != null) {
@@ -209,9 +203,9 @@ public class DirectedGraph {
         return list;
     }
 
-    public List<Pair<String, Integer>> getInputList(String s) { //___
+    public List<Pair<String, Integer>> getInputList(String vertexName) { //___
         List<Pair<String, Integer>> list = new ArrayList<>();
-        int location = this.name.indexOf(s);
+        int location = this.name.indexOf(vertexName);
         if (location == -1) throw new IllegalArgumentException("Can't fine this vertex");
         for (int i = 0; i < this.matrix.size(); i++) {
             if (this.matrix.get(i).get(location) != null) {
