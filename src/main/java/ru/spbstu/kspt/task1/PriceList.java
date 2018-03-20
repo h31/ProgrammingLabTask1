@@ -42,15 +42,15 @@ public class PriceList {
         }
     }
 
-//    public void changeName(int code, String newName) {
-//        for (int i = 0; i < PriceList.size(); i++) {
-//            if (PriceList.get(i).name.equals(newName)) {
-//                throw new IllegalArgumentException("Продукт с таким названием уже существует под другим кодом");
-//            } else {
-//                PriceList.get(code).name = newName;
-//            }
-//        }
-//    }
+
+    public void changeName(int code, String newName) {
+        for (Map.Entry<Integer, Product> entry : PriceList.entrySet()) {
+            if (entry.getValue().getName().equals(newName)) {
+                throw new IllegalArgumentException("Продукт с таким названием уже существует под другим кодом");
+            }
+        }
+        PriceList.get(code).name = newName;
+    }
 
     public int priceByCode(int code, int amount) {
         if (amount >= 0 && PriceList.containsKey(code)) {

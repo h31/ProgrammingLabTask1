@@ -17,7 +17,7 @@ class MainTest {
 
 
 
-    Product juice = new Product("Сок", 7800);
+    
     Map<Integer, Product> listOfProducts = new HashMap() {{
         put(1298, new Product("Молоко", 6000));
         put(1283, new Product("Хлеб", 3650));
@@ -41,7 +41,7 @@ class MainTest {
         testList.addProduct(1895, new Product("Сок", 7800));
         testList.addProduct(2007, new Product("Шоколад", 12499));
         assertEquals(6, testList.getPriceList().size());
-        assertThrows(IllegalArgumentException.class, () -> testList.addProduct(1438, juice));
+        assertThrows(IllegalArgumentException.class, () -> testList.addProduct(1438, new Product("Сок", 7800)));
     }
 
 
@@ -65,13 +65,13 @@ class MainTest {
         assertThrows(IllegalArgumentException.class, () -> testList.changePrice(1283, -6500));
     }
 
-//    @Test
-//    public void changeName() {
-//        PriceList testList = createPricelist();
-//        testList.changeName(1298, "Соевое молоко");
-//        assertEquals(testList.getPriceList().get(1298).name, "Соевое молоко");
-//        assertThrows(IllegalArgumentException.class, () -> testList.changeName(1376, "Молоко"));
-//    }
+    @Test
+    public void changeName() {
+        PriceList testList = createPricelist();
+        testList.changeName(1298, "Соевое молоко");
+        assertEquals(testList.getPriceList().get(1298).name, "Соевое молоко");
+        assertThrows(IllegalArgumentException.class, () -> testList.changeName(1376, "Хлеб"));
+    }
 
     @Test
     public void priceByCode() {
