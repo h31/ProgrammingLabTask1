@@ -1,5 +1,6 @@
 package ru.spbstu.kspt.task1;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -58,6 +59,11 @@ public class PriceList {
         } else {
             throw new IllegalArgumentException("Отрицательное число товаров");
         }
+    }
+
+    public void getAmountofFood (){
+        ArrayList<Map.Entry<Integer, Product>> newListOfProduct = new ArrayList<Map.Entry<Integer, Product>>(PriceList.entrySet());
+
     }
 
     @Override
