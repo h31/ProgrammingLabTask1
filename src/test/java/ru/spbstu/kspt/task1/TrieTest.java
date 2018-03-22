@@ -34,6 +34,8 @@ public class TrieTest {
         testTrie.search("kot");
         testTrie.search("rrr");
         testTrie.search("hello");
+        testTrie.search("wo");
+        testTrie.toString();
         testTrie.delete("world");
         assertEquals(false, testTrie.find("world"));
         testTrie.delete("rrrrock");
@@ -51,6 +53,7 @@ public class TrieTest {
         assertEquals(true, testTrie.find("word"));
         testTrie.delete("kotlin");
         assertEquals(false, testTrie.find("kotlin"));
+
 
 
 
