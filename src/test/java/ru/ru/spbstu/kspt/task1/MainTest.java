@@ -16,8 +16,6 @@ class MainTest {
     private static final Logger logger = LogManager.getLogger(MainTest.class);
 
 
-
-    
     Map<Integer, Product> listOfProducts = new HashMap() {{
         put(1298, new Product("Молоко", 6000));
         put(1283, new Product("Хлеб", 3650));
@@ -26,9 +24,9 @@ class MainTest {
     }};
     PriceList list = new PriceList(listOfProducts);
 
-    private static PriceList createPricelist(){
+    private static PriceList createPricelist() {
         PriceList testList = new PriceList();
-        testList.addProduct(1298, new Product ("Молоко", 6000));
+        testList.addProduct(1298, new Product("Молоко", 6000));
         testList.addProduct(1283, new Product("Хлеб", 3650));
         testList.addProduct(1376, new Product("Хлопья", 9900));
         testList.addProduct(1438, new Product("Чай", 13872));
