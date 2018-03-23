@@ -2,6 +2,9 @@ package ru.spbstu.kspt.task1;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import task1Graph.Graph;
+
+import java.util.*;
 
 /**
  * Main class
