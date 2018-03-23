@@ -5,12 +5,8 @@ import java.util.*;
 public class Graph {
 
     private Map<String, Integer> vertices = new HashMap<>();
-    private ArrayList<Arc> arcs;
+    private ArrayList<Arc> arcs = new ArrayList<>();
     private ArrayList<Arc> newArcs;
-
-    private void setArcs(ArrayList<Arc> arcs) {
-        this.arcs = arcs;
-    }
 
     public class Arc {
 
@@ -66,13 +62,11 @@ public class Graph {
         Arc ec = new Arc("EC", 3, "E", "C");
         Arc ca = new Arc("CA", 3, "C", "A");
 
-        newArcs.add(ab);
-        newArcs.add(bc);
-        newArcs.add(ae);
-        newArcs.add(ec);
-        newArcs.add(ca);
-
-        setArcs(newArcs);
+        arcs.add(ab);
+        arcs.add(bc);
+        arcs.add(ae);
+        arcs.add(ec);
+        arcs.add(ca);
     }
 
     public Map<String, Integer> getVertices() {
@@ -113,19 +107,20 @@ public class Graph {
     }
 
     public void changeArcWeight(String arcName, int newWeight) {
-        for (Arc arc : arcs) if (arc.name.equals(arcName)) {
-            arc.weight = newWeight;
-            break;
-        }
+        for (Arc arc : arcs)
+            if (arc.name.equals(arcName)) {
+                arc.weight = newWeight;
+                break;
+            }
     }
 
-    public ArrayList<String> getOutList(String vertexName) {
+    public ArrayList<String> getArcOutList(String vertexName) {
         ArrayList<String> result = new ArrayList();
         for (Arc arc : arcs) if (vertices.get(vertexName) == arc.begin) result.add(arc.name);
         return result;
     }
 
-    public ArrayList<String> getInList(String vertexName) {
+    public ArrayList<String> getArcInList(String vertexName) {
         ArrayList<String> result = new ArrayList();
         for (Arc arc : arcs) if (vertices.get(vertexName) == arc.end) result.add(arc.name);
         return result;

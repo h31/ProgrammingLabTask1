@@ -16,14 +16,4 @@ public class Main {
         logger.debug("Logging example");
         System.out.println("Hello World!");
     }
-
-    Map<String, Integer> a = new HashMap<>();
-    Vector<Graph.Arc> b = new Vector<>();
-
-
-
-//    Graph g = new Graph(a, b);
-
-
-
 }

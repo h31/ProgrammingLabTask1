@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MainTest {
     private static final Logger logger = LogManager.getLogger(MainTest.class);
     Graph g = new Graph();
+    private int sizeTest = g.getVertices().size();
 
     @Test
     void exampleTest() {
@@ -21,36 +22,27 @@ class MainTest {
         logger.info("Test finished");
     }
 
-    int s = g.getVertices().size();
-
     @Test
     void addVertexTest() {
         logger.info("Test started");
         g.addVertex("H");
-        assertEquals(s + 1, g.getVertices().size());
+        assertEquals(sizeTest + 1, g.getVertices().size());
         logger.info("Test finished");
     }
 
     @Test
     void deleteVertexTest() {
         logger.info("Test started");
-        logger.info(s);
-        logger.info(g.getArcs().size());
-        //g.deleteVertex("A");
-        logger.info(s);
-        assertEquals(s - 1, g.getVertices().size());
+        g.deleteVertex("A");
+        assertEquals(sizeTest - 1, g.getVertices().size());
         logger.info("Test finished");
     }
 
     @Test
     void addArcTest() {
         logger.info("Test started");
-        Graph g = new Graph();
-        logger.info(g);
         int s = g.getArcs().size();
-        logger.info(s);
         g.addArc("BA", 25, "B", "A");
-        logger.info(s);
         assertEquals(s + 1, g.getArcs().size());
         logger.info("Test finished");
     }
@@ -58,22 +50,52 @@ class MainTest {
     @Test
     void deleteArcTest() {
         logger.info("Test started");
-        Graph g = new Graph();
-        logger.info(g);
         int s = g.getArcs().size();
-        logger.info(s);
         g.deleteArc("AB");
-        logger.info(s);
         assertEquals(s - 1, g.getArcs().size());
         logger.info("Test finished");
     }
 
     @Test
-    void changeVertexName() {
+    void changeVertexNameTest() {
         logger.info("Test started");
-        Graph g = new Graph();
-        g.changeVertexName("EC", "EtoC");
-        assertEquals(1, g.getArcs().size());
+        g.changeVertexName("E", "e");
+        boolean q = false;
+        if (!g.getVertices().containsKey("E") && g.getVertices().containsKey("e")) q = true;
+        assertEquals(true, q);
+        assertThrows(IllegalArgumentException.class, () -> g.changeVertexName("L", "O"));
+        logger.info("Test finished");
+    }
+
+    @Test
+    void changeArcWeightTest() {
+        logger.info("Test started");
+        g.changeArcWeight("EC", 17);
+        List<Graph.Arc> arcsTest = g.getArcs();
+        int resultWeight = 0;
+        for (int i = 0; i < arcsTest.size(); i++)
+            if (arcsTest.get(i).getArcName().equals("EC")) resultWeight = arcsTest.get(i).getArcWeight();
+        assertEquals(17, resultWeight);
+        logger.info("Test finished");
+    }
+
+    @Test
+    void getArcOutListTest() {
+        logger.info("Test started");
+        ArrayList<String> result = new ArrayList<>();
+        result.add("AB");
+        result.add("AE");
+        assertEquals(result, g.getArcOutList("A"));
+        logger.info("Test finished");
+    }
+
+    @Test
+    void getArcInListTest() {
+        logger.info("Test started");
+        ArrayList<String> result = new ArrayList<>();
+        result.add("BC");
+        result.add("EC");
+        assertEquals(result, g.getArcInList("C"));
         logger.info("Test finished");
     }
 }
