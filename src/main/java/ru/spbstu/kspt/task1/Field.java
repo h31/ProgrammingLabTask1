@@ -42,127 +42,111 @@ public class Field {
         putValue(width, height, NOUGHT);
     }
 
-    public int searchLongestSequenceHorizontally(int choice){
-        int max;
-        int sumNeedful;
-        CrossesOrNoughts cell;
-        if (choice == 0) {
-            cell = NOUGHT;
-        }
-        else {
-            cell = CROSS;
-        }
-        max = 0;
-        sumNeedful = 0;
+    public int searchLongestSequence(boolean choice, CrossesOrNoughts cell) {
+        int max = 0;
+        int sum = 0;
         for (int height = 0; height < size; height++) {
             for (int width = 0; width < size; width++) {
-                if (field[width][height] == cell) {
-                    sumNeedful += 1;
-                    if (sumNeedful > max) {
-                        max = sumNeedful;
+                if (choice) {
+                    if (field[height][width] == cell) {
+                        sum += 1;
+                        if (sum > max) {
+                            max = sum;
+                        }
+                    }
+                    else {
+                        sum = 0;
                     }
                 }
                 else {
-                    sumNeedful = 0;
+                    if (field[width][height] == cell) {
+                        sum += 1;
+                        if (sum > max) {
+                            max = sum;
+                        }
+                    }
+                    else {
+                        sum = 0;
+                    }
                 }
             }
-            sumNeedful = 0;
+            sum = 0;
         }
         return max;
     }
 
-    public int searchLongestSequenceVertically(int choice){
-        int max;
-        int sumNeedful;
-        CrossesOrNoughts cell;
-        if (choice == 0) {
-            cell = NOUGHT;
-        }
-        else {
-            cell = CROSS;
-        }
-        max = 0;
-        sumNeedful = 0;
-        for (int width = 0; width < size; width++) {
-            for (int height = 0; height < size; height++) {
-                if (field[width][height] == cell) {
-                    sumNeedful += 1;
-                    if (sumNeedful > max) {
-                        max = sumNeedful;
-                    }
-                }
-                else {
-                    sumNeedful = 0;
-                }
-            }
-            sumNeedful = 0;
-        }
-        return max;
+    public int searchLongestSequenceHorizontallyNought() {
+        return searchLongestSequence(false, NOUGHT);
     }
 
-    public int searchLongestSequenceDiagonally(int choice){
-        int max;
-        int max2;
+    public int searchLongestSequenceHorizontallyCross() {
+        return searchLongestSequence(false, CROSS);
+    }
+
+    public int searchLongestSequenceVerticallyCross() {
+        return searchLongestSequence(true, CROSS);
+    }
+
+    public int searchLongestSequenceVerticallyNought() {
+        return searchLongestSequence(true, NOUGHT);
+    }
+
+    public int searchLongestSequenceDiagonallyNought(){
+        return searchLongestSequenceDiagonally(NOUGHT);
+    }
+
+    public int searchLongestSequenceDiagonallyCross(){
+        return searchLongestSequenceDiagonally(CROSS);
+    }
+
+    public int searchLongestSequenceDiagonally(CrossesOrNoughts cell){
+        int max = 0;
+        int max2 = 0;
         int i;
-        int sumNeedful;
-        CrossesOrNoughts cell;
-        if (choice == 0) {
-            cell = NOUGHT;
-        }
-        else {
-            cell = CROSS;
-        }
-        max = 0;
-        max2 = 0;
-        sumNeedful = 0;
+        int sum = 0;
         for (int height = 0; height < size; height++) {
             for (int width = 0; width < size; width++) {
                 i = 0;
                 if (field[width][height] == cell) {
-                    sumNeedful += 1;
-                    if (max == 0) max = sumNeedful;
+                    sum += 1;
+                    if (max == 0) max = sum;
                     while ((i + width + 1) < size && (i + height + 1) < size) {
                         i++;
                         if (field[width][height] == field[width + i][height + i]){
-                            sumNeedful += 1;
-                            if (sumNeedful > max) {
-                                max = sumNeedful;
+                            sum += 1;
+                            if (sum > max) {
+                                max = sum;
                             }
                         }
                         else {
-                            sumNeedful = 0;
+                            sum = 0;
                         }
                     }
                 }
-                sumNeedful = 0;
             }
-        }
-
-        sumNeedful = 0;
-
-        for (int height = 0; height < size; height++) {
+            sum = 0;
             int width = size;
             while (width >= 1) {
                 width--;
                 i = 0;
                 if (field[width][height] == cell) {
-                    sumNeedful += 1;
-                    if (max2 == 0) max2 = sumNeedful;
+                    sum += 1;
+                    if (max2 == 0) max2 = sum;
                     while ((width - i > 0) && (i + height + 1 < size)) {
                         i++;
                         if (field[width][height] == field[width - i][height + i]){
-                            sumNeedful += 1;
-                            if (sumNeedful > max2) {
-                                max2 = sumNeedful;
+                            sum += 1;
+                            if (sum > max2) {
+                                max2 = sum;
                             }
                         }
                         else {
-                            sumNeedful = 0;
+                            sum = 0;
                         }
                     }
                 }
             }
-            sumNeedful = 0;
+            sum = 0;
         }
         if (max2 > max) {
             return max2;

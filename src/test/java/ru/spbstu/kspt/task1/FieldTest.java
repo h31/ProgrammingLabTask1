@@ -13,22 +13,22 @@ class FieldTest {
         logger.info("Test started");
 
         Field fieldTest = new Field(4);
-        assertEquals(0, fieldTest.searchLongestSequenceHorizontally(1));
-        assertEquals(0, fieldTest.searchLongestSequenceVertically(1));
-        assertEquals(0, fieldTest.searchLongestSequenceDiagonally(1));
+        assertEquals(0, fieldTest.searchLongestSequenceHorizontallyCross());
+        assertEquals(0, fieldTest.searchLongestSequenceVerticallyCross());
+        assertEquals(0, fieldTest.searchLongestSequenceDiagonallyCross());
 
         fieldTest.addCross(0, 0);
         fieldTest.addNought(1, 1);
         fieldTest.devastate(0, 0);
         fieldTest.devastate(1, 1);
-        assertEquals(0, fieldTest.searchLongestSequenceHorizontally(1));
+        assertEquals(0, fieldTest.searchLongestSequenceHorizontallyCross());
 
         fieldTest.addCross(0, 0);
         fieldTest.addCross(1, 1);
         fieldTest.addCross(2, 1);
         fieldTest.addCross(2, 2);
-        assertEquals(3, fieldTest.searchLongestSequenceDiagonally(1));
-        assertEquals(0, fieldTest.searchLongestSequenceDiagonally(0));
+        assertEquals(3, fieldTest.searchLongestSequenceDiagonallyCross());
+        assertEquals(0, fieldTest.searchLongestSequenceDiagonallyNought());
 
         fieldTest.addCross(0, 0);
         fieldTest.addCross(3, 1);
@@ -36,16 +36,13 @@ class FieldTest {
         fieldTest.addCross(3, 0);
         fieldTest.addNought(2, 3);
         fieldTest.addCross(0, 3);
-        assertEquals(4, fieldTest.searchLongestSequenceDiagonally(1));
+        assertEquals(4, fieldTest.searchLongestSequenceDiagonallyCross());
 
-        fieldTest.devastate(0, 0);
-        fieldTest.devastate(3, 0);
-        fieldTest.devastate(0, 3);
-        fieldTest.devastate(1, 1);
-        fieldTest.devastate(3, 1);
-        fieldTest.devastate(2, 1);
-        fieldTest.devastate(2, 2);
-        fieldTest.devastate(2, 3);
+        for (int height = 0; height < 3; height++) {
+            for (int width = 0; width < 3; width++) {
+                    fieldTest.devastate(height, width);
+            }
+        }
         fieldTest.addNought(1, 0);
         fieldTest.addNought(2, 0);
         fieldTest.addNought(3, 0);
@@ -53,8 +50,8 @@ class FieldTest {
         fieldTest.addNought(2, 1);
         fieldTest.addNought(3, 1);
         fieldTest.addCross(1, 1);
-        assertEquals(3, fieldTest.searchLongestSequenceHorizontally(0));
-        assertEquals(2, fieldTest.searchLongestSequenceVertically(0));
+        assertEquals(3, fieldTest.searchLongestSequenceHorizontallyNought());
+        assertEquals(2, fieldTest.searchLongestSequenceVerticallyNought());
 
         logger.info("Test finished");
     }
@@ -89,9 +86,9 @@ class FieldTest {
         fieldTest.addCross(2, 4);
         fieldTest.addCross(3, 4);
         fieldTest.addNought(4, 4);
-        assertEquals(5, fieldTest.searchLongestSequenceVertically(1));
-        assertEquals(4, fieldTest.searchLongestSequenceHorizontally(1));
-        assertEquals(5, fieldTest.searchLongestSequenceDiagonally(1));
+        assertEquals(5, fieldTest.searchLongestSequenceVerticallyCross());
+        assertEquals(4, fieldTest.searchLongestSequenceHorizontallyCross());
+        assertEquals(5, fieldTest.searchLongestSequenceDiagonallyCross());
 
         logger.info("Test finished");
     }
