@@ -1,5 +1,6 @@
 package task01;
 import java.util.Arrays;
+import java.util.List;
 
 public class Polynomial {
     private int array[];
@@ -31,8 +32,8 @@ public class Polynomial {
         boolean isZero = true;
         for (int i = this.degree; i >= 0; i--) {
             if (i == 0) {
-                if (this.array[i] >= 0 && !isZero) s.append("+");
-                s.append(this.array[i]);
+                if (this.array[i] > 0 && !isZero) s.append("+");
+                if (this.array[i] != 0) s.append(this.array[i]);
                 break;
             }
             if (this.array[i] == 0) continue;
@@ -111,12 +112,21 @@ public class Polynomial {
         res.deleteZeros();
         return res;
     }
-
     public Polynomial div(Polynomial p2) {
-       if (this.equals(p2)) {
+        return divideWithRemainder(p2).get(0);
+    }
+
+    public Polynomial remainder(Polynomial p2) {
+        return divideWithRemainder(p2).get(1);
+    }
+
+    private List<Polynomial> divideWithRemainder(Polynomial p2) {
+        if (this.equals(p2)) {
             Polynomial quotient = new Polynomial(1);
-           quotient.array[0] = 1;
-            return quotient;
+            Polynomial remainder = new Polynomial(1);
+            quotient.array[0] = 1;
+            remainder.array[0] = 0;
+            return Arrays.asList(quotient, remainder);
         }
         this.deleteZeros();
         p2.deleteZeros();
@@ -135,33 +145,8 @@ public class Polynomial {
             dividend = dividend.sub(multiply);
         }
         quotient.deleteZeros();
-        return quotient;
-    }
-
-    public Polynomial remainder(Polynomial p2) {
-        if (this.equals(p2)) {
-            Polynomial quotient = new Polynomial(1);
-            quotient.array[0] = 1;
-            return quotient;
-        }
-        this.deleteZeros();
-        p2.deleteZeros();
-        if (p2.array[p2.degree] == 0) throw new IllegalArgumentException();
-        Polynomial dividend = new Polynomial(this);
-        Polynomial quotient = new Polynomial(this.degree);
-        Polynomial multiply;
-        int coeff;
-        while (dividend.degree >= p2.degree) {
-            coeff = dividend.array[dividend.degree] / p2.array[p2.degree];
-            quotient.array[dividend.degree - p2.degree] = coeff;
-            Polynomial res = new Polynomial(this.degree);
-            Arrays.fill(res.array, 0);
-            res.array[dividend.degree - p2.degree] = coeff;
-            multiply = p2.mult(res);
-            dividend = dividend.sub(multiply);
-        }
         dividend.deleteZeros();
-        return dividend;
+        return Arrays.asList(quotient, dividend);
     }
 
     private void deleteZeros() {

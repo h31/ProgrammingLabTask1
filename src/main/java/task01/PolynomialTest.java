@@ -6,7 +6,7 @@ public class PolynomialTest {
         Polynomial p = new Polynomial(ar);
         System.out.print("p: ");
         p.print();
-        int ar1[] = new int[]{0,-2, 4};
+        int ar1[] = new int[]{0,-1};
         Polynomial p1 = new Polynomial(ar1);
         System.out.print("p1: ");
         p1.print();
