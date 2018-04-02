@@ -6,6 +6,7 @@ import java.util.List;
 public class BinarySearchTree {
     private Node root;
 
+
     public BinarySearchTree() {
         this.root = null;
     }
@@ -14,7 +15,7 @@ public class BinarySearchTree {
         this.root = elem;
     }
 
-    public List<Node> getOrderedNotes() {
+    public List<Node> getOrderedNodes() {
         List<Node> list = new ArrayList<Node>();
         inOrderTreeWalk(list, root);
         return list;
@@ -41,25 +42,25 @@ public class BinarySearchTree {
     }
 
     public void insert(int key) {
-        Node z = new Node(key);
+        Node newNode = new Node(key);
         Node x = root;
         Node y = null;
         while (x != null) {
             y = x;
-            if (z.getValue() < x.getValue()) {
+            if (newNode.getValue() < x.getValue()) {
                 x = x.getLeft();
             } else {
                 x = x.getRight();
             }
-            z.setParent(y);
+            newNode.setParent(y);
         }
         if (y == null) {
-            root = z;
+            root = newNode;
         } else {
-            if (z.getValue() < y.getValue()) {
-                y.setLeft(z);
+            if (newNode.getValue() < y.getValue()) {
+                y.setLeft(newNode);
             } else {
-                y.setRight(z);
+                y.setRight(newNode);
             }
         }
     }
@@ -67,11 +68,11 @@ public class BinarySearchTree {
     public void delete(int key) {
         Node x;
         Node y;
-        Node z = (Node) treeSearch(key);
-        if (z.getLeft() == null || z.getRight() == null) {
-            y = z;
+        Node newNode = (Node) treeSearch(key);
+        if (newNode.getLeft() == null || newNode.getRight() == null) {
+            y = newNode;
         } else {
-            y = treeSuccessor(z);
+            y = treeSuccessor(newNode);
         }
         if (y.getLeft() != null) {
             x = y.getLeft();
@@ -87,8 +88,8 @@ public class BinarySearchTree {
                 y.getParent().setRight(x);
             }
         }
-        if (y != z) {
-            z.setValue(y.getValue());
+        if (y != newNode) {
+            newNode.setValue(y.getValue());
         }
     }
 
@@ -111,7 +112,16 @@ public class BinarySearchTree {
         return y;
     }
 
+    @Override
+    public String toString() {
+        return "BinarySearchTree{" +
+                "root=" + root +
+                '}';
+    }
+
     public class Node {
+
+
         private int key;
         private Node left;
         private Node right;
@@ -121,7 +131,9 @@ public class BinarySearchTree {
             this.key = value;
         }
 
-        void setValue(int key) { this.key = key; }
+        void setValue(int key) {
+            this.key = key;
+        }
 
         int getValue() {
             return key;
@@ -152,5 +164,52 @@ public class BinarySearchTree {
         }
 
 
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Node node = (Node) o;
+
+            if (key != node.key) return false;
+            if (left != null ? !left.equals(node.left) : node.left != null) return false;
+            if (right != null ? !right.equals(node.right) : node.right != null) return false;
+            return parent != null ? parent.equals(node.parent) : node.parent == null;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = key;
+            result = 31 * result + (left != null ? left.hashCode() : 0);
+            result = 31 * result + (right != null ? right.hashCode() : 0);
+            result = 31 * result + (parent != null ? parent.hashCode() : 0);
+            return result;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "key=" + key +
+                    ", left=" + left +
+                    ", right=" + right +
+                    ", parent=" + parent +
+                    '}';
+        }
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BinarySearchTree that = (BinarySearchTree) o;
+
+        return root != null ? root.equals(that.root) : that.root == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return root != null ? root.hashCode() : 0;
     }
 }
