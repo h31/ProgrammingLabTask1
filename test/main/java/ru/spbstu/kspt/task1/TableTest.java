@@ -18,7 +18,7 @@ public class TableTest {
         Table test = new Table();
         test.addValue(1.0D, 9.0D);
         assertEquals(test.showTable(), "1.0 9.0\n");
-        test.dellValue(1.0D);
+        test.delValue(1.0D);
         assertEquals(test.showTable(), "");
     }
 
@@ -28,7 +28,7 @@ public class TableTest {
         test.addValue(1.0D, 2.0D);
         test.addValue(3.0D, 4.0D);
         test.addValue(10.0D, 11.0D);
-        assertEquals(test.findClosestPair(4.0D), "3.0 4.0");
+        assertEquals(test.findClosestPair(4.0D), new Table.Pair(3.0D, 4.0D));
     }
 
     @Test
